@@ -1,4 +1,4 @@
-README.md.fr
+[Français](README.md.fr)
 
 # Microsoft Purview Configuration (2026)
 ## Compliance & AI Architecture Guide for SMBs
