@@ -1,4 +1,4 @@
-[English](README.md)
+🇺🇸 [Read this README in English](README.md)
 
 # Configuration Microsoft Purview (2026)
 ## Guide conformité et IA pour PME
