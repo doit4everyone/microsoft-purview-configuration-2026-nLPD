@@ -127,3 +127,23 @@ Ce dépôt est fourni à des fins **pédagogiques et architecturales**.
 
 Un **guide dédié au Shadow AI et à Entra ID P2** sera publié séparément.
 ``
+---
+
+## ☕ Soutenir ce projet (optionnel)
+
+Ce guide est mis à disposition gratuitement.
+
+Il est le fruit de plusieurs semaines de travail, incluant :
+- des tests techniques terrain sur Microsoft 365 / Purview,
+- une validation méthodologique orientée PME,
+- une prise en compte des exigences de la nLPD (Suisse).
+
+À titre strictement optionnel, les personnes ou organisations souhaitant soutenir
+la maintenance de cette documentation et ses évolutions futures peuvent le faire
+via la plateforme Ko‑fi :
+
+👉 https://ko-fi.com/doit4everyone
+
+Aucune contrepartie, aucun service associé et aucune différence de traitement
+n’est liée à ce soutien.
+``
