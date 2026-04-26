@@ -123,3 +123,20 @@ This repository is provided for **educational and architectural guidance**.
 ## 📌 Upcoming
 
 A **dedicated Shadow AI & Entra ID P2 guide** is planned separately.
+
+## ☕ Support This Project (Optional)
+
+This guide is provided free of charge.
+
+It is the result of several weeks of work, including:
+- hands-on technical testing on Microsoft 365 / Purview,
+- a methodology specifically adapted to SMB environments,
+- consideration of Swiss nLPD (Data Protection Act) requirements.
+
+On a strictly optional basis, individuals or organizations who wish to support
+the maintenance of this documentation and its future updates may do so via Ko‑fi:
+
+👉 https://ko-fi.com/doit4everyone
+
+This support does not imply any obligation, any associated service,
+or any difference in access to the content.
