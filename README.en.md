@@ -141,6 +141,12 @@ the maintenance of this documentation and its future updates may do so via Ko‑
 This support does not imply any obligation, any associated service,
 or any difference in access to the content.
 
-🌐 Guide landing page
+
+## 🧭 Quick access
+
+🌐 Guide landing page  
 https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
+
+🏠 Central documentation hub  
+https://doit4everyone.github.io/
 ``
