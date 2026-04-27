@@ -142,7 +142,7 @@ Il est le fruit de plusieurs semaines de travail, incluant :
 la maintenance de cette documentation et ses évolutions futures peuvent le faire
 via la plateforme Ko‑fi :
 
-👉 https://ko-fi.com/doit4everyone
+👉 **[Soutenir le projet sur Ko-fi](https://ko-fi.com/doit4everyone)**
 
 Aucune contrepartie, aucun service associé et aucune différence de traitement
 n’est liée à ce soutien.
