@@ -147,5 +147,11 @@ via la plateforme Ko‑fi :
 Aucune contrepartie, aucun service associé et aucune différence de traitement
 n’est liée à ce soutien.
 ``
-🌐 Page de présentation du guide
+## 🧭 Accès rapide
+
+🌐 Page de présentation du guide  
 https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
+
+🏠 Page centrale des guides  
+https://doit4everyone.github.io/
+``
