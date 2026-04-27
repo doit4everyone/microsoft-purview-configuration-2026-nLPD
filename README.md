@@ -152,6 +152,6 @@ n’est liée à ce soutien.
 🌐 Page de présentation du guide  
 https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
 
-🏠 Page centrale des guides  
-https://doit4everyone.github.io/
+🏠  Retrouvez tous les guides sur:   https://doit4everyone.github.io/
+
 ``
