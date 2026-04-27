@@ -146,7 +146,7 @@ via la plateforme Ko‑fi :
 
 Aucune contrepartie, aucun service associé et aucune différence de traitement
 n’est liée à ce soutien.
-``
+
 ## 🧭 Accès rapide
 
 🌐 Page de présentation du guide  
