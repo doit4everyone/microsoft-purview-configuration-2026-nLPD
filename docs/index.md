@@ -59,8 +59,8 @@ dans un environnement maîtrisé.
 
 ## 🔗 Accès au guide complet
 
-👉 **Dépôt GitHub – documentation intégrale et fichiers**  
-https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD
+- 👉 [Page de présentation du guide](https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/)
+- 👉 [Dépôt GitHub – documentation intégrale et fichiers](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD)
 
 ---
 
