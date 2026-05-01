@@ -130,7 +130,7 @@ Ce dépôt est fourni à des fins **pédagogiques et architecturales**.
 ## 📌 À venir
 
 Un **guide dédié au Shadow AI et à Entra ID P2** sera publié séparément.
-``
+
 ---
 
 ## ☕ Soutenir ce projet (optionnel)
