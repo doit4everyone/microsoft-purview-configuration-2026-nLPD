@@ -1,6 +1,9 @@
 ---
-title: Configuration Microsoft Purview (2026)
-description: Guide pas à pas pour configurer Microsoft Purview avec Microsoft 365 Business Premium, orienté conformité nLPD et gouvernance de Copilot pour PME suisses.
+---
+title: "Documentation Microsoft Purview 2026 - Configuration PME Suisse & conformité nLPD"
+description: "Documentation technique complète pour configurer Microsoft Purview en environnement PME Suisse. DLP, étiquettes de sensibilité, gouvernance Copilot, conformité nLPD."
+
+---
 ---
 
 # Configuration Microsoft Purview (2026)
@@ -51,7 +54,7 @@ dans un environnement maîtrisé.
   - protection des usages Copilot,
   - audit et traçabilité.
 - Un document dédié à la **préparation du tenant de test (POC)**.
-- Des **fichiers de démonstration** (AXIOS) pour tester les scénarios
+- Des **fichiers de démonstration** (Axonix SA) pour tester les scénarios
   sans données sensibles.
 - Une approche adaptée aux **PME sous Business Premium**.
 
