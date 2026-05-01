@@ -64,8 +64,8 @@ Ce document garantit un **environnement de test propre et reproductible**.
 ---
 
 ### 3️⃣ Données de démonstration pour les tests
-- **`FICHIERS DEMO AXIOS.zip`**  
-  Une archive ZIP contenant des **fichiers de démonstration d’une société fictive (AXIOS)**, utilisés tout au long de la procédure :
+- **`FICHIERS DEMO AXONIX.zip`**  
+  Une archive ZIP contenant des **fichiers de démonstration d’une société fictive (Axonix SA)**, utilisés tout au long de la procédure :
   - documents RH,
   - fichiers financiers,
   - contenus internes et confidentiels.
