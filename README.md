@@ -3,6 +3,10 @@
 # Configuration Microsoft Purview (2026)
 ## Guide conformité et IA pour PME
 
+## 📥 Téléchargement
+
+👉 [Télécharger la dernière version (v1.0)](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/latest)
+
 Ce dépôt contient une **procédure technique complète**, pas à pas, pour configurer **Microsoft Purview** dans un environnement **Microsoft 365 Business Premium**, avec un focus particulier sur :
 
 - la protection des données,
