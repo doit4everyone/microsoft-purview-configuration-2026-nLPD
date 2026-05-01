@@ -3,6 +3,10 @@
 # Microsoft Purview Configuration (2026)
 ## Compliance & AI Architecture Guide for SMBs
 
+## 📥 Download
+
+👉 [Download the latest version (v1.0)](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/latest)
+
 This repository contains a **step-by-step technical procedure** to configure **Microsoft Purview** for **Microsoft 365 Business Premium** environments, with a strong focus on:
 
 - data protection,
@@ -59,8 +63,8 @@ This document ensures you start from a **clean, reproducible test environment**.
 ---
 
 ### 3️⃣ Demo data for realistic testing
-- **`FICHIERS DEMO AXIOS.zip`**  
-  A ZIP archive containing **demo files from a fictional company (AXIOS)**, used throughout the procedure:
+- **`FICHIERS_DEMO_AXONIX.zip`**  
+  A ZIP archive containing **demo files from a fictional company (AXONIX SA)**, used throughout the procedure:
   - HR documents,
   - finance files,
   - internal and confidential content.
