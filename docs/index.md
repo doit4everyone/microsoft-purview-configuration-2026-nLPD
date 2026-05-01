@@ -1,10 +1,8 @@
 ---
----
 title: "Documentation Microsoft Purview 2026 - Configuration PME Suisse & conformité nLPD"
 description: "Documentation technique complète pour configurer Microsoft Purview en environnement PME Suisse. DLP, étiquettes de sensibilité, gouvernance Copilot, conformité nLPD."
+---
 
----
----
 
 # Configuration Microsoft Purview (2026)
 ## Guide conformité et IA pour PME suisses 🇨🇭
