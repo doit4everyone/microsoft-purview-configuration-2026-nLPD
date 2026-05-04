@@ -4,8 +4,9 @@ description: "Documentation technique complète pour configurer Microsoft Purvie
 ---
 
 <style>
-  /* Cache l'en-tête du thème jekyll-theme-minimal */
-  header { display: none !important; }
+  /* Cache l'en-tête et le pied de page du thème (supprime le texte jaune) */
+  header, footer { display: none !important; }
+  
   /* Centre le contenu de la page */
   .wrapper {
     max-width: 900px;
