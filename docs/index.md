@@ -4,15 +4,20 @@ description: "Documentation technique complète pour configurer Microsoft Purvie
 ---
 
 <style>
-  /* Cache l'en-tête et le pied de page du thème (supprime le texte jaune) */
+  /* Supprime la sidebar (gauche) et le pied de page (jaune) */
   header, footer { display: none !important; }
-  
-  /* Centre le contenu de la page */
+
+  /* Centre le contenu proprement */
   .wrapper {
     max-width: 900px;
     margin: 0 auto;
   }
+  
+  /* Supprime l'espace inutile en haut */
   section { padding-top: 0 !important; }
+
+  /* Centre les titres manuellement si nécessaire */
+  h1, h2 { text-align: center; }
 </style>
 
 # Configuration Microsoft Purview (2026)
