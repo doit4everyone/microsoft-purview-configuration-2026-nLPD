@@ -4,20 +4,25 @@ description: "Documentation technique complète pour configurer Microsoft Purvie
 ---
 
 <style>
-  /* Supprime la sidebar (gauche) et le pied de page (jaune) */
+  /* 1. On cache le header et le footer */
   header, footer { display: none !important; }
 
-  /* Centre le contenu proprement */
+  /* 2. On réinitialise le conteneur principal */
   .wrapper {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    float: none !important; /* Supprime le décalage du thème */
+    position: relative !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
-  
-  /* Supprime l'espace inutile en haut */
-  section { padding-top: 0 !important; }
 
-  /* Centre les titres manuellement si nécessaire */
-  h1, h2 { text-align: center; }
+  /* 3. On force la section de texte à prendre toute la largeur */
+  section {
+    width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+  }
 </style>
 
 # Configuration Microsoft Purview (2026)
