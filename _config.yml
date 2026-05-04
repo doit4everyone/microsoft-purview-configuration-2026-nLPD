@@ -1,0 +1,11 @@
+title: "Configuration Microsoft Purview 2026 - Guide PME Suisse & nLPD"
+description: "Procédure technique complète : DLP, étiquettes de sensibilité et conformité nLPD pour PME suisses sous Microsoft 365 Business Premium."
+url: "https://doit4everyone.github.io"
+# TRÈS IMPORTANT : le baseurl doit correspondre au nom de ce dépôt
+baseurl: "/microsoft-purview-configuration-2026-nLPD"
+
+theme: jekyll-theme-minimal
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
