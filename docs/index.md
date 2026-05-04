@@ -11,10 +11,13 @@ description: "Documentation technique complète pour configurer Microsoft Purvie
   .wrapper {
     max-width: 900px !important;
     margin: 0 auto !important;
-    float: none !important; /* Supprime le décalage du thème */
+    float: none !important; 
     position: relative !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
+    
+    /* --- LA POLICE SE MET ICI --- */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   }
 
   /* 3. On force la section de texte à prendre toute la largeur */
