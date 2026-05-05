@@ -18,6 +18,7 @@ description: "Documentation technique complète pour configurer Microsoft Purvie
     
     /* --- LA POLICE SE MET ICI --- */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 1.1em !important;
   }
 
   /* 3. On force la section de texte à prendre toute la largeur */
@@ -28,8 +29,8 @@ description: "Documentation technique complète pour configurer Microsoft Purvie
   }
 </style>
 
-# Configuration Microsoft Purview (2026)
-## Guide conformité et IA pour PME suisses 🇨🇭
+<h1 style="text-align: center;">Configuration Microsoft Purview (2026)</h1>
+<h2 style="text-align: center;"><strong>Guide conformité et IA pour PME suisses 🇨🇭</strong></h2>
 
 Ce guide propose une **procédure technique complète**, étape par étape,
 pour configurer **Microsoft Purview** dans un environnement
