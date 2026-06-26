@@ -51,6 +51,18 @@ permalink: /
 
 ---
 
+## 📥 Fichiers et ressources
+
+Le guide de préparation du tenant est intégré directement dans ce site (section ci-dessous). Les versions Word/PDF et le pack de fichiers de démo restent disponibles sur la page de [release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0) :
+
+| Fichier | Description |
+|---|---|
+| `Configuration_Microsoft_Purview_2026.docx` / `.pdf` | Ce guide en version Word et PDF |
+| `Preparation_Tenant_POC_Purview.docx` / `.pdf` | Version Word/PDF du guide de préparation du tenant (identique à la version intégrée ci-dessous) |
+| `FICHIERS_DEMO_AXONIX.zip` | Fichiers de démonstration utilisés dans les scénarios de test (Partie 6) : contrat de travail, fiches de salaire, registre du personnel, grand livre |
+
+---
+
 ## Chronologie de déploiement
 
 Cette procédure exhaustive peut être déployée progressivement sans interruption de service. Chaque semaine représente un palier stable.
@@ -83,24 +95,41 @@ Microsoft Purview est un outil de gouvernance et de protection des données, pas
 
 ---
 
-## 🗂️ Sommaire complet
+## 🧱 Préparation du tenant (à faire avant ce guide)
+
+Si votre tenant Microsoft 365 n'est pas encore prêt, suivez d'abord ce guide pas à pas : il crée le tenant, les 15 comptes utilisateurs, les 7 groupes, les 5 sites SharePoint et l'audit nécessaires au guide Purview.
 
 | Chapitre | Description |
 |---|---|
-| [Préface](docs/00-preface.md) | Contexte du projet, chronologie de déploiement, positionnement de Purview, limites du dispositif |
-| [Partie 0 — Avant de commencer](docs/01-avant-de-commencer.md) | Accès au portail, PowerShell Exchange Online, rôles administrateur, vérification des licences |
-| [Partie 1 — Introduction et concepts Purview](docs/02-introduction-concepts.md) | Les 4 piliers de Purview, ordre de configuration obligatoire, activation de l'audit |
-| [Partie 2 — Les Étiquettes de sensibilité (Labels)](docs/03-etiquettes-sensibilite.md) | Groupes mail-enabled, SIT personnalisés, création et publication des 7 étiquettes, break-glass RMS |
-| [Partie 3 — Auto-labelling](docs/04-auto-labelling.md) | Étiquetage automatique des données sensibles (AVS, IBAN, données médicales) |
-| [Partie 4 — Politiques DLP](docs/05-politiques-dlp.md) | Politique DLP principale, transmission externe, protection Copilot |
-| [Partie 5 — Audit et DSPM for AI](docs/06-audit-dspm-ai.md) | Surveillance Copilot, Activity Explorer, recherche dans les journaux d'audit |
-| [Partie 6 — Scénarios de test et validation](docs/07-tests-validation.md) | Tests auto-labelling, DLP, protection Copilot, checklist finale |
-| [Partie 7 — Gestion opérationnelle et démos](docs/08-gestion-operationnelle.md) | Suspendre les protections pour une démo, vérifications hebdomadaires, dette de labellisation |
-| [Partie 8 — Fonctionnalités avancées Purview](docs/09-fonctionnalites-avancees.md) | Rétention, Insider Risk Management, eDiscovery Premium, Communication Compliance |
-| [Partie 9 — Endpoint DLP, Edge for Business et AI Hub](docs/10-endpoint-dlp-aihub.md) | Endpoint DLP, contrôles IA dans Edge, extension navigateur via Intune, AI Hub |
-| [Partie 10 — Gouvernance Copilot Studio et Power Platform](docs/11-power-platform.md) | Politique DLP connecteur, inventaire des agents, Managed Environments |
-| [Partie 11 — Gouvernance des accès SharePoint](docs/12-sharepoint.md) | Modèle de permissions, audit du sur-partage, moindre privilège, OneDrive |
-| [Annexes](docs/13-annexes.md) | Glossaire, articles nLPD, SIT personnalisés, RACI, levée d'anonymat IRM, comptes et rôles, registre des activités de traitement |
+| [Vue d'ensemble et prérequis](docs/prep-00-vue-ensemble.html) | Ce que vous allez construire, comptes nécessaires, liste des 15 utilisateurs |
+| [Création du tenant Microsoft 365](docs/prep-01-creation-tenant.html) | Créer le tenant et ajouter les licences Purview Suite |
+| [Création des groupes Entra ID](docs/prep-02-groupes-entra-id.html) | 4 groupes de sécurité standards + 3 groupes mail-enabled (PowerShell Exchange Online) |
+| [Création des comptes utilisateurs](docs/prep-03-comptes-utilisateurs.html) | 15 comptes, affectation aux groupes, MFA administrateur |
+| [Création des sites SharePoint](docs/prep-04-sites-sharepoint.html) | Intranet, Communication, Direction, RH, Finances et Transmission externe (partage externe sécurisé) |
+| [Activer l'audit Microsoft 365](docs/prep-05-audit.html) | Première étape requise par le guide Purview |
+| [Documents de démonstration](docs/prep-06-documents-demo.html) | Répartition des fichiers de démo (AVS, IBAN) dans les sites SharePoint |
+| [Annexes](docs/prep-annexes.html) | Checklist de validation, glossaire, portails utiles |
+
+---
+
+## 🗂️ Sommaire complet — Configuration Microsoft Purview 2026
+
+| Chapitre | Description |
+|---|---|
+| [Préface](docs/00-preface.html) | Contexte du projet, chronologie de déploiement, positionnement de Purview, limites du dispositif |
+| [Partie 0 — Avant de commencer](docs/01-avant-de-commencer.html) | Accès au portail, PowerShell Exchange Online, rôles administrateur, vérification des licences |
+| [Partie 1 — Introduction et concepts Purview](docs/02-introduction-concepts.html) | Les 4 piliers de Purview, ordre de configuration obligatoire, activation de l'audit |
+| [Partie 2 — Les Étiquettes de sensibilité (Labels)](docs/03-etiquettes-sensibilite.html) | Groupes mail-enabled, SIT personnalisés, création et publication des 7 étiquettes, break-glass RMS |
+| [Partie 3 — Auto-labelling](docs/04-auto-labelling.html) | Étiquetage automatique des données sensibles (AVS, IBAN, données médicales) |
+| [Partie 4 — Politiques DLP](docs/05-politiques-dlp.html) | Politique DLP principale, transmission externe, protection Copilot |
+| [Partie 5 — Audit et DSPM for AI](docs/06-audit-dspm-ai.html) | Surveillance Copilot, Activity Explorer, recherche dans les journaux d'audit |
+| [Partie 6 — Scénarios de test et validation](docs/07-tests-validation.html) | Tests auto-labelling, DLP, protection Copilot, checklist finale |
+| [Partie 7 — Gestion opérationnelle et démos](docs/08-gestion-operationnelle.html) | Suspendre les protections pour une démo, vérifications hebdomadaires, dette de labellisation |
+| [Partie 8 — Fonctionnalités avancées Purview](docs/09-fonctionnalites-avancees.html) | Rétention, Insider Risk Management, eDiscovery Premium, Communication Compliance |
+| [Partie 9 — Endpoint DLP, Edge for Business et AI Hub](docs/10-endpoint-dlp-aihub.html) | Endpoint DLP, contrôles IA dans Edge, extension navigateur via Intune, AI Hub |
+| [Partie 10 — Gouvernance Copilot Studio et Power Platform](docs/11-power-platform.html) | Politique DLP connecteur, inventaire des agents, Managed Environments |
+| [Partie 11 — Gouvernance des accès SharePoint](docs/12-sharepoint.html) | Modèle de permissions, audit du sur-partage, moindre privilège, OneDrive |
+| [Annexes](docs/13-annexes.html) | Glossaire, articles nLPD, SIT personnalisés, RACI, levée d'anonymat IRM, comptes et rôles, registre des activités de traitement |
 
 ---
 
@@ -120,4 +149,4 @@ Ce guide est fourni à titre informatif et pédagogique uniquement. Il ne consti
 
 ---
 
-ℹ️ *Ce document est mis à disposition gratuitement, fruit de plusieurs semaines de tests terrain sur un tenant Microsoft 365 / Purview réel. Aucune contrepartie financière n'est requise. Voir l'[Annexe J](docs/13-annexes.md) pour plus de détails.*
+ℹ️ *Ce document est mis à disposition gratuitement, fruit de plusieurs semaines de tests terrain sur un tenant Microsoft 365 / Purview réel. Aucune contrepartie financière n'est requise. Voir l'[Annexe J](docs/13-annexes.html) pour plus de détails.*
