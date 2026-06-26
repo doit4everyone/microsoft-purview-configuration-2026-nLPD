@@ -454,4 +454,4 @@ Le Gestionnaire de conformité se met à jour automatiquement au fur et à mesur
 
 ---
 
-[← Partie 7 — Gestion opérationnelle et démos](08-gestion-operationnelle.md) | [Partie 9 — Endpoint DLP, Edge for Business et AI Hub →](10-endpoint-dlp-aihub.md)
+[← Partie 7 — Gestion opérationnelle et démos](08-gestion-operationnelle.html) | [Partie 9 — Endpoint DLP, Edge for Business et AI Hub →](10-endpoint-dlp-aihub.html)

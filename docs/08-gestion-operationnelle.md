@@ -113,4 +113,4 @@ Ces trois indicateurs constituent le tableau de bord minimal pour piloter la det
 
 ---
 
-[← Partie 6 — Scénarios de test et validation](07-tests-validation.md) | [Partie 8 — Fonctionnalités avancées Purview →](09-fonctionnalites-avancees.md)
+[← Partie 6 — Scénarios de test et validation](07-tests-validation.html) | [Partie 8 — Fonctionnalités avancées Purview →](09-fonctionnalites-avancees.html)

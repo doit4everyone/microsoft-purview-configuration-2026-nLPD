@@ -30,6 +30,8 @@ lang: fr
 
 > ⚠️ **ATTENTION : **Avant de commencer les tests : vérifiez que les politiques DLP et auto-labelling sont bien activées (pas en simulation) et que l'audit est actif. Attendez 24-48h après activation avant de tester.
 
+> 📦 **Fichiers de démo requis :** les tests ci-dessous utilisent des fichiers fictifs (contrat de travail, fiches de salaire, registre du personnel, grand livre). Téléchargez `FICHIERS_DEMO_AXONIX.zip` depuis la [release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0) et uploadez-les dans les sites SharePoint correspondants (RH, Finances) avant de commencer. Le détail de la répartition par site est décrit dans la [page de préparation du tenant](prep-06-documents-demo.html).
+
 ## 6.1 Test 1 Vérifier l'auto-labelling
 
 1. **Uploader un document** Ouvrez le site SharePoint RH dans votre navigateur → Documents → faites glisser le fichier 11_Contrat_Travail_Beraz_Valerie_RH.docx dans la bibliothèque.
@@ -85,4 +87,4 @@ lang: fr
 
 ---
 
-[← Partie 5 — Audit et DSPM for AI (surveillance Copilot)](06-audit-dspm-ai.md) | [Partie 7 — Gestion opérationnelle et démos →](08-gestion-operationnelle.md)
+[← Partie 5 — Audit et DSPM for AI (surveillance Copilot)](06-audit-dspm-ai.html) | [Partie 7 — Gestion opérationnelle et démos →](08-gestion-operationnelle.html)

@@ -228,4 +228,4 @@ Checklist de validation section 9
 
 ---
 
-[← Partie 8 — Fonctionnalités avancées Purview](09-fonctionnalites-avancees.md) | [Partie 10 — Gouvernance Copilot Studio et Power Platform →](11-power-platform.md)
+[← Partie 8 — Fonctionnalités avancées Purview](09-fonctionnalites-avancees.html) | [Partie 10 — Gouvernance Copilot Studio et Power Platform →](11-power-platform.html)

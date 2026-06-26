@@ -72,4 +72,4 @@ Ce guide est fourni à titre informatif et pédagogique uniquement. Il ne consti
 
 ---
 
-[← Retour à l'index](../) | [Partie 0 — Avant de commencer →](01-avant-de-commencer.md)
+[← Préparation — Annexes](prep-annexes.html) | [Partie 0 — Avant de commencer →](01-avant-de-commencer.html)

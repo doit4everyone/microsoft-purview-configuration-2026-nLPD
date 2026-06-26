@@ -30,6 +30,8 @@ lang: fr
 
 Lisez cette section entièrement avant de toucher quoi que ce soit dans Purview.
 
+> 💡 **Tenant vierge ou de test :** si vous n'avez pas encore de tenant Microsoft 365 sur lequel travailler, le guide [Préparation du tenant — POC Purview](prep-00-vue-ensemble.html) explique comment créer et préparer un environnement de preuve de concept avant de suivre cette procédure (également disponible en .docx/.pdf sur la [release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0)).
+
 ## 0.1 Comment accéder au portail Purview
 
 1. **Ouvrir le navigateur** Utilisez Microsoft Edge ou Google Chrome. Évitez Firefox, certaines pages Purview ne s'affichent pas correctement.
@@ -183,4 +185,4 @@ $setting.Values | Format-List
 
 ---
 
-[← Préface](00-preface.md) | [Partie 1 — Introduction et concepts Purview →](02-introduction-concepts.md)
+[← Préface](00-preface.html) | [Partie 1 — Introduction et concepts Purview →](02-introduction-concepts.html)

@@ -388,4 +388,4 @@ via la plateforme Kofi :
 
 ---
 
-[← Partie 11 — Gouvernance des accès SharePoint](12-sharepoint.md) | [Retour à l'index →](../)
+[← Partie 11 — Gouvernance des accès SharePoint](12-sharepoint.html) | [Retour à l'index →](../)

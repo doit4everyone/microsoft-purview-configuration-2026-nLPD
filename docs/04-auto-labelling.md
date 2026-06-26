@@ -128,4 +128,4 @@ Une fois la simulation terminée (délai variable selon le tenant), voici commen
 
 ---
 
-[← Partie 2 — Les Étiquettes de sensibilité (Labels)](03-etiquettes-sensibilite.md) | [Partie 4 — Politiques DLP (Data Loss Prevention) →](05-politiques-dlp.md)
+[← Partie 2 — Les Étiquettes de sensibilité (Labels)](03-etiquettes-sensibilite.html) | [Partie 4 — Politiques DLP (Data Loss Prevention) →](05-politiques-dlp.html)

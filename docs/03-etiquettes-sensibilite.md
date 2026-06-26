@@ -399,4 +399,4 @@ Microsoft propose des classifieurs entraînables capables de reconnaître des ty
 
 ---
 
-[← Partie 1 — Introduction et concepts Purview](02-introduction-concepts.md) | [Partie 3 — Auto-labelling (étiquetage automatique) →](04-auto-labelling.md)
+[← Partie 1 — Introduction et concepts Purview](02-introduction-concepts.html) | [Partie 3 — Auto-labelling (étiquetage automatique) →](04-auto-labelling.html)

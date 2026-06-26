@@ -223,4 +223,4 @@ Le bandeau affiché dans Copilot standalone indique une protection de session En
 
 ---
 
-[← Partie 3 — Auto-labelling (étiquetage automatique)](04-auto-labelling.md) | [Partie 5 — Audit et DSPM for AI (surveillance Copilot) →](06-audit-dspm-ai.md)
+[← Partie 3 — Auto-labelling (étiquetage automatique)](04-auto-labelling.html) | [Partie 5 — Audit et DSPM for AI (surveillance Copilot) →](06-audit-dspm-ai.html)

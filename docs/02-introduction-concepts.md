@@ -141,4 +141,4 @@ La durée de conservation des journaux fait l’objet d’une réévaluation pé
 
 ---
 
-[← Partie 0 — Avant de commencer](01-avant-de-commencer.md) | [Partie 2 — Les Étiquettes de sensibilité (Labels) →](03-etiquettes-sensibilite.md)
+[← Partie 0 — Avant de commencer](01-avant-de-commencer.html) | [Partie 2 — Les Étiquettes de sensibilité (Labels) →](03-etiquettes-sensibilite.html)

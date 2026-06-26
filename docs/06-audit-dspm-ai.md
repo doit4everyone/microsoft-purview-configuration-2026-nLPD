@@ -146,4 +146,4 @@ Pour rechercher qui a accédé à un fichier précis (ex : le contrat de Valéri
 
 ---
 
-[← Partie 4 — Politiques DLP (Data Loss Prevention)](05-politiques-dlp.md) | [Partie 6 — Scénarios de test et validation →](07-tests-validation.md)
+[← Partie 4 — Politiques DLP (Data Loss Prevention)](05-politiques-dlp.html) | [Partie 6 — Scénarios de test et validation →](07-tests-validation.html)

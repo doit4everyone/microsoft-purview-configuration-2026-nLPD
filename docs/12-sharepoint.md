@@ -179,4 +179,4 @@ Checklist de validation section 11
 
 ---
 
-[← Partie 10 — Gouvernance Copilot Studio et Power Platform](11-power-platform.md) | [Annexes →](13-annexes.md)
+[← Partie 10 — Gouvernance Copilot Studio et Power Platform](11-power-platform.html) | [Annexes →](13-annexes.html)
