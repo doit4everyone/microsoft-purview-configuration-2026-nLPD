@@ -5,17 +5,17 @@
 
 ## 📥 Téléchargement
 
-👉 [Télécharger la dernière version (v1.0)](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/latest)
+👉 [Télécharger la version Word/PDF (v1.0)](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0)
 
-Ce dépôt contient une **procédure technique complète**, pas à pas, pour configurer **Microsoft Purview** dans un environnement **Microsoft 365 Business Premium**, avec un focus particulier sur :
+Ce dépôt contient une **procédure technique complète**, pas à pas, pour configurer **Microsoft Purview** dans un environnement **Microsoft 365 Business Premium**, avec un focus particulier sur :
 
 - la protection des données,
 - la gouvernance de Microsoft 365 Copilot,
 - la conformité à la **nLPD suisse**.
 
 > **Message clé**  
-> La sécurité de Copilot et des données sensibles n’est **pas un problème de licence**.  
-> C’est un **problème d’architecture et de configuration**.
+> La sécurité de Copilot et des données sensibles n'est **pas un problème de licence**.  
+> C'est un **problème d'architecture et de configuration**.
 
 ---
 
@@ -38,44 +38,40 @@ Ce dépôt contient une **procédure technique complète**, pas à pas, pour con
 
 ## 🧩 Contenu du dépôt
 
-Ce dépôt fournit un **environnement de test complet et reproductible**, comprenant :
+Ce dépôt fournit un **environnement de test complet et reproductible** publié sous forme de site GitHub Pages.
 
-### 1️⃣ Procédure principale de configuration
-- **`Configuration Microsoft Purview (2026).docx`**  
-  Le guide technique principal, décrivant la configuration de :
-  - étiquettes de sensibilité,
-  - auto‑labelling,
-  - politiques DLP,
-  - protection des usages Copilot,
-  - audit et DSPM for AI,
-  - gouvernance des accès SharePoint.
+### 1️⃣ Documentation en ligne (GitHub Pages)
 
----
+Le guide est consultable directement en ligne à l'adresse :  
+🌐 https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
 
-### 2️⃣ Préparation du tenant de test (from scratch)
-- **`Préparation_Tenant_POC_Purview.docx`**  
-  Un document dédié expliquant **comment déployer un tenant Microsoft 365 de test depuis zéro**, spécifiquement conçu pour ce POC Purview :
-  - hypothèses de création du tenant,
-  - licences nécessaires,
-  - configuration de base avant l’application des politiques Purview.
+Il comprend **23 pages** organisées en deux parties :
 
-Ce document garantit un **environnement de test propre et reproductible**.
+**Préparation du tenant** (8 chapitres) : création du tenant Microsoft 365, groupes Entra ID, comptes utilisateurs, sites SharePoint, activation de l'audit et déploiement des fichiers de démonstration.
+
+**Configuration Purview** (14 chapitres) : étiquettes de sensibilité, SIT personnalisés suisses (AVS, IBAN, données médicales), auto-labelling, politiques DLP, DSPM for AI, Endpoint DLP, Insider Risk Management, eDiscovery Premium, Communication Compliance, gouvernance SharePoint et Power Platform.
+
+Le site utilise Jekyll avec le thème `jekyll-theme-minimal`.
 
 ---
 
-### 3️⃣ Données de démonstration pour les tests
-- **`FICHIERS DEMO AXONIX.zip`**  
-  Une archive ZIP contenant des **fichiers de démonstration d’une société fictive (Axonix SA)**, utilisés tout au long de la procédure :
+### 2️⃣ Données de démonstration pour les tests
+- **`FICHIERS_DEMO_AXONIX.zip`**  
+  Une archive ZIP contenant des **fichiers de démonstration d'une société fictive (Axonix SA)**, utilisés tout au long de la procédure :
   - documents RH,
   - fichiers financiers,
   - contenus internes et confidentiels.
 
-Ces fichiers sont référencés dans :
-- `Préparation_Tenant_POC_Purview.docx`,
-- et la procédure principale,
+Ces fichiers permettent des **tests complets de bout en bout**  
+(auto-labelling, DLP, Copilot, audit).
 
-afin de permettre des **tests complets de bout en bout**  
-(auto‑labelling, DLP, Copilot, audit).
+---
+
+### 3️⃣ Versions Word et PDF (release v1.0)
+
+Les versions Word (.docx) et PDF du guide principal et du guide de préparation du tenant restent disponibles en téléchargement sur la [page de release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0).
+
+> ⚠️ La version en ligne (GitHub Pages) est la version de référence, maintenue à jour. Les fichiers Word/PDF de la release v1.0 ne sont plus mis à jour.
 
 ---
 
@@ -83,9 +79,9 @@ afin de permettre des **tests complets de bout en bout**
 
 Microsoft 365 Copilot :
 - respecte strictement les permissions utilisateur,
-- mais **amplifie toute erreur de sur‑partage ou de gouvernance**.
+- mais **amplifie toute erreur de sur-partage ou de gouvernance**.
 
-Ce dépôt montre comment :
+Ce dépôt montre comment :
 - classifier correctement les données,
 - encadrer les usages à risque,
 - garantir la traçabilité,
@@ -108,12 +104,12 @@ Ce dépôt montre comment :
 
 ## 🇨🇭 Conformité nLPD
 
-La configuration proposée répond notamment aux exigences suivantes :
-- art. 6 nLPD — finalité et proportionnalité,
-- art. 8 nLPD — mesures techniques et organisationnelles,
-- art. 24 nLPD — traçabilité et notification des violations.
+La configuration proposée répond notamment aux exigences suivantes :
+- art. 6 nLPD : finalité et proportionnalité
+- art. 8 nLPD : mesures techniques et organisationnelles
+- art. 24 nLPD : traçabilité et notification des violations
 
-L’auditabilité et la preuve de conformité sont des **objectifs centraux**.
+L'auditabilité et la preuve de conformité sont des **objectifs centraux**.
 
 ---
 
@@ -144,17 +140,15 @@ Il est le fruit de plusieurs semaines de travail, incluant :
 
 À titre strictement optionnel, les personnes ou organisations souhaitant soutenir
 la maintenance de cette documentation et ses évolutions futures peuvent le faire
-via la plateforme Ko‑fi :
+via la plateforme Ko-fi :
 
 👉 **[Soutenir le projet sur Ko-fi](https://ko-fi.com/doit4everyone)**
 
 Aucune contrepartie, aucun service associé et aucune différence de traitement
-n’est liée à ce soutien.
+n'est liée à ce soutien.
 
 ## 🧭 Accès rapide
 
-🌐 Page de présentation du guide:    https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
+🌐 Page de présentation du guide :    https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
 
-🏠  Retrouvez tous les guides sur:   https://doit4everyone.github.io/
-
-
+🏠  Retrouvez tous les guides sur :   https://doit4everyone.github.io/

@@ -5,7 +5,7 @@
 
 ## 📥 Download
 
-👉 [Download the latest version (v1.0)](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/latest)
+👉 [Download the Word/PDF version (v1.0)](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0)
 
 This repository contains a **step-by-step technical procedure** to configure **Microsoft Purview** for **Microsoft 365 Business Premium** environments, with a strong focus on:
 
@@ -37,43 +37,39 @@ This repository contains a **step-by-step technical procedure** to configure **M
 
 ## 🧩 What this repository contains
 
-This repository provides a **complete test and learning environment**, including:
+This repository provides a **complete test and learning environment**, published as a GitHub Pages site.
 
-### 1️⃣ Core configuration procedure
-- **`Configuration Microsoft Purview (2026).docx`**  
-  The main technical guide, explaining how to configure:
-  - sensitivity labels,
-  - auto-labeling,
-  - DLP policies,
-  - Copilot protection,
-  - audit and DSPM for AI,
-  - SharePoint access governance.
+### 1️⃣ Online documentation (GitHub Pages)
 
----
+The guide is available online at:  
+🌐 https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
 
-### 2️⃣ Test tenant preparation (from scratch)
-- **`Préparation_Tenant_POC_Purview.docx`**  
-  A dedicated document explaining **how to deploy a Microsoft 365 test tenant from scratch**, specifically prepared for this Purview POC:
-  - tenant creation assumptions,
-  - required licenses,
-  - base configuration before applying Purview policies.
+It includes **23 pages** organized in two parts:
 
-This document ensures you start from a **clean, reproducible test environment**.
+**Tenant preparation** (8 chapters): creating the Microsoft 365 tenant, Entra ID groups, user accounts, SharePoint sites, enabling audit and deploying demo files.
+
+**Purview configuration** (14 chapters): sensitivity labels, custom Swiss SITs (AVS, IBAN, medical data), auto-labelling, DLP policies, DSPM for AI, Endpoint DLP, Insider Risk Management, eDiscovery Premium, Communication Compliance, SharePoint and Power Platform governance.
+
+The site is built with Jekyll using the `jekyll-theme-minimal` theme.
 
 ---
 
-### 3️⃣ Demo data for realistic testing
+### 2️⃣ Demo data for realistic testing
 - **`FICHIERS_DEMO_AXONIX.zip`**  
-  A ZIP archive containing **demo files from a fictional company (AXONIX SA)**, used throughout the procedure:
+  A ZIP archive containing **demo files from a fictional company (Axonix SA)**, used throughout the procedure:
   - HR documents,
   - finance files,
   - internal and confidential content.
 
-These files are referenced in:
-- `Préparation_Tenant_POC_Purview.docx`,
-- and the main Purview configuration guide,
+These files allow **end-to-end testing** (auto-labelling, DLP, Copilot, audit).
 
-to allow **end‑to‑end testing** (auto‑labelling, DLP, Copilot, audit).
+---
+
+### 3️⃣ Word and PDF versions (v1.0 release)
+
+Word (.docx) and PDF versions of the main guide and the tenant preparation guide are available for download on the [v1.0 release page](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0).
+
+> ⚠️ The online version (GitHub Pages) is the reference version, kept up to date. The Word/PDF files from the v1.0 release are no longer updated.
 
 ---
 
@@ -86,7 +82,7 @@ Microsoft 365 Copilot:
 This repository explains how to:
 - classify data correctly,
 - restrict risky usage,
-- and maintain auditability — **before deploying Copilot widely**.
+- and maintain auditability, **before deploying Copilot widely**.
 
 ---
 
@@ -99,16 +95,16 @@ This repository explains how to:
 | Microsoft 365 Copilot | Optional (but supported) |
 
 💡 **Cost reference** (indicative):
-- Purview Suite: ~CHF 11 / user / month
+- Purview Suite: approx. CHF 11 / user / month
 
 ---
 
 ## 🇨🇭 Swiss compliance (nLPD)
 
 The proposed configuration aligns with:
-- nLPD Art. 6 (purpose limitation & proportionality)
-- nLPD Art. 8 (technical and organizational measures)
-- nLPD Art. 24 (incident traceability and notification)
+- nLPD Art. 6: purpose limitation and proportionality
+- nLPD Art. 8: technical and organizational measures
+- nLPD Art. 24: incident traceability and notification
 
 Auditability and evidence collection are **first-class design goals**.
 
@@ -138,7 +134,7 @@ It is the result of several weeks of work, including:
 - consideration of Swiss nLPD (Data Protection Act) requirements.
 
 On a strictly optional basis, individuals or organizations who wish to support
-the maintenance of this documentation and its future updates may do so via Ko‑fi:
+the maintenance of this documentation and its future updates may do so via Ko-fi:
 
 👉 https://ko-fi.com/doit4everyone
 
@@ -148,9 +144,8 @@ or any difference in access to the content.
 
 ## 🧭 Quick access
 
-🌐 Guide landing page  
+🌐 Guide landing page:  
 https://doit4everyone.github.io/microsoft-purview-configuration-2026-nLPD/
 
-🏠 Central documentation hub  
+🏠 Central documentation hub:  
 https://doit4everyone.github.io/
-``
