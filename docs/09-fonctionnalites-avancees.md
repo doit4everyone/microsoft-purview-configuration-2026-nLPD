@@ -54,9 +54,9 @@ Durées utilisées dans ce POC et références
 
 > ⚠️ **DURÉES DE DÉMONSTRATION, PAS UNE MATRICE LÉGALE : **les durées ci-dessus permettent de tester le mécanisme dans le POC. Elles ne constituent pas un calendrier de conservation applicable tel quel en production. Trois limites à connaître :
 >
-> 1. **Le point de départ.** Les politiques de ce guide comptent la durée à partir de la dernière modification du fichier. Les obligations légales partent d’autres événements : fin de l’exercice pour la comptabilité, fin des rapports de travail pour le certificat de travail. Pour un point de départ lié à un événement (départ d’un collaborateur, par exemple), Microsoft Purview propose la rétention basée sur un événement, qui s’appuie sur des **étiquettes de rétention** et non sur des politiques de rétention (documentation Microsoft « Start retention when an event occurs »).
-> 2. **L’emplacement ne détermine pas la nature du document.** Un contrat ou une pièce comptable peut se trouver dans une boîte aux lettres ou un OneDrive soumis à la politique de 3 ans. Selon les principes de rétention de Microsoft, la conservation l’emporte sur la suppression et la période de conservation la plus longue s’applique lorsque plusieurs paramètres se chevauchent : un document doit donc être couvert par le bon paramètre de conservation, et non seulement par celui de son emplacement.
-> 3. **En production**, établissez une matrice documentaire (contrats, fiches de salaire, justificatifs d’absence, certificats médicaux, pièces comptables, correspondances) indiquant pour chaque catégorie sa justification, son événement déclencheur et sa règle de suppression, validée avec la fiduciaire ou un juriste.
+> 1. **Le point de départ.** Les politiques de ce guide comptent la durée depuis la dernière modification du fichier, alors que la loi part d’autres événements (fin de l’exercice, fin des rapports de travail). Pour démarrer la durée sur un événement, Purview propose la rétention basée sur un événement, via des **étiquettes de rétention**.
+> 2. **L’emplacement ne dit pas la nature du document.** Un contrat peut se trouver dans un OneDrive soumis à 3 ans. En cas de chevauchement, Purview applique la conservation la plus longue : chaque catégorie de document doit donc être couverte par le bon paramètre.
+> 3. **En production**, établissez avec votre fiduciaire une matrice par catégorie de documents : durée, événement déclencheur, règle de suppression.
 
 Procédure de configuration
 
@@ -102,9 +102,9 @@ L’Insider Risk Management (IRM) détecte les comportements à risque des utili
 
 Cadre légal à examiner avant activation
 
-En droit suisse, la surveillance des employés est encadrée notamment par l’art. 26 OLT 3, qui interdit les systèmes de surveillance ou de contrôle destinés à surveiller le comportement des travailleurs à leur poste de travail, et par l’art. 6 al. 2 nLPD (proportionnalité). Selon le PFPDT, l’interdiction vise les systèmes dont le but unique ou principal est de surveiller le comportement des employés. Un système poursuivant un autre but, comme la sécurité ou la prévention des fuites de données, n’est pas interdit par principe, mais il doit être proportionné à ce but et les employés doivent en être informés au préalable. Le commentaire du SECO relatif à l’art. 26 OLT 3 retient trois conditions cumulatives : (a) un intérêt nettement prépondérant autre que la surveillance du comportement des travailleurs, (b) le respect du principe de proportionnalité, (c) la participation des travailleurs à la planification, à l’installation et à l’utilisation du système, ainsi qu’à la détermination de la durée de conservation des données.
+La surveillance des collaborateurs relève de l’art. 26 OLT 3, qui interdit les systèmes destinés à surveiller leur comportement au poste de travail. Un système poursuivant un autre but, comme la prévention des fuites de données, reste possible. Selon le commentaire du SECO, trois conditions cumulatives doivent alors être réunies : un intérêt nettement prépondérant autre que la surveillance du comportement, la proportionnalité (art. 6 al. 2 nLPD), et la participation des travailleurs à la planification, à l’installation et à l’utilisation du système ainsi qu’à la fixation de la durée de conservation des données. Informer les collaborateurs au préalable (art. 19 nLPD) est nécessaire, mais ne suffit pas.
 
-L’information préalable (art. 19 nLPD) est donc nécessaire mais ne suffit pas à rendre un dispositif licite. Avant activation, documentez au minimum : (1) le but poursuivi (prévention des fuites de données, pas l’évaluation des personnes), (2) le périmètre des personnes et des signaux couverts, (3) les personnes habilitées à examiner les alertes, (4) la durée de conservation des alertes et dossiers, (5) les modalités de contrôle humain, y compris l’anonymisation par défaut et le processus écrit de levée d’anonymat (voir Annexe G), (6) la manière dont les travailleurs ou leurs représentants ont été associés à ces choix. Faites valider ce cadre par un juriste avant tout déploiement en production.
+Avant activation, documentez le but, le périmètre (personnes et signaux), les personnes habilitées à examiner les alertes, la durée de conservation, le contrôle humain (anonymisation par défaut, levée encadrée selon l’Annexe G) et la manière dont les collaborateurs ont été associés. Ce cadre vaut aussi pour Communication Compliance (section 8.4). Faites-le valider par un juriste avant la mise en production.
 
 Stratégies IRM recommandées pour une PME suisse
 
@@ -213,9 +213,9 @@ nLPD art. 8 → **Suivant.**
 
 Lien nLPD : articles concernés
 
-Art. 6 al. 2 (proportionnalité). Populations limitées aux groupes exposés, pas à tous les utilisateurs. Art. 8 (sécurité des données), IRM comme mesure complémentaire à la DLP. Art. 19 (devoir d’informer). Information préalable des employés. Art. 24 (annonce des violations au PFPDT), les alertes IRM peuvent servir d’éléments de preuve en cas d’incident. Art. 26 OLT 3 (interdiction des systèmes destinés à surveiller le comportement), finalité de sécurité documentée, anonymisation activée par défaut, levée encadrée (voir Annexe G).
+Art. 6 al. 2 (proportionnalité) : périmètre limité aux groupes exposés. Art. 8 (sécurité des données) : complément à la DLP. Art. 19 : information préalable des collaborateurs. Art. 24 : les alertes peuvent servir lors de l’analyse d’un incident. Art. 26 OLT 3 : voir le cadre ci-dessus.
 
-📊 Note. Indicateur de couverture "faible" dans les 3 stratégies IRM : Purview affiche un indicateur de couverture faible ou moyen pour chaque stratégie car le périmètre est volontairement limité aux groupes GRP-Direction-Purview, GRP-RH-Purview et GRP-Finances-Purview. C'est le comportement attendu et conforme. La recommandation Microsoft d'étendre la couverture à tous les utilisateurs est une recommandation technique générique qui ne tient pas compte du cadre légal suisse. Étendre la surveillance à l'ensemble des utilisateurs du tenant sans justification serait difficilement compatible avec le principe de proportionnalité (art. 6 al. 2 nLPD) et augmenterait le risque de tomber sous l'interdiction de l'art. 26 OLT 3. Ne pas modifier le périmètre des stratégies
+📊 Note. Indicateur de couverture "faible" dans les 3 stratégies IRM : Purview affiche un indicateur de couverture faible ou moyen pour chaque stratégie car le périmètre est volontairement limité aux groupes GRP-Direction-Purview, GRP-RH-Purview et GRP-Finances-Purview. C'est le comportement attendu et conforme. La recommandation Microsoft d'étendre la couverture à tous les utilisateurs est une recommandation technique générique qui ne tient pas compte du cadre légal suisse. Étendre la surveillance à tout le tenant sans justification irait à l'encontre du cadre décrit plus haut. Ne modifiez pas le périmètre des stratégies.
 
 Licence
 
@@ -353,7 +353,7 @@ Licence : inclus dans Microsoft Purview Suite pour Business Premium
 
 Prérequis :
 
-**⚠️ Cadre légal à examiner avant activation : **les communications professionnelles ne sont pas en elles-mêmes des données sensibles au sens de l’art. 5 let. c nLPD, mais les contenus analysés peuvent en contenir (données sur la santé, opinions politiques ou syndicales, par exemple). Les collaborateurs doivent être informés de l’analyse **avant activation** (art. 19 nLPD, devoir d’informer), par exemple dans le règlement du personnel. Cette information ne rend toutefois pas le dispositif licite à elle seule : l’art. 26 OLT 3 interdit les systèmes destinés à surveiller le comportement des travailleurs, et le PFPDT exige que tout système de contrôle poursuive un autre but (sécurité, prévention des fuites ou du harcèlement) et soit proportionné à ce but. Selon le commentaire du SECO relatif à l’art. 26 OLT 3, l’analyse doit également tenir compte de la participation des travailleurs à la planification, à l’installation et à l’utilisation des systèmes concernés, ainsi qu’à la détermination de la durée de conservation des données. Définissez par écrit le but, le périmètre des utilisateurs et des canaux, les réviseurs habilités, la durée de conservation des alertes et les modalités de contrôle humain. Dans ce POC, les stratégies couvrent tous les utilisateurs à 100 % pour la démonstration : en production, limitez ce périmètre au strict nécessaire. Consultez un juriste avant déploiement en production.
+**⚠️ Avant activation : **le cadre décrit en section 8.2 (art. 26 OLT 3, information préalable, proportionnalité, participation des travailleurs) s’applique aussi à Communication Compliance. Les communications professionnelles ne sont pas en elles-mêmes des données sensibles (art. 5 let. c nLPD), mais les contenus analysés peuvent en contenir. Dans ce POC, les stratégies couvrent tous les utilisateurs pour la démonstration : en production, limitez ce périmètre au strict nécessaire.
 
 Rôle requis : **Communication Compliance Admin** ajouter admin@demo.ch via Purview → Paramètres → Rôles et étendues → Groupes de rôles → Communication Compliance.
 
@@ -391,7 +391,7 @@ Checklist Communication Compliance
 
 ✅ Stratégie CC-Contenu-Inapproprié-nLPD créée. classifieurs Sexual/Violence/Hate/Self-harm
 
-*⚠️ Note nLPD : l’information préalable des collaborateurs (art. 19 nLPD) est nécessaire mais ne suffit pas. Le dispositif doit poursuivre un but autre que la surveillance du comportement (art. 26 OLT 3) et rester proportionné à ce but (art. 6 al. 2 nLPD). Consultez un juriste avant déploiement en production.*
+*⚠️ Avant tout déploiement en production, appliquez le cadre de la section 8.2.*
 
 ## 8.5 Gestionnaire de conformité
 
