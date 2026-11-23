@@ -32,7 +32,7 @@ lang: fr
 
 Microsoft a unifié DSPM for AI (classique) et DSPM dans une interface unifiée appelée simplement **DSPM** (la mention « aperçu » a été retirée, la fonctionnalité est désormais en disponibilité générale). Les deux expériences classiques restent accessibles depuis la barre latérale gauche du portail mais n’évoluent plus fonctionnellement.
 
-> 🚨 **DÉPRÉCIATION ANNONCÉE :** DSPM pour l’IA (classique) et Gestion de la posture de sécurité des données (classique) **seront mis hors service le 30 septembre 2026**. Toutes les fonctionnalités et données sont désormais disponibles dans le nouveau DSPM unifié. Migrez vos workflows vers le DSPM unifié dès que possible.
+> 🚨 **DÉPRÉCIATION ANNONCÉE :** DSPM pour l’IA (classique) et Gestion de la posture de sécurité des données (classique) **seront mis hors service entre mi-mars et fin mars 2027** (calendrier du message MC1481315, mis à jour par Microsoft le 30 octobre 2026, qui remplace la date initiale du 30 septembre 2026). Toutes les fonctionnalités et données sont désormais disponibles dans le nouveau DSPM unifié. Migrez vos workflows vers le DSPM unifié dès que possible.
 
 Ce guide documente exclusivement la nouvelle interface DSPM unifiée.
 

@@ -50,7 +50,7 @@ SharePoint fonctionne avec trois niveaux qui héritent l’un de l’autre. Le n
 
 Procédure : Rapport de partage dans le Centre d’administration SharePoint
 
-1. Accédez directement à https://admin.sharepoint.com. Vous arrivez dans le Centre d’administration SharePoint sans passer par admin.microsoft.com. Autre chemin : admin.microsoft.com → faites défiler le menu gauche jusqu’à la section Centres d’administration → SharePoint.
+1. Accédez directement à https://demo-admin.sharepoint.com (remplacez demo par le préfixe de votre tenant, l’adresse suit le format https://<préfixe>-admin.sharepoint.com). Vous arrivez dans le Centre d’administration SharePoint sans passer par admin.microsoft.com. Autre chemin : admin.microsoft.com → faites défiler le menu gauche jusqu’à la section Centres d’administration → SharePoint.
 
 2. Menu de gauche → Sites → Sites actifs. La liste affiche tous les sites SharePoint du tenant avec les colonnes Niveau de confidentialité et Partage externe. La colonne Partage externe indique l’état de chaque site : Désactivé ou Activé.
 
@@ -58,9 +58,9 @@ Procédure : Rapport de partage dans le Centre d’administration SharePoint
 
 4. Pour chaque site Activé : cliquez sur son nom → onglet Paramètres → vérifiez le champ Partage de fichiers externes. Si la valeur est Invités nouveaux et existants ou Tout le monde : le site est sur-partagé. Notez-le pour la procédure de correction (section 11.3). Note : l’héritage de ce niveau vient de la configuration du tenant. Microsoft configure par défaut Invités nouveaux et existants au niveau tenant, et tous les nouveaux sites en héritent automatiquement.
 
-Procédure : Rapport des partages dans Purview (Content Explorer)
+Procédure : Localiser les fichiers sensibles dans Purview (Content Explorer)
 
-Purview Content Explorer vous permet de voir quels fichiers étiquetés sont accessibles à qui. C’est complémentaire au Centre d’administration SharePoint, il croise les labels avec les permissions.
+Purview Content Explorer dresse l’inventaire des éléments classifiés (fichiers portant une étiquette de sensibilité ou de rétention, ou contenant un type d’information sensible) avec leur emplacement. Il n’affiche pas les utilisateurs et groupes autorisés sur chaque fichier. La démarche consiste donc à croiser deux sources : Content Explorer indique **où** se trouvent les fichiers sensibles, le Centre d’administration SharePoint (rapport ci-dessus, ou rapports Data Access Governance si SharePoint Advanced Management est disponible) indique **qui** peut accéder aux sites concernés.
 
 1. Purview → Protection des données → Explorateurs → Explorateur de contenu.
 
@@ -72,21 +72,23 @@ Purview Content Explorer vous permet de voir quels fichiers étiquetés sont acc
 
 Procédure ; Restreindre le partage externe d’un site
 
-1. https://admin.sharepoint.com → Sites → Sites actifs → cliquez sur le nom du site à corriger → onglet Paramètres.
+1. https://demo-admin.sharepoint.com → Sites → Sites actifs → cliquez sur le nom du site à corriger → onglet Paramètres.
 
 2. Champ Partage de fichiers externes : changez Invités nouveaux et existants en Uniquement les personnes de votre organisation.
 
-3. Champ Restreindre le contenu Microsoft 365 Copilot : sélectionnez Activé pour les sites contenant des données sensibles (RH, Finances). Copilot ne pourra plus accéder aux données de ce site sans contrôle explicite.
+3. Champ Restreindre le contenu Microsoft 365 Copilot (Restricted Content Discovery) : sélectionnez Activé pour les sites contenant des données sensibles (RH, Finances). Cette option limite la découverte des contenus du site dans les recherches à l’échelle de l’organisation et dans les expériences Microsoft Copilot, et retire certains points d’entrée IA du site. Elle ne modifie pas les autorisations SharePoint : les utilisateurs qui disposent déjà d’un accès peuvent toujours ouvrir directement les contenus, et Copilot peut toujours résumer un document déjà ouvert. Pour empêcher réellement l’accès, corrigez les permissions du site (procédure ci-dessous).
+
+> ℹ️ **PRÉREQUIS LICENCE : **selon Microsoft, Restricted Content Discovery suppose que l’organisation dispose d’une licence Microsoft Copilot et de SharePoint Advanced Management. Business Premium avec Purview Suite ne suffit pas à lui seul. Sans licence Copilot dans le tenant, ignorez ce champ.
 
 4. Cliquez sur Enregistrer. Le partage externe est immédiatement restreint.
 
 ℹ️ **Étiquette de confidentialité sur les sites : **seules les étiquettes dont la portée inclut Groupes et sites peuvent être appliquées à un site SharePoint. Dans ce POC, uniquement 3a - Direction - Site et 6 - Transmission-Externe ont cette portée. Les étiquettes 4 - RH-Confidentiel et 5 - Finances-Confidentiel s’appliquent aux fichiers, pas aux sites : le menu déroulant Étiquette de confidentialité affichera None pour ces sites, ce qui est correct.
 
-ℹ️ **Héritage du niveau de partage tenant : **Microsoft configure par défaut le tenant sur Invités nouveaux et existants. Tous les nouveaux sites en héritent automatiquement. Pour changer le niveau par défaut : admin.sharepoint.com → Stratégies → Partage → curseur SharePoint → Uniquement les personnes de votre organisation → Enregistrer. Les sites déjà créés conservent leur niveau individuel.
+ℹ️ **Héritage du niveau de partage tenant : **Microsoft configure par défaut le tenant sur Invités nouveaux et existants. Tous les nouveaux sites en héritent automatiquement. Pour changer le niveau par défaut : demo-admin.sharepoint.com → Stratégies → Partage → curseur SharePoint → Uniquement les personnes de votre organisation → Enregistrer. Les sites déjà créés conservent leur niveau individuel.
 
 **Configuration pour le tenant Axonix SA :**
 
-RH : Partage externe = Uniquement les personnes de votre organisation, Copilot = Activé. | Intranet : à corriger (Activé → Uniquement les personnes). | Site de communication : à corriger. | Transmission externe : Activé par design (site de transit). | Direction, Finances, Applications : Désactivé.
+RH : Partage externe = Uniquement les personnes de votre organisation, Restreindre le contenu Copilot = Activé (si licence Copilot). | Intranet : à corriger (Activé → Uniquement les personnes). | Site de communication : à corriger. | Transmission externe : Activé par design (site de transit). | Direction, Finances, Applications : Désactivé.
 
 Procédure : Remplacer les permissions héritées par des groupes spécifiques
 
@@ -106,7 +108,7 @@ Si un site SharePoint est actuellement accessible à Tout le monde de l’organi
 
 Si votre organisation n’a aucun besoin de partage avec des personnes extérieures, vous pouvez bloquer le partage externe globalement, ce qui est plus simple et plus sûr que de le gérer site par site.
 
-1. admin.sharepoint.com → Stratégies → Partage.
+1. demo-admin.sharepoint.com → Stratégies → Partage.
 
 2. Section Partage externe → curseur SharePoint → déplacez le curseur jusqu’à Uniquement les personnes de votre organisation. Faites de même pour le curseur OneDrive. Cliquez sur Enregistrer.
 
@@ -114,16 +116,17 @@ Si votre organisation n’a aucun besoin de partage avec des personnes extérieu
 
 ## 11.5 Lien Copilot : ce que la gouvernance des accès change concrètement
 
-Copilot M365 respecte strictement les permissions SharePoint. Si un utilisateur n’a pas accès à un fichier, Copilot ne peut pas le lui montrer quelles que soient les questions posées. En conséquence, restreindre les permissions SharePoint est la mesure la plus efficace pour contrôler ce que Copilot peut exploiter, plus encore que les labels ou les politiques DLP.
+Copilot M365 respecte strictement les permissions SharePoint. Si un utilisateur n’a pas accès à un fichier, Copilot ne peut pas le lui montrer quelles que soient les questions posées. Les étiquettes de sensibilité sans chiffrement ne remplacent pas ces permissions. En revanche, lorsqu’une étiquette applique un chiffrement Azure RMS, les droits définis dans l’étiquette protègent aussi le document : selon Microsoft, Copilot ne restitue le texte d’un document chiffré que si l’utilisateur dispose du droit d’usage EXTRACT (Copier). Les deux couches sont complémentaires : la gouvernance des permissions reste indispensable pour les fichiers non étiquetés ou non chiffrés et pour limiter le sur-partage général.
 
 | **Sans gouvernance des accès** | **Avec gouvernance des accès** |
 | --- | --- |
 | Copilot peut agréger tous les fichiers RH auxquels l’employé a accès, même ceux qu’il n’aurait jamais ouverts manuellement | Copilot ne voit que les fichiers RH auxquels l’employé est explicitement autorisé |
-| Label RH-Confidentiel appliqué mais site ouvert à tous, Copilot peut quand même résumer le contenu pour n’importe quel employé | Label RH-Confidentiel + site restreint au groupe GRP-RH-Purview : Copilot ne peut pas accéder au site pour les non-membres |
+| Document RH non étiqueté, ou étiqueté sans chiffrement, sur un site ouvert à tous : Copilot peut en restituer le contenu à tout employé autorisé par les permissions du site | Site restreint au groupe GRP-RH-Purview : Copilot ne peut pas accéder au site pour les non-membres, que les documents soient étiquetés ou non |
+| Document « 4 - RH-Confidentiel » (chiffré) sur un site ouvert à tous : les non-membres des groupes autorisés n’ont aucun droit RMS, Copilot ne peut pas leur en restituer le contenu, mais le fichier reste visible dans le site (nom, emplacement) | Chiffrement RMS + site restreint : double protection, le contenu et l’existence même du fichier sont réservés aux personnes autorisées |
 
 ## 11.6 Routine opérationnelle de contrôle des accès
 
-La gouvernance des accès SharePoint n’est pas un état statique : sans contrôle récurrent, le sur-partage réapparaîtra naturellement. Pour satisfaire durablement aux exigences de l’art. 8 nLPD, l’administrateur doit mettre en place les trois contrôles suivants.
+La gouvernance des accès SharePoint n’est pas un état statique : sans contrôle récurrent, le sur-partage réapparaîtra naturellement. Les contrôles ci-dessous constituent une routine opérationnelle recommandée pour maintenir un niveau de sécurité adapté aux risques et satisfaire durablement aux exigences de l’art. 8 nLPD. La loi ne fixe pas ces fréquences : adaptez-les à la taille du tenant, à la sensibilité des données et aux risques identifiés.
 
 Rapport de partage mensuel
 
@@ -131,7 +134,7 @@ Centre d’administration SharePoint → Sites → Sites actifs → exportez la 
 
 Audit Content Explorer trimestriel
 
-Dans Purview → Protection des données → Explorateurs → Explorateur de contenu, filtrez par étiquette 4 — RH-Confidentiel et 5 — Finances-Confidentiel. Croisez la liste des fichiers avec les sites identifiés comme sur-partagés lors du rapport mensuel. Toute occurrence constitue une priorité de correction immédiate.
+Dans Purview → Protection des données → Explorateurs → Explorateur de contenu, filtrez par étiquette 4 - RH-Confidentiel et 5 - Finances-Confidentiel. Croisez la liste des fichiers avec les sites identifiés comme sur-partagés lors du rapport mensuel. Toute occurrence constitue une priorité de correction immédiate.
 
 Incidents DLP dans Microsoft Defender (automatique)
 
@@ -139,7 +142,7 @@ Les incidents déclenchés par les politiques DLP remontent automatiquement dans
 
 Gouvernance des alertes (Drift) à définir avant mise en production
 
-La section 11.6 met en place les routines techniques de détection. Pour être conformé à l’art. 8 nLPD (mesures techniques ET organisationnelles), quatre paramètres de gouvernance doivent être formalisés avant le déploiement en production.
+La section 11.6 met en place les routines techniques de détection. L’art. 8 nLPD exige des mesures techniques et organisationnelles : il est recommandé de formaliser les quatre paramètres de gouvernance suivants avant le déploiement en production.
 
 | **Paramètre** | **Description** | **Valeur recommandée (POC)** |
 | --- | --- | --- |
@@ -160,7 +163,7 @@ OneDrive est le site SharePoint personnel de chaque utilisateur. Techniquement i
 
 Aligner le niveau de restriction OneDrive sur SharePoint
 
-admin.sharepoint.com → Stratégies → Partage. Dans la section Partage externe, vous disposez de deux curseurs indépendants : un pour SharePoint et un pour OneDrive. Vérifiez que le curseur OneDrive est positionné au même niveau que SharePoint ou à un niveau plus restrictif. OneDrive ne peut jamais être moins restrictif que SharePoint, si vous tentez de l’assouplir, le portail le bloquera automatiquement.
+demo-admin.sharepoint.com → Stratégies → Partage. Dans la section Partage externe, vous disposez de deux curseurs indépendants : un pour SharePoint et un pour OneDrive. Vérifiez que le curseur OneDrive est positionné au même niveau que SharePoint ou à un niveau plus restrictif. OneDrive ne peut jamais être moins restrictif que SharePoint, si vous tentez de l’assouplir, le portail le bloquera automatiquement.
 
 Audit mensuel des partages OneDrive
 

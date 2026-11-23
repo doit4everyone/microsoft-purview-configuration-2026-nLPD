@@ -148,7 +148,7 @@ Avant de continuer, confirmez que la licence est active sur votre compte :
 
 Par défaut, Microsoft 365 n’active pas la fonctionnalité permettant d’appliquer des étiquettes de sensibilité aux conteneurs (sites SharePoint, équipes Teams, groupes Microsoft 365). Cette activation est globale au tenant et doit être effectuée une seule fois via PowerShell Microsoft Graph, avant toute création d’étiquette de type Groupes et sites.
 
-> 🚨 **PRÉREQUIS GLOBAL : **Sans cette activation, les étiquettes de type Groupes et sites n’apparaissent pas dans l’interface lors de la création d’un site SharePoint ou d’une équipe Teams. L’opération est irreversible mais sans impact négatif sur les étiquettes existantes. À exécuter une seule fois par tenant.
+> 🚨 **PRÉREQUIS GLOBAL : **Sans cette activation, les étiquettes de type Groupes et sites n’apparaissent pas dans l’interface lors de la création d’un site SharePoint ou d’une équipe Teams. Cette activation est globale au tenant et s’effectue normalement une seule fois. Elle est techniquement réversible (EnableMIPLabels remis à False), mais Microsoft précise qu’une désactivation a des conséquences : les paramètres des étiquettes ne sont plus appliqués aux sites et groupes, les étiquettes ne s’y affichent plus, et les conteneurs reviennent à l’ancienne propriété Classification d’Entra ID. Ne désactivez pas cette fonction une fois les étiquettes de conteneurs déployées.
 
 Il faut distinguer deux objets : le **modèle** Group.Unified, fourni par Microsoft et toujours présent, et le **paramètre** Group.Unified, créé dans votre tenant à partir de ce modèle. Le paramètre peut ne pas exister, ou exister avec EnableMIPLabels à False. Le script ci-dessous traite les deux cas.
 
