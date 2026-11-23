@@ -4,24 +4,24 @@ description: "Créer les sites SharePoint Intranet, Communication, Direction, RH
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l'index](../)
@@ -32,7 +32,7 @@ Les sites SharePoint sont utilisés par le guide Purview pour tester les permiss
 
 Un sixième site nommé « Transmission externe » sera créé. Sa fonction sera décrite plus loin, après
 
-la créations des sites standards.
+la création des sites standards.
 
 | **Site** | **Type** | **URL** | **Qui peut accéder** |
 | --- | --- | --- | --- |
@@ -183,7 +183,7 @@ Contrairement aux autres sites, le partage externe y est autorisé, mais de faç
 
 > **📤 La LOGIQUE DE CE SITE : À LIRE AVANT DE COMMENCER** Chaque département dispose de SA PROPRE bibliothèque, isolée des autres. Un membre RH peut déposer dans la bibliothèque RH, il ne voit pas les bibliothèques Finance ou Direction. La racine du site est en lecture seule pour tout le monde sauf l’admin, on ne dépose rien à la racine. Le partage externe s’effectue exclusivement via des liens sécurisés nécessitant l’authentification de l’utilisateur externe (invité) ; aucun lien public accessible sans authentification n’est autorisé. La DLP et la rétention seront configurées par Purview, ne les touchez pas ici, cela sera décrit dans le guide Purview
 
-> **RISQUE OPÉRATIONNEL IDENTIFIÉ** La sécurité du site Transmission externe repose sur : •  le respect strict de la procédure, •  l’absence de modification manuelle des groupes et autorisations. Une erreur de manipulation administrateur peut réouvrir l’accès croisé entre départements. Ce risque est accepté dans le cadre du POC.
+> **RISQUE OPÉRATIONNEL IDENTIFIÉ** La sécurité du site Transmission externe repose sur : • le respect strict de la procédure, • l’absence de modification manuelle des groupes et autorisations. Une erreur de manipulation administrateur peut réouvrir l’accès croisé entre départements. Ce risque est accepté dans le cadre du POC.
 
 ### Étape 1 — Activer le partage externe au niveau du tenant
 
@@ -220,7 +220,7 @@ Cliquez sur « Paramètres de partage externe supplémentaires ∨ » pour dépl
 | L’accès invité à un site ou OneDrive expirera automatiquement après X jours | ☐ Laisser décoché (POC) | Utile en production pour révoquer automatiquement l’accès des invités. Pour le POC, laissez décoché. |
 | Les personnes utilisant un code de vérification doivent s’authentifier de nouveau après X jours | ☑ COCHER saisir 30 | Force le destinataire à se réauthentifier après 30 jours. Sans cette option cochée, l’accès reste valide indéfiniment si cette case est décochée, risque de sécurité. |
 
-> **⚠️ POINT D’ATTENTION**** :**** CASE « AUTORISER LES INVITÉS À PARTAGER »** Cette case est cochée par défaut dans la plupart des tenants Microsoft 365. Si vous la laissez cochée, un partenaire externe qui reçoit votre document peut créer un nouveau lien et l’envoyer à n’importe qui. Décochez-la systématiquement c’est la première chose à corriger dans un tenant neuf.
+> **⚠️ POINT D’ATTENTION : CASE « AUTORISER LES INVITÉS À PARTAGER »** Cette case est cochée par défaut dans la plupart des tenants Microsoft 365. Si vous la laissez cochée, un partenaire externe qui reçoit votre document peut créer un nouveau lien et l’envoyer à n’importe qui. Décochez-la systématiquement c’est la première chose à corriger dans un tenant neuf.
 
 ### Zone 3 - Liens des fichiers et des dossiers
 
@@ -273,7 +273,7 @@ Quand SharePoint crée un nouveau site, il génère automatiquement 3 groupes vi
 
 4. Si la page affiche un message « Ce site hérite des autorisations », cliquez sur Arrêter l’héritage des autorisations dans le ruban > confirmez. Les 3 groupes sont maintenant indépendants du site parent.
 
-> **ℹ️**** SI VOUS NE VOYEZ PAS « ARRÊTER L’HÉRITAGE »** Si le ruban montre directement les boutons Modifier les autorisations et Supprimer les autorisations (comme dans la capture), l’héritage est déjà stoppé passez directement à l’étape suivante.
+> **ℹ️ SI VOUS NE VOYEZ PAS « ARRÊTER L’HÉRITAGE »** Si le ruban montre directement les boutons Modifier les autorisations et Supprimer les autorisations (comme dans la capture), l’héritage est déjà stoppé, passez directement à l’étape suivante.
 
 5. Cliquez sur le groupe « Transmission externe - Membres » pour l’ouvrir.
 
@@ -291,13 +291,13 @@ Quand SharePoint crée un nouveau site, il génère automatiquement 3 groupes vi
 | Transmission externe - Membres | (vide) | Modification - personne |
 | Transmission externe - Visiteurs | GRP-Direction-Purview + GRP-RH-Purview + GRP-Finances-Purview | Lecture |
 
-> **⚠****️  RÉSULTAT**** ATTENDU À CE STADE** Si un membre RH ouvre le site, il voit la page d’accueil mais ne peut PAS y glisser-déposer un fichier. Le bouton « + Nouveau » et le bouton « Télécharger » sont grisés ou absents à la racine. C’est le comportement voulu, les dépôts se font uniquement dans les bibliothèques (par déparlement).
+> **⚠️ RÉSULTAT ATTENDU À CE STADE** Si un membre RH ouvre le site, il voit la page d’accueil mais ne peut PAS y glisser-déposer un fichier. Le bouton « + Nouveau » et le bouton « Télécharger » sont grisés ou absents à la racine. C’est le comportement voulu, les dépôts se font uniquement dans les bibliothèques (par département).
 
 ### Étape 4 — Créer les 3 bibliothèques par département
 
 Dans SharePoint, une bibliothèque est un espace de stockage avec ses propres permissions, c’est différent d’un simple dossier. Chaque département aura sa propre bibliothèque, invisible pour les autres.
 
-> **📚 BIBLIOTHÈQUE vs DOSSIER ****-**** POURQUOI C’EST IMPORTANT** Un dossier hérite des permissions de la bibliothèque parente, tout le monde avec accès au site voit tous les dossiers. Une bibliothèque peut avoir ses PROPRES permissions indépendantes. C’est ce qui permet l’isolation entre départements. Pour ce site, on utilise obligatoirement des bibliothèques, jamais des dossiers.
+> **📚 BIBLIOTHÈQUE vs DOSSIER - POURQUOI C’EST IMPORTANT** Un dossier hérite des permissions de la bibliothèque parente, tout le monde avec accès au site voit tous les dossiers. Une bibliothèque peut avoir ses PROPRES permissions indépendantes. C’est ce qui permet l’isolation entre départements. Pour ce site, on utilise obligatoirement des bibliothèques, jamais des dossiers.
 
 Créez les 3 bibliothèques suivantes (répétez la procédure pour chacune) :
 
@@ -317,7 +317,7 @@ C’est l’étape la plus importante. Chaque bibliothèque doit avoir ses propr
 
 Répétez cette procédure pour chacune des 3 bibliothèques.
 
-> **⚠️ POINT CRITIQUE**** :**** POURQUOI NE PAS CLIQUER SUR LE NOM DU GROUPE** Depuis la page des autorisations de la bibliothèque, si vous cliquez sur « Transmission externe - Membres » puis Nouveau, vous ouvrez la page du groupe au niveau du SITE. Ce groupe est partagé par toutes les bibliothèques. Ajouter GRP-Finances-Purview ici lui donnerait accès à RH et Direction également, c’est l’opposé de l’isolation recherchée. La bonne méthode est d’utiliser le bouton Accorder des autorisations depuis le ruban de la BIBLIOTHÈQUE, pas depuis la page du groupe.
+> **⚠️ POINT CRITIQUE : POURQUOI NE PAS CLIQUER SUR LE NOM DU GROUPE** Depuis la page des autorisations de la bibliothèque, si vous cliquez sur « Transmission externe - Membres » puis Nouveau, vous ouvrez la page du groupe au niveau du SITE. Ce groupe est partagé par toutes les bibliothèques. Ajouter GRP-Finances-Purview ici lui donnerait accès à RH et Direction également, c’est l’opposé de l’isolation recherchée. La bonne méthode est d’utiliser le bouton Accorder des autorisations depuis le ruban de la BIBLIOTHÈQUE, pas depuis la page du groupe.
 
 ### Accéder aux autorisations de la bibliothèque
 
@@ -329,7 +329,7 @@ Répétez cette procédure pour chacune des 3 bibliothèques.
 
 4. Dans la page Paramètres, sous la colonne Autorisations et gestion, cliquez sur Autorisations pour le composant : bibliothèque de documents.
 
-> **ℹ️  CE**** QUE VOUS VOYEZ À CE STADE** Bandeau jaune : « Cette bibliothèque hérite des autorisations de son parent. (Transmission externe) ». Ruban : Gérer les parents │ Arrêter l’héritage des autorisations │ Vérifier les autorisations. Liste : les 3 groupes du site (Propriétaires, Membres, Visiteurs) - c’est normal, ils sont hérités.
+> **ℹ️ CE QUE VOUS VOYEZ À CE STADE** Bandeau jaune : « Cette bibliothèque hérite des autorisations de son parent. (Transmission externe) ». Ruban : Gérer les parents │ Arrêter l’héritage des autorisations │ Vérifier les autorisations. Liste : les 3 groupes du site (Propriétaires, Membres, Visiteurs) - c’est normal, ils sont hérités.
 
 5. Cliquez sur Arrêter l’héritage des autorisations dans le ruban. Cliquez sur OK dans la boîte de dialogue.
 
@@ -363,7 +363,7 @@ Dans le ruban de la bibliothèque, cliquez sur Accorder des autorisations. Un di
 
 7. Cliquez sur Partager.
 
-> **✅  RÉSULTAT ATTENDU DANS LA LISTE DES AUTORISATIONS** Le bandeau jaune indique : « Cette bibliothèque dispose d’autorisations uniques. », c’est la confirmation que l’héritage est bien stoppé. Vous devez voir exactement 2 entrées dans la liste, rien d’autre : •  GRP-[Département]-Purview - Type : Groupe de domaines - Niveau : Modification •  Propriétaires de Transmission externe - Type : Groupe SharePoint - Niveau : Contrôle total Le compte admin n’apparaît pas directement, c’est normal. Il est déjà membre de « Propriétaires de Transmission externe », ce qui lui donne Contrôle total sur toutes les bibliothèques. Si vous voyez encore Transmission externe - Membres ou Visiteurs : cochez-les et cliquez sur Supprimer les autorisations des utilisateurs.
+> **✅ RÉSULTAT ATTENDU DANS LA LISTE DES AUTORISATIONS** Le bandeau jaune indique : « Cette bibliothèque dispose d’autorisations uniques. », c’est la confirmation que l’héritage est bien stoppé. Vous devez voir exactement 2 entrées dans la liste, rien d’autre : • GRP-[Département]-Purview - Type : Groupe de domaines - Niveau : Modification • Propriétaires de Transmission externe - Type : Groupe SharePoint - Niveau : Contrôle total Le compte admin n’apparaît pas directement, c’est normal. Il est déjà membre de « Propriétaires de Transmission externe », ce qui lui donne Contrôle total sur toutes les bibliothèques. Si vous voyez encore Transmission externe - Membres ou Visiteurs : cochez-les et cliquez sur Supprimer les autorisations des utilisateurs.
 
 | **Bibliothèque** | **Groupe à ajouter (Modification)** | **Groupes à supprimer** | **Admin couvert par** |
 | --- | --- | --- | --- |
@@ -371,9 +371,9 @@ Dans le ruban de la bibliothèque, cliquez sur Accorder des autorisations. Un di
 | Finance - Transmission externe | GRP-Finances-Purview | Transmission externe - Membres + Visiteurs | Propriétaires (Contrôle total) |
 | Direction - Transmission externe | GRP-Direction-Purview | Transmission externe - Membres + Visiteurs | Propriétaires (Contrôle total) |
 
-> **⚠️  ÉTAT FINAL ATTENDU POUR CHAQUE BIBLIOTHÈQUE** Propriétaires de Transmission externe : Contrôle total (conservé) Transmission externe - Membres : supprimé de la liste Transmission externe - Visiteurs : supprimé de la liste GRP-[Département]-Purview : Modification (entrée directe) admin@demo.ch : Modification (entrée directe)
+> **⚠️ ÉTAT FINAL ATTENDU POUR CHAQUE BIBLIOTHÈQUE** Propriétaires de Transmission externe : Contrôle total (conservé) Transmission externe - Membres : supprimé de la liste Transmission externe - Visiteurs : supprimé de la liste GRP-[Département]-Purview : Modification (entrée directe) admin@demo.ch : Modification (entrée directe)
 
-> **✅  VÉRIFICATION RAPIDE** Connectez-vous avec rh1@demo.ch et ouvrez le site Transmission externe > Contenu du site. Vous devez voir UNIQUEMENT la bibliothèque RH - Transmission externe, pas les deux autres. Si les 3 bibliothèques sont visibles : l’héritage n’a pas été correctement arrêté, reprenez depuis l’étape 5 (Arrêter l’héritage). Si les autorisations semblent correctes mais la visibilité croisée persiste : vérifiez qu’il ne reste pas de trace de Transmission externe - Membres dans la liste des permissions de la bibliothèque.
+> **✅ VÉRIFICATION RAPIDE** Connectez-vous avec rh1@demo.ch et ouvrez le site Transmission externe > Contenu du site. Vous devez voir UNIQUEMENT la bibliothèque RH - Transmission externe, pas les deux autres. Si les 3 bibliothèques sont visibles : l’héritage n’a pas été correctement arrêté, reprenez depuis l’étape 5 (Arrêter l’héritage). Si les autorisations semblent correctes mais la visibilité croisée persiste : vérifiez qu’il ne reste pas de trace de Transmission externe - Membres dans la liste des permissions de la bibliothèque.
 
 ### Étape 6 — Configurer le partage externe sécurisé sur ce site
 
@@ -394,13 +394,13 @@ Maintenant que le site est sécurisé, configurez le niveau de partage externe a
 | **Option dans la liste déroulante** | **Explication** | **À choisir ?** |
 | --- | --- | --- |
 | Tout le monde | Lien public sans connexion, n’importe qui sur internet peut accéder sans aucune vérification | ❌ Non |
-| Invités nouveaux et existants | Les invités doivent s’authentifier avec un compte Microsoft ou une identité Entra ID externe. Niveau recommandé - authentification obligatoire avant l’accès. | ✅ Oui :  choisir celui-ci |
+| Invités nouveaux et existants | Les invités doivent s’authentifier avec un compte Microsoft ou une identité Entra ID externe. Niveau recommandé - authentification obligatoire avant l’accès. | ✅ Oui : choisir celui-ci |
 | Invités existants | Uniquement les personnes déjà présentes dans l’annuaire. Un partenaire inconnu ne peut pas recevoir de lien. | ❌ Non |
 | Uniquement les personnes de votre organisation | Aucun partage externe autorisé : réservé aux sites purement internes | ❌ Non |
 
-> **ℹ️  CE RÉGLAGE EST UN PLAFOND POUR CE SITE** Le niveau choisi ici ne peut pas dépasser le niveau défini au niveau du tenant (Zone 1 de l’Étape 1). Si le tenant est réglé sur « Invités nouveaux et existants », ce site peut aussi utiliser ce niveau ou être plus restrictif. Les autres sites (RH, Finances, Direction) restent sur « Uniquement les personnes de votre organisation » par défaut, ils ne sont pas affectés par ce réglage.
+> **ℹ️ CE RÉGLAGE EST UN PLAFOND POUR CE SITE** Le niveau choisi ici ne peut pas dépasser le niveau défini au niveau du tenant (Zone 1 de l’Étape 1). Si le tenant est réglé sur « Invités nouveaux et existants », ce site peut aussi utiliser ce niveau ou être plus restrictif. Les autres sites (RH, Finances, Direction) restent sur « Uniquement les personnes de votre organisation » par défaut, ils ne sont pas affectés par ce réglage.
 
-> **🔐  COMMENT**** FONCTIONNE LE PARTAGE EXTERNE SÉCURISÉ ****-**** POUR LE DÉBUTANT** 1. Un membre RH ouvre un document dans la bibliothèque RH - Transmission externe. 2. Il clique sur Partager et entre l’adresse email du partenaire externe. 3. Le partenaire reçoit un email avec un lien sécurisé. En cliquant, il est invité à s’authentifier avec son compte Microsoft ou Entra ID (ou à créer un compte invité s’il n’en a pas). 4. Il saisit le code et peut accéder au document pendant la durée configurée (30 jours selon Zone 2 de l’étape 1). Sans le code, le lien est inutilisable. 5. La DLP Purview analyse le document avant le partage et peut le bloquer si le contenu est trop sensible. → La configuration DLP et la rétention de ce site sont dans le guide Microsoft Purview (pas ici).
+> **🔐 COMMENT FONCTIONNE LE PARTAGE EXTERNE SÉCURISÉ - POUR LE DÉBUTANT** 1. Un membre RH ouvre un document dans la bibliothèque RH - Transmission externe. 2. Il clique sur Partager et entre l’adresse email du partenaire externe. 3. Le partenaire reçoit un email avec un lien sécurisé. En cliquant, il est invité à s’authentifier avec son compte Microsoft ou Entra ID (ou à créer un compte invité s’il n’en a pas). 4. Il saisit le code et peut accéder au document pendant la durée configurée (30 jours selon Zone 2 de l’étape 1). Sans le code, le lien est inutilisable. 5. La DLP Purview analyse le document avant le partage et peut le bloquer si le contenu est trop sensible. → La configuration DLP et la rétention de ce site sont dans le guide Microsoft Purview (pas ici).
 
 ---
 

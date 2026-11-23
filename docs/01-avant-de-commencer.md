@@ -4,24 +4,24 @@ description: "Prérequis avant de configurer Microsoft Purview : accès au porta
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -36,7 +36,7 @@ Lisez cette section entièrement avant de toucher quoi que ce soit dans Purview.
 
 1. **Ouvrir le navigateur** Utilisez Microsoft Edge ou Google Chrome. Évitez Firefox, certaines pages Purview ne s'affichent pas correctement.
 
-2. **Aller sur l'URL** Tapez exactement : https://compliance.microsoft.com, ne passez pas par admin.microsoft.com pour Purview, l’accès direct est plus fiable. Mise à jour 2026 : Microsoft a migré le portail vers https://purview.microsoft.com. L’ancienne URL redirige automatiquement mais peut afficher une page intermédiaire selon le navigateur. En cas de doute, utilisez directement https://purview.microsoft.com.
+2. **Aller sur l’URL** Tapez exactement : https://purview.microsoft.com. L’ancienne URL https://compliance.microsoft.com redirige automatiquement mais peut afficher une page intermédiaire selon le navigateur.
 
 3. **Se connecter** Entrez votre compte administrateur. Si vous avez un compte admin@demo.ch ou admin@demo.onmicrosoft.com, utilisez celui qui a les droits admin M365.
 
@@ -108,7 +108,7 @@ Rôle Exchange Online via le Centre d'administration Exchange
 
 Rôles Purview RBAC via le portail Purview
 
-1. Dans Purview (https://compliance.microsoft.com) → menu de gauche → Paramètres (icône engrenage en bas) → Rôles et portées → Groupes de rôles.
+1. Dans Purview (https://purview.microsoft.com) → menu de gauche → Paramètres (icône engrenage en bas) → Rôles et étendues → Groupes de rôles.
 
 2. Cherchez chaque groupe dans le tableau ci-dessous → cliquez dessus → Modifier le groupe de rôles → Ajouter des membres → votre compte → **Enregistrer.**
 
@@ -176,7 +176,7 @@ $setting.Values | Format-List
 
 | **✓** | **Prérequis** | **Comment vérifier** |
 | --- | --- | --- |
-| ☐ | Accès à https://compliance.microsoft.com sans erreur | La page s'ouvre et affiche le menu Purview |
+| ☐ | Accès à https://purview.microsoft.com sans erreur | La page s'ouvre et affiche le menu Purview |
 | ☐ | 3 rôles Entra ID attribués | entra.microsoft.com → Rôles → vos attributions |
 | ☐ | Rôle Organization Management Exchange | admin.exchange.microsoft.com → Rôles → Membres |
 | ☐ | 5 groupes de rôles Purview attribués | Purview → Paramètres → Rôles → vos groupes |

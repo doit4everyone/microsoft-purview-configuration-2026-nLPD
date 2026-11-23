@@ -4,24 +4,24 @@ description: "Créer les 4 groupes de sécurité standards et les 3 groupes mail
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l'index](../)
@@ -49,13 +49,13 @@ Ces groupes servent à gérer les accès SharePoint. Ils doivent être créés e
 | GRP-Finances | Équipe Finances et Comptabilité | finance1, finance2 |
 | GRP-Standards | Utilisateurs standards | standard1 à standard8 |
 
-> **ℹ️  CONSEIL : AJOUTER LES MEMBRES PLUS TARD** Vous pouvez créer les groupes maintenant (vides) et ajouter les membres après avoir créé les comptes utilisateurs (Partie 3). Pour ajouter un membre : Groupes actifs > cliquez sur le groupe > onglet Membres > + Ajouter des membres.
+> **ℹ️ CONSEIL : AJOUTER LES MEMBRES PLUS TARD** Vous pouvez créer les groupes maintenant (vides) et ajouter les membres après avoir créé les comptes utilisateurs (Partie 3). Pour ajouter un membre : Groupes actifs > cliquez sur le groupe > onglet Membres > + Ajouter des membres.
 
 ## 2.2 Créer les 3 groupes mail-enabled pour Purview
 
 Ces groupes sont techniquement différents des précédents. Ils doivent être créés via PowerShell dans Exchange Online, le portail web ne permet pas de créer ce type de groupe directement.
 
-> **⚠️ POURQUOI POWERSHELL EST OBLIGATOIRE ICI** Les groupes de sécurité standard du portail web ne sont pas mail-enabled. Azure RMS (moteur de chiffrement de Purview) ne reconnaît que les groupes qui ont une adresse email. PowerShell est le seul moyen de créer ces groupes mail-enabled dans un tenant cloud pur. **Toutes les manipulations en Powershell pour Exchange Online sont à faire sur un poste local en Powershell 5.x. Le cloud-Shell supporte mal ce module**.
+> **⚠️ POURQUOI POWERSHELL EST OBLIGATOIRE ICI** Les groupes de sécurité standard du portail web ne sont pas mail-enabled. Azure RMS (moteur de chiffrement de Purview) ne reconnaît que les groupes qui ont une adresse email. PowerShell est le seul moyen de créer ces groupes mail-enabled dans un tenant cloud pur. **Toutes les manipulations en PowerShell pour Exchange Online sont à faire sur un poste local en PowerShell 5.x. Le Cloud Shell supporte mal ce module**.
 
 ### Étape 1 — Installer le module Exchange Online PowerShell
 

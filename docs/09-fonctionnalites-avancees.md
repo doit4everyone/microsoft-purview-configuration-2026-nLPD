@@ -4,24 +4,24 @@ description: "Fonctionnalités avancées de Purview Suite : politiques de réten
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -108,9 +108,7 @@ Stratégies IRM recommandées pour une PME suisse
 
 Prérequis : Affecter les rôles IRM obligatoires
 
-Sans affectation de rôle IRM, les stratégies fonctionnent et génèrent des alertes, mais celles-ci sont invisibles dans l’interface c’est un piège classique lors de la première configuration. Chemin : Purview → Gestion des risques internes → Paramètres → Groupes de rôles → sélectionnez le rôle → Modifier → Ajouter des membres → ajoutez votre compte admin → **Enregistrer.**
-
-**Insider Risk Management Analysts **: consulte et trie les alertes anonymisées. Ne peut pas lever l’anonymat. Rôle recommandé pour 95 % des cas. Conforme Annexe G.
+Sans affectation de rôle IRM, les stratégies fonctionnent et génèrent des alertes, mais celles-ci sont invisibles dans l’interface c’est un piège classique lors de la première configuration. Chemin : Purview → Gestion des risques internes → Paramètres → Groupes de rôles → sélectionnez le rôle → Modifier → Ajouter des membres → ajoutez votre compte admin → **Enregistrer. Insider Risk Management Analysts **: consulte et trie les alertes anonymisées. Ne peut pas lever l’anonymat. Rôle recommandé pour 95 % des cas. Conforme Annexe G.
 
 **Insider Risk Management Investigators **: accès complet incluant la levée d’anonymat. À restreindre strictement. voir Annexe G.
 
@@ -132,13 +130,13 @@ Purview → Gestion des risques internes → Stratégies → + → Politique de 
 
 3. Utilisateurs et groupes : sélectionnez « Utilisateurs, groupes et étendues adaptatives spécifiques », ajoutez les trois groupes : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview. **Ne jamais choisir « Tous les utilisateurs »**, principe de proportionnalité nLPD art. 6. Exclusions : laisser vide. → **Suivant.**
 
-4. Contenu à prioriser : sélectionnez « Je souhaite hiérarchiser le contenu » cochez : Sites SharePoint, Étiquettes de confidentialité, Types d’informations sensibles : décochez Extensions de fichiers et Classifieurs pouvant être formés (trop larges pour un POC) → **Suivant.**
+4. Contenu à prioriser : sélectionnez « Je souhaite hiérarchiser le contenu » cochez : Sites SharePoint, Étiquettes de confidentialité, Types d’infos confidentielles : décochez Extensions de fichiers et Classifieurs pouvant être formés (trop larges pour un POC) → **Suivant.**
 
 5. Sites SharePoint à hiérarchiser : ajoutez les trois sites sensibles : RH, Finances, Direction. Ne pas ajouter Transmission externe (couvert par DLP dédiée).
 
 6. Étiquettes de confidentialité : sélectionnez : 3a - Direction - Site, 3b - Direction - Documents, 4 - RH-Confidentiel, 5 - Finances-Confidentiel. Ne pas ajouter 1 - Public ni 2 - Interne.
 
-7. Types d’informations sensibles : ajoutez : AVS-Suisse-PME (confiance moyenne), Swiss Social Security Number AHV (confiance élevée), International Banking Account Number IBAN (confiance élevée). Cela couvre les fichiers non étiquetés contenant des données sensibles.
+7. Types d’infos confidentielles : ajoutez : AVS-Suisse-PME (confiance moyenne), Swiss Social Security Number AHV (confiance élevée), International Banking Account Number IBAN (confiance élevée). Cela couvre les fichiers non étiquetés contenant des données sensibles.
 
 8. Score : sélectionnez « Obtenir des alertes pour toutes les activités » → **Suivant.**
 
@@ -160,7 +158,7 @@ Stratégie 2 : IRM-Risque-IA (optionnel en préversion)
 
 3. Utilisateurs et groupes : mêmes 3 groupes que Stratégie 1 : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview → **Suivant.**
 
-4. Contenu à prioriser : cochez uniquement : Sites SharePoint, Étiquettes de confidentialité, Types d’informations sensibles → décochez Extensions de fichiers et Classifieurs → **Suivant.**
+4. Contenu à prioriser : cochez uniquement : Sites SharePoint, Étiquettes de confidentialité, Types d’infos confidentielles → décochez Extensions de fichiers et Classifieurs → **Suivant.**
 
 5. Sites SharePoint : RH, Finances, Direction. Étiquettes : 3, 3b, 4, 5. SIT : AVS-Suisse-PME, Medical-RH-Suisse, IBAN, Swiss Social Security Number AHV → **Suivant.**
 
@@ -194,11 +192,7 @@ Activation du partage des alertes MDE vers Purview : security.microsoft.com → 
 2. Nom : IRM-Violations-Sécurité : Description : Détection des violations de sécurité techniques MDE,
 nLPD art. 8 → **Suivant.**
 
-3. Utilisateurs et groupes : mêmes 3 groupes : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview → Exclusions : vide → **Suivant.**
-
-**4. Contenu à prioriser : spécificité de ce modèle : **Purview affiche le message « Il n’est pas utile de spécifier le contenu à définir pour la hiérarchisation pour le modèle que vous avez sélectionné ». La hiérarchisation est désactivée automatiquement. Ce modèle est basé sur les alertes MDE, pas sur le contenu des fichiers → **Suivant.**
-
-**5. Événement déclencheur : automatique : **la stratégie commence à attribuer des scores uniquement lorsqu’une alerte MDE de gravité faible, moyenne ou élevée existe pour l’utilisateur. Les alertes d’information ne déclenchent pas. Aucune configuration manuelle → **Suivant.**
+3. Utilisateurs et groupes : mêmes 3 groupes : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview → Exclusions : vide → **Suivant. 4. Contenu à prioriser : spécificité de ce modèle : **Purview affiche le message « Il n’est pas utile de spécifier le contenu à définir pour la hiérarchisation pour le modèle que vous avez sélectionné ». La hiérarchisation est désactivée automatiquement. Ce modèle est basé sur les alertes MDE, pas sur le contenu des fichiers → **Suivant. 5. Événement déclencheur : automatique : **la stratégie commence à attribuer des scores uniquement lorsqu’une alerte MDE de gravité faible, moyenne ou élevée existe pour l’utilisateur. Les alertes d’information ne déclenchent pas. Aucune configuration manuelle → **Suivant.**
 
 6. Indicateurs : activez uniquement :
 **Indicateurs Microsoft Defender for Endpoint (2/2)** Fraude à la défense (contournement des contrôles de sécurité) + Logiciels indésirables (logiciels non approuvés ou malveillants). Ces deux indicateurs couvrent exactement la désactivation RTP/BM.
@@ -207,9 +201,7 @@ nLPD art. 8 → **Suivant.**
 
 **Defender for Cloud Apps (0/11) ne pas activer :** nécessitent des connecteurs MDCA non configurés dans ce POC.
 
-7. Seuils : Appliquer les seuils fournis par Microsoft → Suivant → Envoyer. Cochez les 3 notifications email avant **Terminé.**
-
-**Validation terrain : **IRM-Violations-Sécurité créée et opérationnelle dans le tenant Axonix SA. Déclencheur automatique lié aux alertes MDE, la désactivation de RTP/BM testée en section 9.1 devrait générer une alerte sur cette stratégie.
+7. Seuils : Appliquer les seuils fournis par Microsoft → Suivant → Envoyer. Cochez les 3 notifications email avant **Terminé. Validation terrain : **IRM-Violations-Sécurité créée et opérationnelle dans le tenant Axonix SA. Déclencheur automatique lié aux alertes MDE, la désactivation de RTP/BM testée en section 9.1 devrait générer une alerte sur cette stratégie.
 
 Lien nLPD : articles concernés
 
@@ -271,9 +263,7 @@ Contexte POC : simulation d’une réponse à une demande d’accès nLPD (art. 
 
 1. Purview → Solutions → eDiscovery → Cas → + Créer un cas.
 
-2. Nom : **eDiscovery-Demande-Acces-nLPD**, Description : *Cas de démonstration, réponse à une demande d’accès nLPD art. 25, données personnelles de Valérie Beraz*. Activez le toggle eDiscovery Premium (active l’IA de déduplication et l’analyse avancée : ne pas oublier) → **Créer.**
-
-**Étape 2 Ajouter les sources de données.**
+2. Nom : **eDiscovery-Demande-Acces-nLPD**, Description : *Cas de démonstration, réponse à une demande d’accès nLPD art. 25, données personnelles de Valérie Beraz*. Activez le toggle eDiscovery Premium (active l’IA de déduplication et l’analyse avancée : ne pas oublier) → **Créer. Étape 2 Ajouter les sources de données.**
 
 3. Dans le cas → onglet Sources de données → + Ajouter → dans le panneau, sélectionnez toutes les sources dans ce cas → les 2 sources s’affichent (boîte aux lettres + site OneDrive) → cochez les deux → **Enregistrer et fermer**.
 
@@ -287,7 +277,7 @@ Résultat : bannière verte « *Ajout réussi de 2 sources de données* », Type
 
 6. Panneau droit → Générateur de conditions : dans le champ Entrez des mots clés, saisissez **Beraz** → cliquez Exécuter la requête (bouton bleu en haut à droite) → dans la fenêtre « Choisissez les résultats de la recherche », laissez Statistiques sélectionné par défaut → **Exécuter la requête**.
 
-7 Onglet Statistiques → résultat dans mon POC  275 correspondances (34,9 Mo). Le chiffre de 252 boîtes aux lettres peut surprendre sur un tenant de test avec peu d'utilisateurs : il inclut toutes les boîtes aux lettres système de Microsoft 365 (salles, équipements, groupes, boîtes partagées, ressources techniques) indexées lors d'une recherche sur l'ensemble du tenant. Les 23 sites SharePoint couvrent les sites de communication, d'équipe et les sites système OneDrive. Ces chiffres sont spécifiques au tenant Axonix SA et varieront selon le tenant cible. 2 erreurs « eDiscovery is not available » peuvent apparaître, elles concernent quelques emplacements système non indexables et n'affectent pas la validité des résultats.
+7 Onglet Statistiques → résultat dans mon POC 275 correspondances (34,9 Mo). Le chiffre de 252 boîtes aux lettres peut surprendre sur un tenant de test avec peu d'utilisateurs : il inclut toutes les boîtes aux lettres système de Microsoft 365 (salles, équipements, groupes, boîtes partagées, ressources techniques) indexées lors d'une recherche sur l'ensemble du tenant. Les 23 sites SharePoint couvrent les sites de communication, d'équipe et les sites système OneDrive. Ces chiffres sont spécifiques au tenant Axonix SA et varieront selon le tenant cible. 2 erreurs « eDiscovery is not available » peuvent apparaître, elles concernent quelques emplacements système non indexables et n'affectent pas la validité des résultats.
 
 **Étape 4 Ajouter au jeu à réviser**
 
@@ -379,7 +369,7 @@ Objectif : détecter les contenus inappropriés (harcèlement, discrimination, v
 
 2. Nom : **CC-Contenu-Inapproprie-nLPD** | Utilisateurs concernés → Tous les utilisateurs → Réviseurs : admin@demo.ch → **Créer une stratégie**.
 
-Paramètres automatiques : Teams + Viva Engage.  Direction : Interne, Classifieurs : Sexual, Violence, Hate, Self-harm. Pourcentage : 100 %. Résultat : statut Activating / Intègre.
+Paramètres automatiques : Teams + Viva Engage. Direction : Interne, Classifieurs : Sexual, Violence, Hate, Self-harm. Pourcentage : 100 %. Résultat : statut Activating / Intègre.
 
 Vue d’ensemble au moment de la configuration
 

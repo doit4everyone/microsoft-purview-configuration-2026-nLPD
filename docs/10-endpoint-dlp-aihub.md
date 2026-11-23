@@ -4,24 +4,24 @@ description: "Endpoint DLP Purview Suite, contrôles IA dans Edge for Business a
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -73,7 +73,7 @@ Pour que l’Endpoint DLP fonctionne, chaque poste Windows doit être intégré 
 
 ⚠️ Script identique à Defender for Endpoint : si vos postes sont déjà intégrés dans Microsoft Defender for Endpoint (ce qui est le cas sur tout tenant Business Premium correctement configuré), ils apparaissent automatiquement dans la liste des appareils Purview sans exécuter le script. Vérifiez d'abord Purview → Paramètres** → **Intégration d'un appareil** → **Appareils avant de procéder à l'onboarding manuel.
 
-**ℹ️**** INFO :** si vos postes sont gérés par Intune (Azure AD joint), l'intégration peut se faire en masse depuis Purview** → **Paramètres** → **Intégration d'un appareil** → **Intégration** → **Méthode de déploiement** : **Microsoft Intune**. **Tous les appareils Intune sont alors intégrés automatiquement sans script manuel.
+**ℹ️ INFO :** si vos postes sont gérés par Intune (Azure AD joint), l'intégration peut se faire en masse depuis Purview** → **Paramètres** → **Intégration d'un appareil** → **Intégration** → **Méthode de déploiement** : **Microsoft Intune**. **Tous les appareils Intune sont alors intégrés automatiquement sans script manuel.
 
 Prérequis : Vérifier la protection en temps réel (RTP) et l’analyse comportementale (BM)
 
@@ -113,7 +113,7 @@ L’Endpoint DLP doit être configuré dans une **politique séparée** et non d
 
 ℹ️** Avantage des étiquettes vs SIT : **un fichier étiqueté 4 - RH-Confidentiel sera protégé même s’il ne contient pas de pattern AVS ou IBAN détectable. Les étiquettes couvrent aussi les fichiers chiffrés dont le contenu ne peut pas être analysé par les SIT. Petit plus : ajouter également les SIT AVS-Suisse-PME, Swiss Social Security Number AHV, IBAN et Medical-RH-Suisse dans le même groupe (opérateur N’importe lequel), cela étend la protection aux fichiers non étiquetés contenant des données sensibles. Dans l’interface, ajoutez-les via Ajouter + Types d’infos confidentielles dans le groupe « Surveiller-Activités-Appareils ».
 
-7. Pas de condition « partage externe » :  cette condition est incompatible avec l’emplacement Appareils. L’Endpoint DLP surveille toutes les activités sur l’appareil indépendamment de la destination. Dans section Actions → sélectionnez Auditer ou restreindre les activités sur les appareils → Appliquer des restrictions à une activité spécifique → configurez le tableau suivant :
+7. Pas de condition « partage externe » : cette condition est incompatible avec l’emplacement Appareils. L’Endpoint DLP surveille toutes les activités sur l’appareil indépendamment de la destination. Dans section Actions → sélectionnez Auditer ou restreindre les activités sur les appareils → Appliquer des restrictions à une activité spécifique → configurez le tableau suivant :
 
 | **Activité** | **Phase 1 (sem. 1-2)** | **Phase 2 (après validation)** |
 | --- | --- | --- |
@@ -140,7 +140,7 @@ Configurer la restriction des sites IA dans la règle Endpoint
 
 Dans la règle Surveiller-Activités-Appareils → section Domaine de service et activités du navigateur → deux options à activer :
 
-1. Téléchargement vers un domaine de service cloud restreint :** **cocher → + Choisir différentes restrictions pour les domaines de service sensibles → Ajouter un groupe → sélectionner Sites web d’IA générative (groupe prédéfini Microsoft, contient automatiquement ChatGPT, Gemini, Perplexity, Mistral, etc.) → Action : Auditer uniquement (Phase 1) puis **Bloquer avec remplacement** (Phase 2 après validation) → Enregistrer.
+1. Téléchargement vers un domaine de service cloud restreint : cocher → + Choisir différentes restrictions pour les domaines de service sensibles → Ajouter un groupe → sélectionner Sites web d’IA générative (groupe prédéfini Microsoft, contient automatiquement ChatGPT, Gemini, Perplexity, Mistral, etc.) → Action : Auditer uniquement (Phase 1) puis **Bloquer avec remplacement** (Phase 2 après validation) → Enregistrer.
 
 2. Coller dans les navigateurs pris en charge : Phase 1 : Auditer uniquement. Phase 2 : Bloquer avec remplacement : bloque le copier-coller de contenu sensible dans un navigateur vers un site IA.
 
@@ -172,15 +172,15 @@ Phase 2 — Créer un profil Custom (OMA-URI) avec ExtensionSettings contenant :
 
 {
 
-  "microsoft.defender.browser_extension.native_message_host@microsoft.com": {
+ "microsoft.defender.browser_extension.native_message_host@microsoft.com": {
 
-    "installation_mode": "force_installed",
+ "installation_mode": "force_installed",
 
-    "install_url": "https://github.com/microsoft/purview/raw/main/endpointDLP/browser_extension/prod-1.1.0.212.xpi",
+ "install_url": "https://github.com/microsoft/purview/raw/main/endpointDLP/browser_extension/prod-1.1.0.212.xpi",
 
-    "updates_disabled": false
+ "updates_disabled": false
 
-  }
+ }
 
 }
 

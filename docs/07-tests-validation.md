@@ -4,24 +4,24 @@ description: "Scénarios de test pour valider le déploiement Purview : auto-lab
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -72,8 +72,8 @@ lang: fr
 
 | **✓** | **Ce qui doit fonctionner** | **Où vérifier** |
 | --- | --- | --- |
-| ✅ | 7 étiquettes créées | Purview → Protection infos → Étiquettes |
-| ✅ | Politique d'étiquettes publiée | Purview → Protection infos → Politiques d'étiquettes |
+| ✅ | 7 étiquettes créées | Purview → Protection des données → Étiquettes |
+| ✅ | Politique d'étiquettes publiée | Purview → Protection des données → Politiques d'étiquettes |
 | ☐ | Étiquettes visibles dans Word après un délai variable | Ouvrir un doc Office → barre Sensibilité |
 | ✅ | Stratégie auto-labelling activée | Purview → Étiquetage automatique → Statut |
 | ✅ | Auto-labelling détecte les documents test | Résultats de simulation → fichiers 11-18 |
@@ -81,7 +81,7 @@ lang: fr
 | ✅ | DLP-Protection-Copilot activée | Purview → DLP → Stratégies |
 | ✅ | DLP-Protection-Transmission-Externe activée (2 règles) | Purview → DLP → Stratégies |
 | ✅ | Audit actif PowerShell = True | Get-AdminAuditLogConfig │ FL |
-| ☐ | DSPM (aperçu) — Tâches de configuration vérifiées | Purview → DSPM → Vue d'ensemble |
+| ☐ | DSPM — Tâches de configuration vérifiées | Purview → DSPM → Vue d'ensemble |
 | ✅ | Test DLP email externe bloqué | Activity Explorer → Correspondance DLP |
 | ✅ | Test Copilot protégé | Copilot ne résume pas les docs confidentiels |
 

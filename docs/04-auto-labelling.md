@@ -4,24 +4,24 @@ description: "Configurer l'étiquetage automatique des données sensibles (AVS, 
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -52,29 +52,17 @@ Faites défiler la liste des catégories → sélectionnez Personnaliser → Sui
 
 **Étape 2 : Nommer votre stratégie**
 
-Nom : **Auto-Label-RH-Sensible** | Description : Détecte automatiquement les numéros AVS et données médicales dans SharePoint, OneDrive et Exchange. → **Suivant.**
-
-**Étape 3 : Choisir une étiquette à appliquer automatiquement**
+Nom : **Auto-Label-RH-Sensible** | Description : Détecte automatiquement les numéros AVS et données médicales dans SharePoint, OneDrive et Exchange. → **Suivant. Étape 3 : Choisir une étiquette à appliquer automatiquement**
 
 Cliquez sur choisir une étiquette → sélectionnez 4 : RH-Confidentiel → Appliquer → **Suivant.** ⚠️ Étape critique : l’étiquette choisie ici s’appliquera à tout document détecté par les règles de cette stratégie.
 
 **Étape 4 : Unités d’administration**
 
-Laissez sur Répertoire complet → **Suivant.**
+Laissez sur Répertoire complet → **Suivant. Étape 5 : Choisir les emplacements**
 
-**Étape 5 : Choisir les emplacements**
+Activez les trois emplacements : Courrier Exchange (Tous utilisateurs et groupes), Sites SharePoint : Modifier → Exclure → saisir https://demo.sharepoint.com/sites/transmissionexterne → + → Terminé (ce site est géré par DLP dédiée, l’étiquette 4 - RH-Confidentiel ne doit pas s’y appliquer automatiquement), Comptes OneDrive (Tous utilisateurs et groupes). Azure Storage : laisser désactivé. Cliquez sur **Suivant. Étape 6 : Configurer des règles**
 
-Activez les trois emplacements : Courrier Exchange (Tous utilisateurs et groupes), Sites SharePoint : Modifier → Exclure → saisir https://demo.sharepoint.com/sites/transmissionexterne → + → Terminé (ce site est géré par DLP dédiée, l’étiquette 4 - RH-Confidentiel ne doit pas s’y appliquer automatiquement), Comptes OneDrive (Tous utilisateurs et groupes). Azure Storage : laisser désactivé. Cliquez sur **Suivant.**
-
-**Étape 6 : Configurer des règles**
-
-Sélectionnez Règles communes → **Suivant.**
-
-**Étape 7 : Définir des règles (+ Nouvelle règle)**
-
-***Règle 1 : AVS suisse :*** Nom : Règle-AVS-Suisse | Le contenu contient → Nom du groupe : Règle-AVS-Suisse → +Ajouter → Types d’infos confidentielles → tapez AVS-Suisse-PME → sélectionnez AVS-Suisse-PME | Confiance moyenne | Nombre d’instances min : 1 → **Enregistrer.**
-
-***Règle 2 : Médical :*** Nom : **Règle-Medical** → Le contenu contient → Nom du groupe : Règle-Medical | Opérateur du groupe : N’importe lequel de ces éléments (OU).
+Sélectionnez Règles communes → **Suivant. Étape 7 : Définir des règles (+ Nouvelle règle) *Règle 1 : AVS suisse :*** Nom : Règle-AVS-Suisse | Le contenu contient → Nom du groupe : Règle-AVS-Suisse → +Ajouter → Types d’infos confidentielles → tapez AVS-Suisse-PME → sélectionnez AVS-Suisse-PME | Confiance moyenne | Nombre d’instances min : 1 → **Enregistrer. *Règle 2 : Médical :*** Nom : **Règle-Medical** → Le contenu contient → Nom du groupe : Règle-Medical | Opérateur du groupe : N’importe lequel de ces éléments (OU).
 
 **Condition unique : **+ Ajouter → Types d’infos confidentielles → tapez et sélectionnez : **Medical-RH-Suisse** | Confiance : Moyenne | min : 2. → **Enregistrer**.
 
@@ -82,7 +70,7 @@ Sélectionnez Règles communes → **Suivant.**
 
 Une fois les 2 règles créées, cliquez sur Suivant.
 
-**Étape ****8  :**** Paramètres d’étiquette supplémentaire**
+**Étape 8 : Paramètres d’étiquette supplémentaire**
 
 Cochez uniquement : Tous les emplacements (préversion) : remplace les étiquettes de priorité inférieure sur tous les emplacements. Laissez décoché : Emails uniquement et Appliquer le chiffrement aux e-mails reçus en dehors de votre organisation. Cliquez sur Suivant.
 

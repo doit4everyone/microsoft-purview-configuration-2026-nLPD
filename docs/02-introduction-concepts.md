@@ -4,24 +4,24 @@ description: "Qu'est-ce que Microsoft Purview, pourquoi il est indispensable ave
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -30,7 +30,7 @@ lang: fr
 
 ## 1.1 Qu'est-ce que Microsoft Purview ?
 
-Microsoft Purview est la suite de conformité et de protection des données de Microsoft, accessible via le portail https://compliance.microsoft.com. Elle regroupe tous les outils nécessaires pour classifier, protéger, surveiller et gouverner vos données dans Microsoft 365, emails, fichiers SharePoint, OneDrive, Teams, et les applications IA comme Copilot.
+Microsoft Purview est la suite de conformité et de protection des données de Microsoft, accessible via le portail https://purview.microsoft.com. Elle regroupe tous les outils nécessaires pour classifier, protéger, surveiller et gouverner vos données dans Microsoft 365, emails, fichiers SharePoint, OneDrive, Teams, et les applications IA comme Copilot.
 
 > ℹ️ **INFO : **Purview ne crée pas de nouvelles données, il protège celles qui existent déjà. C'est une couche de gouvernance qui s'applique par-dessus vos services existants.
 
@@ -50,7 +50,7 @@ L’auto-labelling peut générer des faux positifs ou manquer certains contenus
 
 Microsoft Purview est une solution de gouvernance, de conformité et de protection des données. Elle ne remplace pas les solutions de sécurité active (protection contre les attaques, détection des menaces), qui relèvent d’autres services Microsoft tels que Microsoft Defender. Ces deux couches sont complémentaires et non substituables.
 
-> 🚨 **IMPORTANT : ****Point d’attention nLPD, si des mesures de protection adaptées ne sont pas mises en place (art. 8 nLPD), la responsabilité peut engager la personne en charge et, en cas de manquement grave, conduire à une amende pouvant aller jusqu’à CHF 250'000.**
+> 🚨 **IMPORTANT : Point d’attention nLPD, si des mesures de protection adaptées ne sont pas mises en place (art. 8 nLPD), la responsabilité peut engager la personne en charge et, en cas de manquement grave, conduire à une amende pouvant aller jusqu’à CHF 250'000.**
 
  
 
@@ -61,7 +61,7 @@ Microsoft Purview est une solution de gouvernance, de conformité et de protecti
 | **1 : Étiquettes de sensibilité** | Classifier les documents selon leur niveau de confidentialité | Partie 2 |
 | **2 : Auto-labelling** | Détecter et classifier automatiquement les données sensibles (AVS, IBAN) | Partie 3 |
 | **3 : DLP** | Bloquer la fuite des données sensibles vers l'extérieur | Partie 4 |
-| **4 : Audit ****&**** DSPM for AI** | Tracer qui accède à quoi, surveiller Copilot | Partie 5 |
+| **4 : Audit & DSPM for AI** | Tracer qui accède à quoi, surveiller Copilot | Partie 5 |
 
 Les Parties 6 à 11 (scénarios de test, gestion opérationnelle, fonctionnalités avancées, Endpoint DLP, gouvernance Power Platform et accès SharePoint) complètent ces 4 piliers fondamentaux et peuvent être déployées progressivement après le socle.
 
@@ -109,7 +109,7 @@ Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
 
 Get-AdminAuditLogConfig | FL UnifiedAuditLogIngestionEnabled
 
-**→ Résultat ****attendu :**** ****UnifiedAuditLogIngestionEnabled :**** True**
+**→ Résultat attendu : UnifiedAuditLogIngestionEnabled : True**
 
 *→ Si vous voyez False : déconnectez-vous, reconnectez-vous et réessayez l'étape 3.*
 

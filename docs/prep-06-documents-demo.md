@@ -4,24 +4,24 @@ description: "Répartition et dépôt des fichiers de démonstration (contrats, 
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l'index](../)
@@ -31,7 +31,7 @@ lang: fr
 Le guide Purview utilise des documents contenant des données sensibles réelles pour tester la détection automatique (auto-labelling). Les fichiers du dossier FICHIERS_DEMO_AXONIX.zip sont prêts à l'emploi.
 Ils contiennent des numéros AVS, des IBAN et des informations confidentielles fictives d'une société fictive (Axonix SA).
 
-> **ℹ️  CE QUE PURVIEW VA DÉTECTER DANS CES FICHIERS** Règle AVS → étiquette 4 - RH-Confidentiel : déclenche sur les fichiers 11, 12, 13, 14, 15, 16 (numéros AVS 756.xxxx). Règle IBAN → étiquette 5 - Finances-Confidentiel : déclenche sur les fichiers 14, 17, 18 (IBAN CH xx xxxx). Le fichier 14 (Registre Personnel) déclenche LES DEUX règles, il est particulièrement intéressant pour la démo.
+> **ℹ️ CE QUE PURVIEW VA DÉTECTER DANS CES FICHIERS** Règle AVS → étiquette 4 - RH-Confidentiel : se déclenche sur les fichiers 11, 12, 13, 14, 15, 16 (numéros AVS 756.xxxx). Règle IBAN → étiquette 5 - Finances-Confidentiel : se déclenche sur les fichiers 14, 17, 18 (IBAN CH xx xxxx). Le fichier 14 (Registre Personnel) déclenche LES DEUX règles, il est particulièrement intéressant pour la démo.
 
 ## 6.1 Répartition des fichiers par site SharePoint
 
@@ -70,7 +70,7 @@ Fichiers RH contenant des données personnelles sensibles au sens de la nLPD. Ce
 | 15_Evaluation_Annuelle_Nguyen_Linh_2024.docx | Évaluation annuelle, Linh Nguyen, Dev Senior | 🔴 AVS : 756.9988.7766.12 |
 | 16_Note_Disciplinaire_Favre_Laurent.docx | Note disciplinaire, L. Favre, fuite tarifaire client | 🔴 AVS : 756.5544.3322.87 + Strictement confidentiel |
 
-> **⚠️  LE FICHIER 14 EST LE PLUS IMPORTANT POUR LA DÉMO** 14_Registre_Personnel_2025.docx contient à la fois 7 numéros AVS ET 7 IBAN partiels. Il déclenchera simultanément la règle AVS (→ RH-Confidentiel) et la règle IBAN (→ Finances-Confidentiel). C'est le cas de test idéal pour montrer comment Purview gère les conflits de règles d'auto-labelling.
+> **⚠️ LE FICHIER 14 EST LE PLUS IMPORTANT POUR LA DÉMO** 14_Registre_Personnel_2025.docx contient à la fois 7 numéros AVS ET 7 IBAN partiels. Il déclenchera simultanément la règle AVS (→ RH-Confidentiel) et la règle IBAN (→ Finances-Confidentiel). C'est le cas de test idéal pour montrer comment Purview gère les conflits de règles d'auto-labelling.
 
 Site Finances : accès GRP-Finances + GRP-Direction (lecture)
 
@@ -103,9 +103,9 @@ Document de référence technique interne.
 
 5. Répétez pour chaque site (RH, Finances, Direction, Communication, Intranet).
 
-> **✅  CONSEIL**** :**** UPLOADER AVEC LE BON COMPTE** Connectez-vous avec un compte membre du bon groupe pour uploader : rh1@demo.ch pour le site RH, finance1@demo.ch pour Finances, direction1@demo.ch pour Direction. Cela simule un comportement réaliste et ancre correctement l'historique d'activité pour la démo Purview. Pour Communication et Intranet, n'importe quel compte peut uploader.
+> **✅ CONSEIL : UPLOADER AVEC LE BON COMPTE** Connectez-vous avec un compte membre du bon groupe pour uploader : rh1@demo.ch pour le site RH, finance1@demo.ch pour Finances, direction1@demo.ch pour Direction. Cela simule un comportement réaliste et ancre correctement l'historique d'activité pour la démo Purview. Pour Communication et Intranet, n'importe quel compte peut uploader.
 
-> **ℹ️  DÉLAI AVANT DÉTECTION PAR PURVIEW** Après le dépôt des fichiers, l'auto-labelling Purview analyse les contenus de façon asynchrone. Comptez 1 à 24 heures avant que les premières étiquettes automatiques apparaissent sur les fichiers. Déposez les fichiers AVANT de commencer la configuration Purview pour que l'analyse soit déjà en cours.
+> **ℹ️ DÉLAI AVANT DÉTECTION PAR PURVIEW** Après le dépôt des fichiers, l'auto-labelling Purview analyse les contenus de façon asynchrone. Comptez 1 à 24 heures avant que les premières étiquettes automatiques apparaissent sur les fichiers. Déposez les fichiers AVANT de commencer la configuration Purview pour que l'analyse soit déjà en cours.
 
 ---
 

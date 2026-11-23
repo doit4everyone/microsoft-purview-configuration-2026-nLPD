@@ -4,24 +4,24 @@ description: "Gestion opérationnelle de Microsoft Purview au quotidien : suspen
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -44,8 +44,8 @@ L’accès aux documents protégés par chiffrement est évalué dynamiquement. 
 | **Vérification** | **Où dans Purview** |
 | --- | --- |
 | Nouveaux événements DLP | Prévention des pertes de données → Activity Explorer |
-| Interactions Copilot inhabituelles | DSPM pour l'IA → Activités de l'IA |
-| Documents non étiquetés dans SharePoint RH/Finances | Protection des informations → Content Explorer |
+| Interactions Copilot inhabituelles | DSPM → Observabilité IA |
+| Documents non étiquetés dans SharePoint RH/Finances | Protection des données → Explorateurs → Explorateur de contenu |
 | Rapport hebdomadaire DSPM | Email automatique si configuré en 5.1 |
 
 ## 7.3 Résoudre les problèmes courants
@@ -76,7 +76,7 @@ Le chiffrement Purview ne nécessite pas que vous transmettiez un mot de passe a
 
 Dans un tenant Microsoft 365 actif depuis plusieurs années et sans gouvernance initiale des données, il est normal qu’une dette de labellisation existe : documents historiques, fichiers métier, contenus transférés ou hérités. L’objectif de cette section est de décrire la méthode pour identifier et piloter cette dette, en tenant compte des limitations connues de Purview.
 
-**Rappel de la limitation Purview :**** **l’Explorateur de données (Content Explorer) n’offre pas de filtre 
+**Rappel de la limitation Purview : **l’Explorateur de données (Content Explorer) n’offre pas de filtre 
 « étiquette de sensibilité = aucune ». L’identification des fichiers non étiquetés repose donc sur une approche combinée, décrite ci-dessous en 4 méthodes.
 
 Méthode 1 : Analyse des contenus déjà étiquetés (vue positive)

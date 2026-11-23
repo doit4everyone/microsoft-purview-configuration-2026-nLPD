@@ -4,24 +4,24 @@ description: "Créer les politiques DLP Microsoft Purview : politique principale
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -104,7 +104,7 @@ La nLPD (art. 6 et 19) n’interdit pas la communication de données personnelle
 
 **⚠️ Restriction production obligatoire**
 
-En production, ne pas laisser l’override ouvert à tous les utilisateurs. Créer un **groupe de sécurité DLP-Exceptions** (Direction + RH uniquement) et le désigner comme seul groupe autorisé à outrepasser la règle : Modifier la règle → section Remplacements → *Limiter qui peut ignorer la règle* → sélectionner le groupe DLP-Exceptions. Note : cette option granulaire par groupe nécessite M365 E3/E5 et n’est pas disponible en Business Premium. En Business Premium, la restriction est assurée implicitement par les **permissions ****SharePoint**,: seuls les utilisateurs ayant accès au site RH peuvent physiquement partager un fichier RH et donc déclencher l’override. Par construction, ce sont uniquement RH et Direction ce qui constitue une restriction implicite suffisante. Voir Annexe E pour le détail.
+En production, ne pas laisser l’override ouvert à tous les utilisateurs. Créer un **groupe de sécurité DLP-Exceptions** (Direction + RH uniquement) et le désigner comme seul groupe autorisé à outrepasser la règle : Modifier la règle → section Remplacements → *Limiter qui peut ignorer la règle* → sélectionner le groupe DLP-Exceptions. Note : cette option granulaire par groupe nécessite M365 E3/E5 et n’est pas disponible en Business Premium. En Business Premium, la restriction est assurée implicitement par les **permissions SharePoint**,: seuls les utilisateurs ayant accès au site RH peuvent physiquement partager un fichier RH et donc déclencher l’override. Par construction, ce sont uniquement RH et Direction ce qui constitue une restriction implicite suffisante. Voir Annexe E pour le détail.
 
 Cliquez sur **Enregistrer.**
 
@@ -155,7 +155,7 @@ Règle 1 : Surveiller les partages externes (traçabilité nLPD)
 | Notifications utilisateur | Activez par Message : Ce partage externe est enregistré conformément à la nLPD art. 6. |
 | Rapports d’incident | Niveau de gravité : Faible │ Alerte admin : Activé │ Email : admin@demo.ch |
 
-*Objectif : traçabilité nLPD. L’étiquette 6 appliquée manuellement = décision consciente. Cliquez sur ****Enregistrer***.
+*Objectif : traçabilité nLPD. L’étiquette 6 appliquée manuellement = décision consciente. Cliquez sur **Enregistrer**.*
 
 **⚠️ Filet de sécurité : **la condition « étiquette n’est pas appliquée » n’existe pas dans les politiques DLP SharePoint. La protection est assurée par : (1) permissions SharePoint (seuls RH et Direction peuvent déposer) ; (2) label par défaut de bibliothèque (section 2.4) qui applique automatiquement l’étiquette 6 à tout fichier déposé sans étiquette.
 
@@ -185,7 +185,7 @@ La politique **DLP-Protection-Transmission-Externe** contient **2 règles** couv
 
 Politique distincte : Protéger les documents étiquetés dans Copilot
 
-**ℹ️**** INFO : **La protection Copilot via DLP ne peut pas être ajoutée comme simple règle à la politique DLP-Protection-nLPD-demo. L’emplacement **Copilot (expériences Microsoft Copilot)** doit être configuré dans une **politique DLP dédiée**. C’est uniquement dans cette politique qu’apparaissent la condition *Étiquettes de sensibilité* et l’action *Restreindre l’accès dans Copilot*. 
+**ℹ️ INFO : **La protection Copilot via DLP ne peut pas être ajoutée comme simple règle à la politique DLP-Protection-nLPD-demo. L’emplacement **Copilot (expériences Microsoft Copilot)** doit être configuré dans une **politique DLP dédiée**. C’est uniquement dans cette politique qu’apparaissent la condition *Étiquettes de sensibilité* et l’action *Restreindre l’accès dans Copilot*. 
 
 Créez une nouvelle politique distincte en suivant ces étapes :
 

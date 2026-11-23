@@ -4,24 +4,24 @@ description: "Annexes du guide Microsoft Purview 2026 : glossaire, articles nLPD
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -49,7 +49,7 @@ lang: fr
 | **Article nLPD** | **Obligation** | **Fonctionnalité Purview qui y répond** |
 | --- | --- | --- |
 | Art. 6 — Finalité | Données utilisées uniquement pour la finalité prévue | DLP + Labels empêchent l'utilisation non prévue |
-| Art. 6 — Proportionnalité | Pas plus de données que nécessaire | DLP complète les mécanismes de protection en auditant et restreignant certains usages Copilot (partage, exfiltration), sans en être le contrôle principal. Ordre de priorité :  (1) Permissions M365, un utilisateur n’accède qu’à ce qu’il est autorisé à voir ;  (2) Chiffrement RMS, protection intrinsèque du document ;  (3) DLP Copilot, complète en bloquant certaines actions. Un utilisateur autorisé par RMS peut toujours interroger le contenu via Copilot, la DLP réduit le risque résiduel mais ne le supprime pas |
+| Art. 6 — Proportionnalité | Pas plus de données que nécessaire | DLP complète les mécanismes de protection en auditant et restreignant certains usages Copilot (partage, exfiltration), sans en être le contrôle principal. Ordre de priorité : (1) Permissions M365, un utilisateur n’accède qu’à ce qu’il est autorisé à voir ; (2) Chiffrement RMS, protection intrinsèque du document ; (3) DLP Copilot, complète en bloquant certaines actions. Un utilisateur autorisé par RMS peut toujours interroger le contenu via Copilot, la DLP réduit le risque résiduel mais ne le supprime pas |
 | Art. 8 — Sécurité | Mesures techniques et organisationnelles obligatoires | Chiffrement + DLP + Audit = MTO complètes |
 | Art. 9 — Privacy by design | Protection intégrée dès la conception | Auto-labelling protège dès le dépôt du fichier |
 | Art. 24 — Notification PFPDT | Notifier dès que possible (art. 24 nLPD) en cas de violation | Audit logs = preuves et chronologie complète |
@@ -74,7 +74,7 @@ Ce regex détecte exactement le format suisse avec points obligatoires : 756.XXX
 
 Ces mots-clés sont des éléments de soutien, ils augmentent le niveau de confiance de la détection quand ils apparaissent dans une fenêtre de 300 caractères autour du numéro détecté. Ils ne ralentissent pas l’analyse et n’affectent pas les performances des politiques DLP ou d’auto-labelling.
 
-ℹ️ **Astuce copier-coller : **copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez «  /  » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
+ℹ️ **Astuce copier-coller : **copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez « / » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
 
 ⚠️ Notepad++ : activez le mode Expression régulière et utilisez \\n dans le champ Remplacer par au lieu de Ctrl+Entrée.
 
@@ -114,7 +114,7 @@ Une fois le SIT AVS-Suisse-PME créé, remplacez Swiss Social Security Number AH
 
 4. DLP DLP-Protection-nLPD-demo → règle Avertir-Donnees-Sensibles-Interne → condition Le contenu inclut → remplacez le SIT natif par AVS-Suisse-PME.
 
-**ℹ️**** INFO — **Après remplacement, relancez la simulation des politiques d’auto-labelling et vérifiez dans l’onglet Éléments correspondants que vos fichiers de test apparaissent. Le SIT personnalisé détecte tout numéro au format 756.XXXX.XXXX.XX indépendamment de la validité du checksum.
+**ℹ️ INFO — **Après remplacement, relancez la simulation des politiques d’auto-labelling et vérifiez dans l’onglet Éléments correspondants que vos fichiers de test apparaissent. Le SIT personnalisé détecte tout numéro au format 756.XXXX.XXXX.XX indépendamment de la validité du checksum.
 
 ### C.5 : SIT personnalisé Medical-RH-Suisse
 
@@ -124,7 +124,7 @@ Le SIT natif Microsoft « All Medical Terms And Conditions » est trop large pou
 
 Ces mots-clés ciblent les documents RH contenant des informations médicales nominatives. Ils ne déclenchent pas sur des termes médicaux génériques ou scientifiques. Saisissez un mot-clé par ligne dans Purview.
 
-ℹ️ **Astuce copier-coller : **copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez «  /  » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
+ℹ️ **Astuce copier-coller : **copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez « / » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
 
 ⚠️ Notepad++ : activez le mode Expression régulière et utilisez \\n dans le champ Remplacer par au lieu de Ctrl+Entrée.
 
@@ -161,7 +161,7 @@ Ce guide est conçu pour un environnement POC / LAB avec Microsoft 365 Business 
 | **Endpoint DLP / Edge IA** | Auditer 7 jours puis bloquer | **Minimum 2 à 4 semaines audit-only. Désigner un sponsor métier. Documenter les usages légitimes à exclure avant blocage.** |
 | **Power Platform DLP** | Blocage connecteurs sans procédure rollback | **Exporter tous les flux Power Automate avant activation. Définir point de restauration. Tester sur environnement de développement avant prod.** |
 | Trainable Classifiers | Non disponible (Business Premium + Purview Suite) | Privilégier SITs personnalisés (Annexes C et D). Trainable Classifiers disponibles avec M365 E5 si évolution de licence. |
-| Restriction override DLP par groupe (Règle 1) | Override ouvert à tous les utilisateurs. Restriction implicite assurée par les permissions SharePoint : seuls RH et Direction ont accès aux fichiers RH et peuvent donc déclencher l’override. La condition “expéditeur est membre de” n’est pas disponible en Business Premium. | **Vérifier que les permissions SharePoint RH sont strictement limitées à RH + Direction (principe du moindre ****privilège  Partie**** 11). Si évolution vers M365 E3/E5 : créer groupe DLP-Exceptions et utiliser la condition “L’expéditeur est membre de” pour architecture à deux règles (1 blocage strict tous users, 1b override groupe autorisé).** |
+| Restriction override DLP par groupe (Règle 1) | Override ouvert à tous les utilisateurs. Restriction implicite assurée par les permissions SharePoint : seuls RH et Direction ont accès aux fichiers RH et peuvent donc déclencher l’override. La condition “expéditeur est membre de” n’est pas disponible en Business Premium. | **Vérifier que les permissions SharePoint RH sont strictement limitées à RH + Direction (principe du moindre privilège Partie 11). Si évolution vers M365 E3/E5 : créer groupe DLP-Exceptions et utiliser la condition “L’expéditeur est membre de” pour architecture à deux règles (1 blocage strict tous users, 1b override groupe autorisé).** |
 
 ## Annexe F — RUN & Responsabilités (PME suisse)
 
@@ -187,7 +187,7 @@ Sans organisation associée aux mesures techniques, Purview devient une boîte n
 
 **Chaîne d’escalade : **Alerte Purview → Admin IT (48h) → Direction (si violation confirmée) → Conseil juridique (si notification PFPD requise) → PFPD (dès que possible - art. 24 nLPD).
 
-**ℹ️**** INFO : **Ce tableau RACI doit être intégré dans le registre des activités de traitement de l’organisation (art. 12 nLPD). Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
+**ℹ️ INFO : **Ce tableau RACI doit être intégré dans le registre des activités de traitement de l’organisation (art. 12 nLPD). Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
 
 ## Annexe G — Procédure de levée d’anonymat IRM (obligatoire nLPD)
 
@@ -230,8 +230,7 @@ Compte : **admin-it@demo.ch** | État : Actif | MFA : Obligatoire | Licence : Bu
 
 Compte : **rms-breakglass@demo.ch** | Type : cloud-only, non nominatif | État : **❌ Désactivé sauf incident** | MFA : FIDO2 ou TOTP offline | Licence : aucune.
 
-**Rôle unique : **Super User RMS (via PowerShell uniquement). **❌ Aucun rôle Entra ID administratif. **
-**❌ Aucun rôle Purview. ❌ Aucun accès SharePoint.**
+**Rôle unique : **Super User RMS (via PowerShell uniquement). **❌ Aucun rôle Entra ID administratif.  ❌ Aucun rôle Purview. ❌ Aucun accès SharePoint.**
 
 Activation temporaire uniquement, désactivation immédiate après usage. Chaque activation est tracée dans les journaux d’audit Entra ID (Journaux d’audit → Gestion des utilisateurs).
 
@@ -280,7 +279,7 @@ L’art. 12 nLPD impose aux responsables du traitement de tenir un registre des 
 | **Champ** | **À compléter par l’organisation** |
 | --- | --- |
 | **Raison sociale** | [Nom de la société] |
-| **Responsable du traitement (art. 5 let. ****j**** nLPD)** | [Nom, Prénom, Fonction] |
+| **Responsable du traitement (art. 5 let. j nLPD)** | [Nom, Prénom, Fonction] |
 | **DPO / Conseiller en protection des données** | [Nom, Prénom ou Externe / Pas de DPO désigné] |
 | **Date de dernière mise à jour** | [JJ/MM/AAAA] |
 
@@ -380,9 +379,7 @@ via la plateforme Kofi :
 
 👉 https://ko-fi.com/doit4everyone
 
-**Ce soutien n’implique aucune obligation, aucun service associé et aucune différence**
-
-**de**** traitement dans l’accès au contenu.**
+**Ce soutien n’implique aucune obligation, aucun service associé et aucune différence de traitement dans l’accès au contenu.**
 
 .
 

@@ -4,24 +4,24 @@ description: "Configurer DSPM for AI et l'audit Purview pour surveiller les inte
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -30,13 +30,15 @@ lang: fr
 
 ## 5.1 Configurer DSPM for AI
 
-Microsoft a unifié en 2026 DSPM for AI (classique)** **et DSPM dans une interface unifiée appelée DSPM (aperçu)**.** Les deux expériences restent actuellement accessibles depuis la barre latérale gauche du portail Microsoft Purview. À ce jour, Microsoft n’a communiqué aucune date officielle de suppression ou de retrait de DSPM for AI (classique). Les expériences classiques (DSPM classique et DSPM for AI classique) demeurent disponibles en parallèle, mais n’évoluent plus fonctionnellement. Les investissements et nouvelles fonctionnalités sont désormais concentrés sur la nouvelle interface DSPM**.**
+Microsoft a unifié DSPM for AI (classique) et DSPM dans une interface unifiée appelée simplement **DSPM** (la mention « aperçu » a été retirée, la fonctionnalité est désormais en disponibilité générale). Les deux expériences classiques restent accessibles depuis la barre latérale gauche du portail mais n’évoluent plus fonctionnellement.
+
+> 🚨 **DÉPRÉCIATION ANNONCÉE :** DSPM pour l’IA (classique) et Gestion de la posture de sécurité des données (classique) **seront mis hors service le 30 septembre 2026**. Toutes les fonctionnalités et données sont désormais disponibles dans le nouveau DSPM unifié. Migrez vos workflows vers le DSPM unifié dès que possible.
 
 Ce guide documente exclusivement la nouvelle interface DSPM unifiée.
 
 Périmètre de DSPM en Business Premium + Purview Suite
 
-DSPM (aperçu) est avant tout un **tableau de bord de reporting et de surveillance** dans le cadre de la licence Business Premium + Purview Suite. La majorité des fonctionnalités d’action visibles dans l’interface nécessitent des licences supplémentaires non incluses dans ce périmètre. Connaître ce périmètre évite de se perdre dans une interface conçue pour montrer ce qui manque.
+DSPM est avant tout un **tableau de bord de reporting et de surveillance** dans le cadre de la licence Business Premium + Purview Suite. La majorité des fonctionnalités d’action visibles dans l’interface nécessitent des licences supplémentaires non incluses dans ce périmètre. Connaître ce périmètre évite de se perdre dans une interface conçue pour montrer ce qui manque.
 
 **Inclus et opérationnel dans ce guide : **Rapports (Exfiltration, DLP, Étiquettes, IA), Observabilité IA, Activity Explorer Copilot, Métriques de posture, Data Risk Assessments au niveau site.
 
@@ -44,7 +46,7 @@ DSPM (aperçu) est avant tout un **tableau de bord de reporting et de surveillan
 
 Accès et navigation :
 
-Purview → barre latérale gauche → **DSPM (aperçu)**. Structure du menu : Posture, Objectifs, Observabilité IA, Découvrir (Applications et agents, Explorateur d’activités, Explorateur de ressources, Évaluations des risques), Tâches et actions (Tâches de configuration, Action de correction), Rapports.
+Purview → barre latérale gauche → **DSPM**. Structure du menu : Posture, Objectifs, Observabilité IA, Découvrir (Applications et agents, Explorateur d’activités, Explorateur de ressources, Évaluations des risques), Tâches et actions (Tâches de configuration, Action de correction), Rapports.
 
 Posture : Métriques clés à surveiller
 
@@ -67,9 +69,9 @@ Partage excessif, exfiltration, contraire à l'éthique (tous à 0).
 
 Tâches de configuration : État pour Business Premium + Purview Suite
 
-Purview → DSPM (aperçu) → Tâches et actions → Tâches de configuration. Après configuration complète de ce guide : 2 terminées, 8 non démarrées.
+Purview → DSPM → Tâches et actions → Tâches de configuration. Après configuration complète de ce guide : 2 terminées, 8 non démarrées.
 
-**Terminées (incluses dans ce guide)**** : **Activer Microsoft Purview Audit (section 1.5) ; Protéger vos données avec étiquettes de sensibilité (Partie 2).
+**Terminées (incluses dans ce guide) : **Activer Microsoft Purview Audit (section 1.5) ; Protéger vos données avec étiquettes de sensibilité (Partie 2).
 
 **Nécessitent Azure Pay-as-you-go (hors scope Business Premium + Purview Suite) : **Configurer la facturation à l’utilisation. Interactions sécurisées dans les expériences Microsoft Copilot. Étendre les insights données sensibles apps IA (détection réseau via SASE/SSE). Sécuriser les interactions apps IA d’entreprise.
 
@@ -90,26 +92,26 @@ Sans l’extension navigateur, la DLP Purview couvre Exchange, SharePoint, OneDr
 
 Action de correction : 12 recommandations
 
-Purview → DSPM (aperçu) → Tâches et actions → Action de correction : 13 éléments, 12 non démarrés, 1 rejeté. La recommandation "Protéger les données sensibles dans les interactions avec Microsoft 365 Copilot" a été rejetée (Dismissed) car couverte par la DLP-Protection-Copilot configurée en section 4.4. Les recommandations "Empêchez l'exfiltration vers des destinations à risque", "Découvrez les données sensibles" et "Prévenez le partage excessif" seront adressées par Endpoint DLP (section 9.1). Ne traitez aucune action de correction à cette étape.
+Purview → DSPM → Tâches et actions → Action de correction : 13 éléments, 12 non démarrés, 1 rejeté. La recommandation "Protéger les données sensibles dans les interactions avec Microsoft 365 Copilot" a été rejetée (Dismissed) car couverte par la DLP-Protection-Copilot configurée en section 4.4. Les recommandations "Empêchez l'exfiltration vers des destinations à risque", "Découvrez les données sensibles" et "Prévenez le partage excessif" seront adressées par Endpoint DLP (section 9.1). Ne traitez aucune action de correction à cette étape.
 
 Politiques one-click DSPM : Information
 
-DSPM propose des actions de correction accessibles depuis **DSPM (aperçu) → Objectifs → Afficher le plan de correction** sur chaque objectif. Ces actions varient selon l’objectif sélectionné et l’état de votre tenant, elles ne correspondent pas à une liste fixe de politiques nommées. Pour chaque objectif vous trouverez des blocs d’action : créer une stratégie DLP, appliquer une stratégie existante, configurer l’IRM, lancer un Data Risk Assessment, ou améliorer la conformité IA. Chaque bloc indique clairement si la stratégie est déjà en place, en cours, ou non démarrée. **Ne pas activer ces actions à cette étape.** La plupart nécessitent l’extension navigateur et/ou Endpoint DLP (section 9). Les actions liées à Copilot sont déjà couvertes par votre politique DLP-Protection-Copilot configurée en section 4.4. Attention à ne pas créer de doublon.
+DSPM propose des actions de correction accessibles depuis **DSPM → Objectifs → Afficher le plan de correction** sur chaque objectif. Ces actions varient selon l’objectif sélectionné et l’état de votre tenant, elles ne correspondent pas à une liste fixe de politiques nommées. Pour chaque objectif vous trouverez des blocs d’action : créer une stratégie DLP, appliquer une stratégie existante, configurer l’IRM, lancer un Data Risk Assessment, ou améliorer la conformité IA. Chaque bloc indique clairement si la stratégie est déjà en place, en cours, ou non démarrée. **Ne pas activer ces actions à cette étape.** La plupart nécessitent l’extension navigateur et/ou Endpoint DLP (section 9). Les actions liées à Copilot sont déjà couvertes par votre politique DLP-Protection-Copilot configurée en section 4.4. Attention à ne pas créer de doublon.
 
 Data Risk Assessments : Cartographier les données surexposées
 
 Les Data Risk Assessments identifient les fichiers SharePoint, OneDrive et Teams accessibles à un périmètre plus large que nécessaire, liens de partage ouverts, fichiers sensibles surexposés.
-Navigation : **DSPM (aperçu) → Découvrir → Évaluations des risques liées aux données**. L’interface propose un workflow en 3 étapes : (1) Identifier, examiner les résultats pour les utilisateurs accédant à des éléments sensibles. (2) Protéger, limiter l’accès Copilot aux données sensibles et appliquer des stratégies d’étiquette. (3) Surveiller, effectuer des examens des accès SharePoint. Un bandeau rouge « Analyse au niveau de l’élément non configurée : Configurer la connexion » peut apparaître : **ne pas cliquer sur ce bouton !** Il concerne Microsoft Fabric / Azure AKS, hors périmètre Business Premium. Le scan niveau site est suffisant pour une PME et les résultats permettent de désactiver en masse les liens « Anyone with the link » et d’identifier les fichiers sensibles mal protégés.
+Navigation : **DSPM → Découvrir → Évaluations des risques liées aux données**. L’interface propose un workflow en 3 étapes : (1) Identifier, examiner les résultats pour les utilisateurs accédant à des éléments sensibles. (2) Protéger, limiter l’accès Copilot aux données sensibles et appliquer des stratégies d’étiquette. (3) Surveiller, effectuer des examens des accès SharePoint. Un bandeau rouge « Analyse au niveau de l’élément non configurée : Configurer la connexion » peut apparaître : **ne pas cliquer sur ce bouton !** Il concerne Microsoft Fabric / Azure AKS, hors périmètre Business Premium. Le scan niveau site est suffisant pour une PME et les résultats permettent de désactiver en masse les liens « Anyone with the link » et d’identifier les fichiers sensibles mal protégés.
 
 Routine de surveillance mensuelle
 
-Revue mensuelle suffisante en régime de croisière, revue hebdomadaire recommandée pendant les 3 premiers mois. Checklist : (1) Consulter les nouvelles recommandations DSPM, traiter celles classées « Élevée ». (2) Vérifier l’évolution du taux de couverture des sensitivity labels (objectif > 80 %). (3) Analyser les pics d’activité DLP (augmentation anormale de correspondances). (4) Relancer un Data Risk Assessment (trimestriel) : DSPM → Découvrir → Évaluations des risques liées aux données → + Créer une évaluation personnalisée. Le scan global se relance automatiquement, mais le trimestriel ciblé passe par ce bouton. (5) Documenter les actions correctives dans le registre nLPD. Le rapport DSPM (aperçu) → Rapports → Microsoft 365 Copilot se peuple automatiquement au fil de l’utilisation et constitue l’outil de surveillance principal des interactions Copilot avec les données sensibles, aucune configuration supplémentaire requise. Les autres rapports disponibles (Exfiltration, Utilisation de l’IA et risque, Étiquettes) suivent la même logique et sont à explorer selon les besoins.
+Revue mensuelle suffisante en régime de croisière, revue hebdomadaire recommandée pendant les 3 premiers mois. Checklist : (1) Consulter les nouvelles recommandations DSPM, traiter celles classées « Élevée ». (2) Vérifier l’évolution du taux de couverture des sensitivity labels (objectif > 80 %). (3) Analyser les pics d’activité DLP (augmentation anormale de correspondances). (4) Relancer un Data Risk Assessment (trimestriel) : DSPM → Découvrir → Évaluations des risques liées aux données → + Créer une évaluation personnalisée. Le scan global se relance automatiquement, mais le trimestriel ciblé passe par ce bouton. (5) Documenter les actions correctives dans le registre nLPD. Le rapport DSPM → Rapports → Microsoft 365 Copilot se peuple automatiquement au fil de l’utilisation et constitue l’outil de surveillance principal des interactions Copilot avec les données sensibles, aucune configuration supplémentaire requise. Les autres rapports disponibles (Exfiltration, Utilisation de l’IA et risque, Étiquettes) suivent la même logique et sont à explorer selon les besoins.
 
 ## 5.2 Utiliser Activity Explorer
 
 Activity Explorer est votre tableau de bord principal pour vérifier que tout fonctionne.
 
-1. Purview → DSPM (aperçu) → Découvrir → Explorateur d’activités → onglet Activités d’IA.
+1. Purview → DSPM → Découvrir → Explorateur d’activités → onglet Activités d’IA.
 
 2. Plage de dates : Derniers 7 jours.
 
@@ -128,7 +130,7 @@ Activity Explorer est votre tableau de bord principal pour vérifier que tout fo
 
 Pour rechercher qui a accédé à un fichier précis (ex : le contrat de Valérie Beraz) :
 
-1. Purview → Audit → Recherche.
+1. Purview → Audit → Rechercher.
 
 2. Plage de dates : choisissez la période souhaitée.
 

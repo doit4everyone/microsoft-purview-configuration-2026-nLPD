@@ -4,24 +4,24 @@ description: "Comprendre et créer les étiquettes de sensibilité Purview : gro
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -125,21 +125,23 @@ Get-DistributionGroupMember "GRP-RH-Purview"
 
 ## 2.3 Accéder à la section Étiquettes
 
-1. Allez sur https://compliance.microsoft.com
+1. Allez sur https://purview.microsoft.com
 
-2. Dans le menu de gauche, cherchez « Protection des informations » cliquez dessus.
+2. Dans le menu de gauche, cherchez « Protection des données » cliquez dessus.
 
-3. Cliquez sur l'onglet Étiquettes dans la barre horizontale en haut.
+3. Cliquez sur Étiquettes de confidentialité dans le sous-menu.
 
 4. Vous voyez la liste vide des étiquettes (normal au départ).
 
-> ⚠️ **ATTENTION : **Si vous ne voyez pas 'Protection des informations' dans le menu gauche, votre rôle Compliance Administrator Purview n'est pas encore actif. Déconnectez-vous, reconnectez-vous, puis réessayez.
+> ⚠️ **ATTENTION : **Si vous ne voyez pas 'Protection des données' dans le menu gauche, votre rôle Compliance Administrator Purview n'est pas encore actif. Déconnectez-vous, reconnectez-vous, puis réessayez.
 
 2.3bis : Créer les SIT personnalisés (à faire avant les étiquettes)
 
 Les SIT (Sensitive Information Types) personnalisés définissent les motifs de détection utilisés par les étiquettes, les règles DLP et l’auto-labelling. Ils doivent être créés avant la configuration des étiquettes et des politiques, afin que les procédures suivantes puissent les référencer directement. La propagation après création peut prendre 15 à 30 minutes, attendez avant de configurer les règles qui les utilisent.
 
-ℹ️ **Terminologie SIT : **dans ce guide, SIT (Sensitive Information Type) désigne ce que l’interface Purview appelle Types d’informations sensibles ou Types d’infos confidentielles selon l’endroit. Les deux termes désignent exactement la même chose. Quand le guide dit « sélectionnez AVS-Suisse-PME dans les SITs », cherchez + Ajouter → Types d’informations sensibles dans l’interface.
+ℹ️ **Terminologie SIT : **dans ce guide, SIT (Sensitive Information Type) désigne ce que l’interface Purview appelle « Types d’infos confidentielles ». Le menu latéral affiche « Sensitive info types (classic) » en anglais. Quand le guide dit « sélectionnez AVS-Suisse-PME dans les SITs », cherchez + Ajouter → Types d’infos confidentielles dans l’interface.
+
+> ℹ️ **Migration des classifieurs en cours (2026) :** Microsoft unifie progressivement les classifieurs dans une nouvelle interface. Les sous-menus actuels portent le suffixe « (classic) » : Trainable classifiers (classic), Sensitive info types (classic), EDM classifiers (classic). Un bandeau dans le portail propose « Go to Classifiers (preview) ». Les procédures de ce guide restent fonctionnelles avec l’interface classique. Lorsque la migration sera achevée, les chemins de navigation pourront évoluer.
 
 SIT 1 : AVS-Suisse-PME
 
@@ -147,9 +149,9 @@ Détecte les numéros AVS suisses au format exact 756.XXXX.XXXX.XX en 4 langues 
 
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
-| **1** | **Navigation** | Purview → Protection des données → Classifieurs → Types d’informations sensibles → **+ Créer un type d’informations sensibles** |
+| **1** | **Navigation** | Purview → Protection des données → Classifieurs → Types d’infos confidentielles → **+ Créer un type d’informations sensibles** |
 | **2** | **Page 1 : Nommer** | Nom : **AVS-Suisse-PME** │ Description : Détection numéro AVS suisse 756.XXXX.XXXX.XX, 4 langues nationales + anglais. → **Suivant** |
-| **3** | **Page 2 : Définir les modèles** | + Ajouter un modèle → Niveau de confiance : **Moyen** → + Ajouter un élément principal → Expression régulière → ID : **regex-AVS-Suisse** → collez : **756\\.\\d{****4}\\.\\d****{****4}\\.\\d****{2}** → Correspondance de chaîne → **Terminé** |
+| **3** | **Page 2 : Définir les modèles** | + Ajouter un modèle → Niveau de confiance : **Moyen** → + Ajouter un élément principal → Expression régulière → ID : **regex-AVS-Suisse** → collez : **756\\.\\d{4}\\.\\d{4}\\.\\d{2}** → Correspondance de chaîne → **Terminé** |
 | **4** | **Page 2 : Ajouter les mots-clés** | + Ajouter des éléments de soutien → Liste de mots-clés → ID : **recherche-AVS-Suisse** → saisissez un mot-clé par ligne (voir Annexe C pour la liste complète en 4 langues) → **Terminé** |
 | **5** | **Page 3 : Tester et créer** | Suivant → testez avec un numéro format 756.XXXX.XXXX.XX → vérifiez la détection → Suivant → **Créer** |
 | **⚠️** | **Propagation 15 à 30 minutes : **attendez avant de configurer les règles qui utilisent ce SIT. AVS-Suisse-PME ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires : conservez-les en configuration OU pendant la période de propagation. |
@@ -160,13 +162,15 @@ Détecte les données médicales RH (arrêts maladie, certificats, incapacité d
 
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
-| **1** | **Navigation** | Purview → Protection des données → Classifieurs → Types d’informations sensibles → **+ Créer un type d’informations sensibles** |
+| **1** | **Navigation** | Purview → Protection des données → Classifieurs → Types d’infos confidentielles → **+ Créer un type d’informations sensibles** |
 | **2** | **Page 1 : Nommer** | Nom : **Medical-RH-Suisse** │ Description : Détection données médicales RH, 4 langues nationales + anglais. → **Suivant** |
 | **3** | **Page 2 : Définir les modèles** | + Ajouter un modèle → Niveau de confiance : **Moyen** → + Ajouter un élément principal → Liste de mots-clés → ID : **medical-rh-suisse** → saisissez un mot-clé par ligne (voir Annexe C.5.1 pour la liste complète) → **Terminé** |
 | **4** | **Page 3 : Tester et créer** | Suivant → testez avec « arrêt maladie » → vérifiez la détection → Suivant → **Créer** │ Attendez 15 à 30 minutes avant de configurer les règles des sections suivantes. |
 | **ℹ️** | **Medical-RH-Suisse vs SIT natif : **Medical-RH-Suisse est ciblé sur le contexte RH suisse (arrêts maladie, certificats, incapacité de travail) en 4 langues nationales. Le SIT natif All Medical Terms And Conditions génère des faux positifs sur des termes médicaux génériques sans contexte RH. Ne pas substituer l’un à l’autre. |
 
 ## 2.4 Créer les 7 étiquettes de sensibilité
+
+> ℹ️ **Modèle d'étiquette moderne (2026) :** un bandeau dans le portail indique « Vous avez été migré vers le modèle d'étiquette moderne ». Cette migration est transparente et n'affecte pas les procédures de ce guide. Les étiquettes existantes et nouvelles fonctionnent de la même manière.
 
 Vous allez créer 7 étiquettes dans cet ordre exact, du moins sensible au plus sensible. Créez-les dans l'ordre 1 à 7.
 
@@ -221,7 +225,7 @@ Cette étiquette gouverne les conteneurs Direction (site SharePoint, équipe Tea
 | **3** | **Page 2 : Définir l’étendue** | **Cochez UNIQUEMENT : Groupes et sites. **Décochez : Fichiers et autres ressources de données, Courriers électroniques, Réunions. → cliquer sur **Suivant.** |
 | **4** | **Page 3 : Éléments** | **Aucune action requise : **Les options Contrôler l’accès et Appliquer le marquage de contenu sont grisées et non disponibles pour l’étendue Groupes et sites. Cliquez simplement sur **Suivant.** |
 | **5** | **Page 4 : Groupes et sites** | **Cochez les 3 cases : **Confidentialité et accès des utilisateurs externes │ Partage externe et accès conditionnel │ Découvrabilité des équipes privées et paramètres des canaux partagés. │ Appliquer un libellé aux réunions de canal : Aucun. → cliquer sur **Suivant.** |
-| **6** | **Sous-page : Confidentialité et accès** | Confidentialité : sélectionnez Privé (seuls les propriétaires et membres peuvent accéder, les propriétaires peuvent ajouter des membres). │ Accès utilisateur externe : décochez Autoriser les propriétaires de groupes Microsoft 365 à ajouter des personnes externes en tant qu’invités. → cliquer sur **Suivant****.** |
+| **6** | **Sous-page : Confidentialité et accès** | Confidentialité : sélectionnez Privé (seuls les propriétaires et membres peuvent accéder, les propriétaires peuvent ajouter des membres). │ Accès utilisateur externe : décochez Autoriser les propriétaires de groupes Microsoft 365 à ajouter des personnes externes en tant qu’invités. → cliquer sur **Suivant.** |
 | **7** | **Sous-page : Partage externe et accès conditionnel** | Contrôler le partage externe : cochez │ Contenu partagé avec : sélectionnez Uniquement les membres de votre organisation, aucun partage externe autorisé. │ Utiliser Accès conditionnel Microsoft Entra : cochez │ Option : Déterminer si les utilisateurs peuvent accéder depuis des appareils non gérés │ Accès : sélectionnez Autoriser un accès limité au web uniquement. → cliquer sur **Suivant.** |
 | **8** | **Sous-page : Équipes privées et canaux partagés** | Détectabilité : décochez Autoriser les utilisateurs à découvrir les équipes privées, la Direction ne doit pas être découvrable dans les recherches. │ Canaux partagés Teams : cochez les 3 options : Interne uniquement + Même étiquette uniquement + Équipes privées uniquement. → cliquer sur **Suivant.** |
 | **9** | **Enregistrer l’étiquette** | Vérifiez le résumé : Nom d’affichage = 3a - Direction - Site │ Portée = Site, UnifiedGroup │ Étiquetage automatique = Aucun │ Paramètres du groupe = Privé │ Paramètres du site = Accès limité au web + Membres org uniquement. │ Cliquez sur Enregistrer l’étiquette → Terminer. |
@@ -242,7 +246,7 @@ Connect-SPOService -Url https://demo-admin.sharepoint.com
 
 Set-SPOSite -Identity https://demo.sharepoint.com/sites/Direction -SensitivityLabel "GUID-de-l-etiquette-3a"
 
-**ℹ️**** INFO — **Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
+**ℹ️ INFO — **Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
 
 Procédure détaillée, créer l’étiquette : 3b - Direction - Documents (fichiers)
 
@@ -257,7 +261,7 @@ Cette étiquette protège et marque visuellement les documents Direction lorsqu�
 | **5** | **Page 4 : Configurer le chiffrement** | Chiffrement : Configurer les paramètres de contrôle d’accès (chiffrement) │ Attribuer des autorisations maintenant │ Expiration : Jamais │ Accès hors connexion : 30 jours │ + Attribuer des autorisations → ajoutez GRP-Direction-Purview et admin@demo.ch │ Niveau : Éditeur (Co-auteur) │ Enregistrer → cliquer sur **Suivant.** |
 | **6** | **Page 5 : Marquage du contenu** | Activez Marquage du contenu. │ En-tête : « Direction - Strictement confidentiel » • Rouge • taille 11 • Centré. │ Pied de page : « Document interne - Diffusion interdite sans validation Direction » • Rouge • taille 11 • Centré. │ Filigrane : « CONFIDENTIEL – DIRECTION » • taille 40 • diagonal • Rouge. → **Suivant.** |
 | **7** | **Sous-page : Étiquetage automatique des fichiers et des courriers** | Laissez désactivé**. **Laissez le bouton désactivé. Le périmètre Direction ne contient pas de données détectables automatiquement, application manuelle uniquement (voir section 3.1). → **Suivant.** |
-| **8** | **Page 4 : Groupes et sites** | Aucune case à cocher.** **L’étiquette 3b étant de type Fichiers uniquement, les paramètres Groupes et sites ne s’appliquent pas. Laissez toutes les cases décochées et le libellé réunion de canal sur Aucun. → **Suivant.** |
+| **8** | **Page 4 : Groupes et sites** | Aucune case à cocher. L’étiquette 3b étant de type Fichiers uniquement, les paramètres Groupes et sites ne s’appliquent pas. Laissez toutes les cases décochées et le libellé réunion de canal sur Aucun. → **Suivant.** |
 | **9** | **Vérifier et créer** | Vérifiez le résumé : Nom = 3b - Direction - Documents │ Portée = Fichiers et autres ressources de données, E-mail │ Contrôle de l’accès = Activé (GRP-Direction-Purview + admin@demo.ch, Co-auteur, 30 jours hors ligne) │ Marquage = Activé (filigrane + en-tête + pied de page) │ Étiquetage automatique = Aucun. → Cliquez sur **Enregistrer l’étiquette.** |
 
 Étiquette 6 : Transmission-Externe
@@ -317,9 +321,7 @@ En cas d’urgence (départ conflictuel, perte d’accès aux groupes de sécuri
 
 Procédure technique, activation via PowerShell :
 
-**Attention, ne fonctionne PAS en Cloud Shell, à exécuter sur un poste en local sous Windows PowerShell 5.1 uniquement.**
-
-**Prérequis : Installer le module AIPService :**
+**Attention, ne fonctionne PAS en Cloud Shell, à exécuter sur un poste en local sous Windows PowerShell 5.1 uniquement. Prérequis : Installer le module AIPService :**
 
 Install-Module -Name AIPService -Force
 
@@ -356,7 +358,7 @@ Votre politique « Politique-Labels-demo » force chaque utilisateur à choisir 
 
 **Niveau 2 : Audit et campagne manuelle via Content Explorer**
 
-Purview → Protection des informations → Content Explorer. Affiche les contenus étiquetés et/ou détectés par les classifieurs Purview. Il permet d’analyser la couverture d’étiquetage et de cibler des campagnes de rattrapage. Pour identifier et piloter la dette de labellisation (fichiers sans étiquette de sensibilité), utilisez l’approche combinée décrite en section 7.5, simulation auto-labellisation, inventaires SharePoint/OneDrive et gouvernance par emplacement.
+Purview → Protection des données → Explorateurs → Explorateur de contenu. Affiche les contenus étiquetés et/ou détectés par les classifieurs Purview. Il permet d’analyser la couverture d’étiquetage et de cibler des campagnes de rattrapage. Pour identifier et piloter la dette de labellisation (fichiers sans étiquette de sensibilité), utilisez l’approche combinée décrite en section 7.5, simulation auto-labellisation, inventaires SharePoint/OneDrive et gouvernance par emplacement.
 
 **⚠️ PRÉREQUIS : Accès à Content Explorer bloqué par défaut. **Même un Global Admin ne peut pas voir le contenu de Content Explorer sans les deux rôles spécifiques ci-dessous. Sans ces rôles, un message "Autorisation requise" s’affiche et bloque tout accès. Ajoutez-les avant de continuer.
 
@@ -370,11 +372,11 @@ Purview → Protection des informations → Content Explorer. Affiche les conten
 
 4. Attendez **15 à 30 minutes** avant de retourner dans Content Explorer, les rôles ne sont pas actifs immédiatement. Rafraîchissez la page après ce délai.
 
-**ℹ️**** INFO — **Les deux rôles sont cumulatifs et indépendants : le premier donne accès à la liste, le second au contenu. Pour un auditeur externe qui doit vérifier les étiquettes sans voir le contenu des fichiers, assignez uniquement le premier rôle, c’est le principe de moindre privilège nLPD.
+**ℹ️ INFO — **Les deux rôles sont cumulatifs et indépendants : le premier donne accès à la liste, le second au contenu. Pour un auditeur externe qui doit vérifier les étiquettes sans voir le contenu des fichiers, assignez uniquement le premier rôle, c’est le principe de moindre privilège nLPD.
 
 **Procédure d’audit recommandée :**
 
-1. Purview → Protection des informations → Content Explorer.
+1. Purview → Protection des données → Explorateurs → Explorateur de contenu.
 
 2. Filtrez par site SharePoint (Direction, RH, Finances) → colonne Étiquette de sensibilité → triez sur Aucune.
 
@@ -395,7 +397,7 @@ Microsoft propose des classifieurs entraînables capables de reconnaître des ty
 | Semaines 2-4 | Campagne manuelle ciblée par département sur le stock critique | 2-3 jours |
 | Phase 2 | Trainable Classifiers si volume > 5 000 documents (M365 E5 requis, non disponible avec Business Premium) | 2-4 semaines |
 
-**ℹ️**** INFO : **Pour le POC, concentrez-vous sur les sites Direction, RH et Finances. Un document mal placé dans SharePoint (ex : contrat commercial dans le site Finances) ne sera jamais auto-étiqueté correctement. Le bon emplacement SharePoint est le premier niveau de gouvernance documentaire. Le bon site avant la bonne étiquette.
+**ℹ️ INFO : **Pour le POC, concentrez-vous sur les sites Direction, RH et Finances. Un document mal placé dans SharePoint (ex : contrat commercial dans le site Finances) ne sera jamais auto-étiqueté correctement. Le bon emplacement SharePoint est le premier niveau de gouvernance documentaire. Le bon site avant la bonne étiquette.
 
 ---
 

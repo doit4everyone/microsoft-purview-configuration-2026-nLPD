@@ -4,24 +4,24 @@ description: "Gouvernance des accès SharePoint : modèle de permissions, audit 
 lang: fr
 ---
 <style>
-  header, footer { display: none !important; }
-  .wrapper {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    float: none !important;
-    position: relative !important;
-    padding: 40px 20px !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    font-size: 1.1em !important;
-  }
-  section {
-    width: 100% !important;
-    float: none !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
-  }
-  h1, h2 { text-align: center; }
-  table { width: 100%; display: table; margin: 20px 0; }
+ header, footer { display: none !important; }
+ .wrapper {
+ max-width: 900px !important;
+ margin: 0 auto !important;
+ float: none !important;
+ position: relative !important;
+ padding: 40px 20px !important;
+ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-size: 1.1em !important;
+ }
+ section {
+ width: 100% !important;
+ float: none !important;
+ margin: 0 !important;
+ padding-top: 0 !important;
+ }
+ h1, h2 { text-align: center; }
+ table { width: 100%; display: table; margin: 20px 0; }
 </style>
 
 [← Retour à l’index](../)
@@ -62,7 +62,7 @@ Procédure : Rapport des partages dans Purview (Content Explorer)
 
 Purview Content Explorer vous permet de voir quels fichiers étiquetés sont accessibles à qui. C’est complémentaire au Centre d’administration SharePoint, il croise les labels avec les permissions.
 
-1. Purview → Protection des informations → Explorateur de contenu.
+1. Purview → Protection des données → Explorateurs → Explorateur de contenu.
 
 2. Filtrez par Étiquette de sensibilité → sélectionnez 4 → RH-Confidentiel. Vous voyez tous les fichiers classifiés RH dans votre tenant avec leur emplacement SharePoint exact.
 
@@ -110,7 +110,7 @@ Si votre organisation n’a aucun besoin de partage avec des personnes extérieu
 
 2. Section Partage externe → curseur SharePoint → déplacez le curseur jusqu’à Uniquement les personnes de votre organisation. Faites de même pour le curseur OneDrive. Cliquez sur Enregistrer.
 
-**ℹ️**** INFO :** Ce paramètre est un plafond, il ne peut pas être contredit au niveau des sites individuels. Si vous le définissez à Uniquement les personnes de votre organisation, aucun site ne pourra être partagé en externe, même si un administrateur essaie de l’activer sur un site spécifique.
+**ℹ️ INFO :** Ce paramètre est un plafond, il ne peut pas être contredit au niveau des sites individuels. Si vous le définissez à Uniquement les personnes de votre organisation, aucun site ne pourra être partagé en externe, même si un administrateur essaie de l’activer sur un site spécifique.
 
 ## 11.5 Lien Copilot : ce que la gouvernance des accès change concrètement
 
@@ -131,7 +131,7 @@ Centre d’administration SharePoint → Sites → Sites actifs → exportez la 
 
 Audit Content Explorer trimestriel
 
-Dans Purview → Protection des informations → Explorateur de contenu, filtrez par étiquette 4 — RH-Confidentiel et 5 — Finances-Confidentiel. Croisez la liste des fichiers avec les sites identifiés comme sur-partagés lors du rapport mensuel. Toute occurrence constitue une priorité de correction immédiate.
+Dans Purview → Protection des données → Explorateurs → Explorateur de contenu, filtrez par étiquette 4 — RH-Confidentiel et 5 — Finances-Confidentiel. Croisez la liste des fichiers avec les sites identifiés comme sur-partagés lors du rapport mensuel. Toute occurrence constitue une priorité de correction immédiate.
 
 Incidents DLP dans Microsoft Defender (automatique)
 
