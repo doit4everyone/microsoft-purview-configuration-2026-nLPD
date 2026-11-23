@@ -31,7 +31,7 @@ This repository contains a **step-by-step technical procedure** to configure **M
 ❌ **Not included**
 - Microsoft 365 E5
 - Advanced Entra ID P2 scenarios
-- Full Shadow AI governance (covered in a separate upcoming guide)
+- Full Shadow AI governance (covered in a [separate guide](https://doit4everyone.github.io/shadow-ai-governance-microsoft-365-nLPD/))
 
 ---
 
@@ -120,9 +120,9 @@ This repository is provided for **educational and architectural guidance**.
 
 ---
 
-## 📌 Upcoming
+## 📌 Companion guide
 
-A **dedicated Shadow AI & Entra ID P2 guide** is planned separately.
+The **[Shadow AI & Microsoft 365 governance guide](https://doit4everyone.github.io/shadow-ai-governance-microsoft-365-nLPD/)** is available: MDCA, Purview DLP, DSPM for AI, Insider Risk Management, inline DLP for Edge for Business.
 
 ## ☕ Support This Project (Optional)
 

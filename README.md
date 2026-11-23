@@ -32,7 +32,7 @@ Ce dépôt contient une **procédure technique complète**, pas à pas, pour con
 - Microsoft 365 E5
 - Scénarios avancés Entra ID P2
 - Gouvernance complète du Shadow AI  
-  *(traitée dans un guide séparé à venir)*
+  *(traitée dans un [guide séparé](https://doit4everyone.github.io/shadow-ai-governance-microsoft-365-nLPD/))*
 
 ---
 
@@ -123,9 +123,9 @@ Ce dépôt est fourni à des fins **pédagogiques et architecturales**.
 
 ---
 
-## 📌 À venir
+## 📌 Guide complémentaire
 
-Un **guide dédié au Shadow AI et à Entra ID P2** sera publié séparément.
+Le **[guide dédié au Shadow AI et à la gouvernance Microsoft 365](https://doit4everyone.github.io/shadow-ai-governance-microsoft-365-nLPD/)** est disponible : MDCA, Purview DLP, DSPM for AI, Insider Risk Management, DLP inline Edge for Business.
 
 ---
 
