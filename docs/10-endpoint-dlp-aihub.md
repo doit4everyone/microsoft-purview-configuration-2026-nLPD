@@ -33,7 +33,7 @@ Cette partie couvre trois fonctionnalités complémentaires qui étendent la pro
 | **Fonctionnalité** | **Licence requise** | **Section** |
 | --- | --- | --- |
 | Endpoint DLP (protection sur l’appareil) | ✅ Purview Suite | 9.1 |
-| Contrôles IA dans les navigateurs (configurés dans la règle Endpoint DLP) | ✅ Purview Suite | 9.2 |
+| Contrôles IA dans les navigateurs Edge, Chrome et Firefox (activités configurées dans la règle Endpoint DLP) | ✅ Purview Suite, sans licence additionnelle par activité ou par navigateur | 9.2 |
 | Purview AI Hub / DSPM for AI (tableau de bord) | ✅ Purview Suite | 9.3 |
 
 ## 9.0 Positionnement de la DLP Appareils (Endpoint DLP)
@@ -134,7 +134,7 @@ L’Endpoint DLP doit être configuré dans une **politique séparée** et non d
 
 ℹ️** Impression : comportement Phase 2 **l'action Bloquer avec remplacement affiche une notification : l'utilisateur doit cliquer sur Remplacer et saisir une justification. L'impression repart ensuite automatiquement. Ce n'est pas un blocage définitif : c'est une friction consciente qui génère une trace horodatée dans l'Activity Explorer (utilisateur, justification, fichier concerné).
 
-## 9.2 Contrôles IA dans Edge for Business
+## 9.2 Contrôles IA dans les navigateurs (Edge, Chrome, Firefox)
 
 La protection contre l’upload de fichiers sensibles vers des sites d’IA générative (ChatGPT, Gemini, Perplexity...) se configure directement dans la règle **Surveiller-Activites-Appareils** de la politique DLP-Protection-Endpoint (section 9.1), elle ne nécessite pas de configuration séparée dans les paramètres Purview.
 
@@ -222,7 +222,7 @@ Lien nLPD : pourquoi cette configuration compte
 | **Fonctionnalité** | **Ce que ça couvre (nLPD)** | **Article nLPD** |
 | --- | --- | --- |
 | Endpoint DLP | Mesures techniques contre la fuite physique de données (USB, impression) | Art. 8 |
-| Contrôles IA Edge for Business | Contrôle du transfert de données vers des applications IA non gérées | Art. 8 + Art. 9 (sous-traitance : un service IA externe traitant des données pour l'entreprise doit être encadré par un contrat) |
+| Contrôles IA dans les navigateurs | Contrôle du transfert de données vers des applications IA non gérées | Art. 8 + Art. 9 (sous-traitance : un service IA externe traitant des données pour l'entreprise doit être encadré par un contrat) |
 | AI Hub / DSPM for AI | Traces opérationnelles utiles à l’investigation d’un incident et, le cas échéant, à l’évaluation de l’obligation d’annonce au PFPDT | Art. 8 (sécurité), art. 24 (annonce des violations à risque élevé) |
 
 Checklist de validation section 9

@@ -153,7 +153,7 @@ La section 11.6 met en place les routines techniques de détection. L’art. 8 n
 
 Automatisation PowerShell (tenants > 20 sites)
 
-Pour les tenants dépassant 20 sites actifs, l’utilisation de scripts PowerShell (module PnP.PowerShell) est recommandée pour lister automatiquement les sites avec permissions larges et envoyer un rapport hebdomadaire par email à l’administrateur. Ce niveau d’automatisation transforme la correction ponctuelle en cycle de gouvernance continu, conformément à l’art. 8 nLPD (mesures techniques et organisationnelles).
+Pour les tenants dépassant 20 sites actifs, l’utilisation de scripts PowerShell (module PnP.PowerShell) est recommandée pour lister automatiquement les sites avec permissions larges et envoyer un rapport hebdomadaire par email à l’administrateur. Ce niveau d’automatisation transforme la correction ponctuelle en cycle de gouvernance continu et contribue à la sécurité des données exigée par l’art. 8 nLPD.
 
 > 💡 **LIEN nLPD ART. 8 DEUX PILIERS INDISSOCIABLES. **La protection des données repose sur deux piliers complémentaires. (1) L’étiquette (le Label) : protège le contenu si le fichier sort du périmètre grâce au chiffrement Azure RMS. (2) La permission (l’Accès) : sécurise le vecteur d’exposition en empêchant les utilisateurs non autorisés d’accéder au fichier dans SharePoint ou via Copilot. L’absence de l’un rend l’autre vulnérable : un fichier chiffré sur un site ouvert à tous reste protégé en contenu, mais reste exposé à l’extraction par Copilot pour tout utilisateur authentifié. Une conformité nLPD robuste nécessite les deux piliers activés simultanément.
 
@@ -169,7 +169,7 @@ Audit mensuel des partages OneDrive
 
 Dans Purview → Audit (menu gauche) → Rechercher : champ Activités : noms conviviaux → tapez Fichier partagé avec un utilisateur externe (SharePoint), plage de dates sur les 30 derniers jours, tous les utilisateurs. Champ ObjectId (fichier, dossier ou site) : laissez vide pour couvrir tous les OneDrive. Exportez les résultats en CSV. Tout partage externe sur un OneDrive contenant des fichiers étiquetés RH-Confidentiel, Finances-Confidentiel ou Direction-Confidentiel doit être examiné et justifié.
 
-> ℹ️ **LIEN nLPD (Art. 8) : **L’art. 8 nLPD exige des mesures techniques couvrant l’ensemble des systèmes traitant des données personnelles y compris les espaces de stockage personnels. L’audit mensuel des partages OneDrive constitue une mesure de surveillance obligatoire. Un partage non justifié de données sensibles via OneDrive expose l’organisation à la même responsabilité qu’un partage sur un site d’équipe.
+> ℹ️ **LIEN nLPD (Art. 8) : **L’art. 8 nLPD exige une sécurité adaptée au risque pour l’ensemble des systèmes traitant des données personnelles, y compris les espaces de stockage personnels. L’audit mensuel des partages OneDrive contribue à cette sécurité ; sa fréquence est une recommandation opérationnelle, la loi n’en fixe aucune. Un partage non justifié de données sensibles via OneDrive expose l’organisation à la même responsabilité qu’un partage sur un site d’équipe.
 
 Checklist de validation section 11
 
