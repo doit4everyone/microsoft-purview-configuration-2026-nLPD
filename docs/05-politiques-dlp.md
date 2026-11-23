@@ -100,7 +100,7 @@ Règle 2 : Bloquer partage externe IBAN
 
 **Pourquoi ce choix est conforme nLPD**
 
-La nLPD (art. 6 et 19) n’interdit pas la communication de données personnelles à des tiers, elle exige que cette communication soit **fondée sur un motif justificatif, proportionnée et traçable**. Un blocage strict sans override est contre-productif en PME, les utilisateurs contournent systématiquement la restriction via des canaux non surveillés (Gmail personnel, WeTransfer, WhatsApp), ce qui fait perdre toute traçabilité. Le blocage avec override justifié maintient l’utilisateur dans le canal M365 surveillé et génère automatiquement la preuve documentaire exigée par le PFPD en cas de contrôle : justification horodatée, identité de l’expéditeur, fichier concerné, tout est enregistré dans l’Explorateur d’activités Purview. La Règle 2 (IBAN) reste en blocage strict sans override, car aucun motif légitime ne justifie l’envoi d’un IBAN en clair par email.
+La nLPD n’interdit pas la communication de données personnelles à des tiers : elle exige que le traitement respecte les principes de l’art. 6 (proportionnalité, finalité) et, s’il porte atteinte à la personnalité, qu’il repose sur un motif justificatif (art. 31). En pratique, la communication doit donc être **justifiée, proportionnée et traçable**. Un blocage strict sans override est contre-productif en PME, les utilisateurs contournent systématiquement la restriction via des canaux non surveillés (Gmail personnel, WeTransfer, WhatsApp), ce qui fait perdre toute traçabilité. Le blocage avec override justifié maintient l’utilisateur dans le canal M365 surveillé et génère automatiquement une preuve documentaire utile en cas de contrôle du PFPDT : justification horodatée, identité de l’expéditeur, fichier concerné, tout est enregistré dans l’Explorateur d’activités Purview. La Règle 2 (IBAN) reste en blocage strict sans override, car aucun motif légitime ne justifie l’envoi d’un IBAN en clair par email.
 
 **⚠️ Restriction production obligatoire**
 
@@ -140,7 +140,7 @@ Politique dédiée au site Transmission externe, séparée de la politique princ
 
 4. Page Emplacements → activez **uniquement** l’emplacement suivant :
 
-**Sites SharePoint : **Modifier → Inclure → saisir **https://demo.sharepoint.com/sites/transmissionexterne** → + → Terminé. **Ce site uniquement** ne pas activer Exchange ni OneDrive (déjà couverts par la politique principale DLP-Protection-nLPD-demo, doublon évité). → **Suivant.**
+**Sites SharePoint : **Modifier → Inclure → saisir **https://demo.sharepoint.com/sites/transmission-externe** → + → Terminé. **Ce site uniquement** ne pas activer Exchange ni OneDrive (déjà couverts par la politique principale DLP-Protection-nLPD-demo, doublon évité). → **Suivant.**
 
 6. Page Règles de DLP avancées → créez les 2 règles suivantes une par une en cliquant **+ Créer une règle** après chaque règle enregistrée.
 

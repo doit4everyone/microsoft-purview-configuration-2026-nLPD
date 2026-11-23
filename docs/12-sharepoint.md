@@ -30,7 +30,7 @@ lang: fr
 
 Purview classifie et protège les données mais il ne corrige pas les permissions. Si un site SharePoint est ouvert à tout le monde, Copilot peut y accéder, et un label confidentiel ne changera rien à cela. Cette partie explique comment auditer et corriger le sur-partage dans votre tenant Business Premium sans outil supplémentaire. C’est le complément indispensable de tout ce qui a été configuré dans les parties précédentes.
 
-**⚠️ Rappel important :** La gouvernance des accès n’est pas optionnelle dans un contexte nLPD. L’art. 8 exige des mesures techniques adaptées et laisser des données RH accessibles à l’ensemble du personnel constitue une violation du principe de proportionnalité (art. 6 al. 4 nLPD).
+**⚠️ Rappel important :** La gouvernance des accès n’est pas optionnelle dans un contexte nLPD. L’art. 8 exige des mesures techniques adaptées et laisser des données RH accessibles à l’ensemble du personnel est contraire au principe de proportionnalité (art. 6 al. 2 nLPD).
 
 ## 11.1 Comprendre le modèle de permissions SharePoint
 

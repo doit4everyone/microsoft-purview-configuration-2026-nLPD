@@ -42,33 +42,37 @@ Deux méthodes coexistent selon votre contexte. **En environnement hybride (AD o
 
 Le moteur de chiffrement de Purview (Azure Rights Management) exige que les groupes assignés aux étiquettes aient une adresse email, on parle de groupes de sécurité mail-enabled. Vos groupes GRP-Direction, GRP-RH et GRP-Finances sont des groupes de sécurité simples sans email, ils ne peuvent pas être utilisés pour le chiffrement des étiquettes 3, 4 et 5. Pour les étiquettes utilisant le chiffrement avec attribution explicite des autorisations, seuls les utilisateurs et les groupes disposant d’une adresse email (groupes mail-enabled) peuvent être utilisés. Cette contrainte est liée au fonctionnement d’Azure Rights Management.
 
-> ⚠️ **ATTENTION :** En mode hybride, les groupes Entra ID existants ne peuvent pas être transformés en mail-enabled, il n’existe aucune commande de conversion. Les groupes doivent être créés directement dans l’Active Directory local avec l’attribut mail renseigné. La gestion des membres doit se faire exclusivement dans l’AD local pas via Exchange Online ni via Entra ID. ⚠️ Dans un tenant purement MS 365 les manipulations suivantes peuvent être effectuées directement via le portail d’Exchange Online ou PowerShell.
+> ⚠️ **ATTENTION :** En mode hybride, les groupes Entra ID existants ne peuvent pas être transformés en mail-enabled, il n’existe aucune commande de conversion. Les groupes doivent être créés dans l’Active Directory local, puis rendus mail-enabled avec les outils Exchange (Enable-DistributionGroup). Renseigner uniquement l’attribut mail avec Set-ADGroup ne crée pas un véritable groupe de sécurité à extension messagerie au sens d’Exchange. La gestion des membres doit se faire exclusivement dans l’AD local pas via Exchange Online ni via Entra ID. ⚠️ Dans un tenant purement MS 365 les manipulations suivantes peuvent être effectuées directement via le portail d’Exchange Online ou PowerShell.
 
 | **Type de groupe** | **Mail-enabled** | **Chiffrement Purview** | **Remarque** |
 | --- | --- | --- | --- |
 | Groupe de sécurité simple (Entra ID) | ❌ Non | ❌ Non | Vos GRP-RH, GRP-Direction etc. |
-| **Groupe sécurité mail-enabled (Exchange)** | ✅ Oui | ✅ Oui | Type MailUniversalSecurityGroup, créé dans l’AD local, synchronisé via Entra Connect |
+| **Groupe sécurité mail-enabled (Exchange)** | ✅ Oui | ✅ Oui | Type MailUniversalSecurityGroup. Hybride : créé dans l’AD local, rendu mail-enabled par Enable-DistributionGroup, synchronisé via Entra Connect. Cloud pur : créé dans Exchange Online |
 | Groupe Microsoft 365 | ✅ Oui | ✅ Oui | Créé automatiquement avec SharePoint |
 
 ### 2.2.1 Créer les 3 groupes dans l’Active Directory local
 
-Effectuez les opérations suivantes dans la console Utilisateurs et ordinateurs Active Directory (ou via PowerShell AD local). Remplacez demo.ch par votre domaine réel.
+Effectuez les opérations suivantes avec PowerShell AD local et les outils de gestion Exchange. Remplacez demo.ch par votre domaine réel.
 
-**Étape 1 : Créer le groupe dans l’AD local :**
+> ℹ️ **PRÉREQUIS HYBRIDE : **Enable-DistributionGroup est une commande Exchange Server. Elle s’exécute soit sur le serveur Exchange hybride (Exchange Management Shell), soit, si toutes les boîtes aux lettres sont déjà dans Exchange Online, avec les outils de gestion Exchange Server 2019 CU12 ou ultérieur installés sur un poste joint au domaine (composant de gestion des destinataires, chargé par Add-PSSnapin *RecipientManagement). Microsoft documente les prérequis de ce second scénario dans l’article « Manage recipients in Exchange Hybrid environments using Management tools ». Sans l’un de ces deux outils, utilisez la méthode cloud pur (section 2.2.3) avec des groupes non synchronisés.
 
+**Étape 1 : Créer le groupe de sécurité universel dans l’AD local :**
+
+```powershell
 New-ADGroup -Name "GRP-Direction-Purview" -GroupScope Universal -GroupCategory Security -Path "OU=Groupes,DC=demo,DC=ch"
+```
 
-*→ Adaptez le chemin OU à la structure de votre AD. Répétez les mêmes commandes pour GRP-RH-Purview et GRP-Finances-Purview.*
+*→ Adaptez le chemin OU à la structure de votre AD. Répétez la commande pour GRP-RH-Purview et GRP-Finances-Purview. L’étendue Universal est requise : Exchange ne rend mail-enabled que des groupes de sécurité universels.*
 
-**Étape 2 : Renseigner l’attribut mail sur chaque groupe :**
+**Étape 2 : Rendre chaque groupe mail-enabled avec Exchange :**
 
-Set-ADGroup -Identity "GRP-Direction-Purview" -Replace @{mail="grp-direction-purview@demo.ch"}
+```powershell
+Enable-DistributionGroup -Identity "GRP-Direction-Purview" -Alias "grp-direction-purview" -PrimarySmtpAddress "grp-direction-purview@demo.ch"
+Enable-DistributionGroup -Identity "GRP-RH-Purview" -Alias "grp-rh-purview" -PrimarySmtpAddress "grp-rh-purview@demo.ch"
+Enable-DistributionGroup -Identity "GRP-Finances-Purview" -Alias "grp-finances-purview" -PrimarySmtpAddress "grp-finances-purview@demo.ch"
+```
 
-Set-ADGroup -Identity "GRP-RH-Purview" -Replace @{mail="grp-rh-purview@demo.ch"}
-
-Set-ADGroup -Identity "GRP-Finances-Purview" -Replace @{mail="grp-finances-purview@demo.ch"}
-
-*→ Résultat attendu après le prochain cycle de synchronisation Entra Connect (délai : 15 à 30 minutes) : 3 groupes de type MailUniversalSecurityGroup visibles dans Entra ID avec leur adresse email. Aucun site SharePoint ni équipe Teams associé.*
+*→ Cette commande renseigne l’ensemble des attributs Exchange du groupe (adresse, alias, adresses proxy, type de destinataire). Après le prochain cycle de synchronisation Entra Connect (délai : 15 à 30 minutes), les 3 groupes apparaissent dans Entra ID avec leur adresse email et, dans Exchange Online, comme groupes de type MailUniversalSecurityGroup (vérification : Get-DistributionGroup -Identity "GRP-Direction-Purview" | FL RecipientTypeDetails,PrimarySmtpAddress). Aucun site SharePoint ni équipe Teams associé.*
 
 ### 2.2.2 Ajouter les membres et vérifier
 
@@ -244,7 +248,7 @@ Connect-SPOService -Url https://demo-admin.sharepoint.com
 
 `# Récupérer l'ID de l'étiquette 3a depuis Purview`
 
-Set-SPOSite -Identity https://demo.sharepoint.com/sites/Direction -SensitivityLabel "GUID-de-l-etiquette-3a"
+Set-SPOSite -Identity https://demo.sharepoint.com/sites/direction -SensitivityLabel "GUID-de-l-etiquette-3a"
 
 **ℹ️ INFO — **Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
 

@@ -103,7 +103,7 @@ Connect-ExchangeOnline
 
 Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
 
-*→ Aucune réponse = succès. Si vous voyez une erreur rouge, vérifiez votre rôle Organization Management Exchange (section 0.3).*
+*→ Aucune réponse = succès. Si vous voyez une erreur rouge, vérifiez que vous disposez du rôle Audit Logs, via le groupe Compliance Management Exchange (section 0.3).*
 
 **Étape 4 : Vérifier que l'audit est actif **
 
@@ -117,7 +117,7 @@ Get-AdminAuditLogConfig | FL UnifiedAuditLogIngestionEnabled
 
 Disconnect-ExchangeOnline -Confirm:$false
 
-> ✅ **CONSEIL : **Si la valeur est True → vous pouvez continuer. Si elle est encore False après 3 tentatives → vérifiez que vous êtes bien membre du groupe Organization Management dans le Centre d'administration Exchange (section 0.3).
+> ✅ **CONSEIL : **Si la valeur est True → vous pouvez continuer. Si elle est encore False après 3 tentatives → vérifiez que vous êtes bien membre du groupe Compliance Management dans le Centre d'administration Exchange (section 0.3).
 
 ### 1.5.2 Vérifier l'audit dans le portail Purview
 
@@ -127,15 +127,16 @@ Disconnect-ExchangeOnline -Confirm:$false
 
 3. Si vous voyez un bouton Démarrer l'enregistrement → cliquez dessus en complément de PowerShell.
 
-| **Ce qui est audité** | **Rétention avec Purview Suite** |
+| **Source des enregistrements d’audit** | **Rétention par défaut, Audit (Premium) inclus dans Purview Suite** |
 | --- | --- |
-| Connexions utilisateurs | 1 an (vs 90 jours sans add-on) |
-| Accès aux fichiers SharePoint/OneDrive | 1 an |
-| Interactions Copilot, prompts et réponses | 1 an |
-| Déclenchements DLP | 1 an |
-| Modifications d'étiquettes | 1 an |
+| Microsoft Entra ID (connexions, gestion des comptes) | 1 an |
+| SharePoint et OneDrive (accès aux fichiers) | 1 an |
+| Exchange (boîtes aux lettres) | 1 an |
+| Autres activités (par exemple interactions Copilot, selon la charge de travail qui les enregistre) | 180 jours, prolongeable par une politique de rétention d’audit |
 
-Les journaux d’audit sont conservés pendant une durée maximale pouvant aller jusqu’à 12 mois selon la licence et la configuration du tenant. Cette durée est définie conformément au principe de proportionnalité de la nLPD et permet la détection d’incidents de sécurité, l’analyse des accès et la constitution de preuves en cas de violation avant suppression ou anonymisation automatique des données.
+> ℹ️ **INFO : **selon la documentation Microsoft, Audit (Premium) conserve par défaut pendant un an les enregistrements dont la charge de travail est Entra ID, Exchange, OneDrive ou SharePoint, et pendant 180 jours ceux des autres activités. Sans Audit (Premium), Audit (Standard) conserve les enregistrements 180 jours. Chaque utilisateur dont l’activité doit bénéficier de la conservation d’un an doit disposer de la licence correspondante. Pour vérifier la durée appliquée à un type d’événement, contrôlez la charge de travail (champ Workload) d’un enregistrement dans Audit → Rechercher.
+
+Les journaux d’audit sont conservés pendant une durée maximale pouvant aller jusqu’à 12 mois selon la licence, la charge de travail et la configuration du tenant. Cette durée est définie conformément au principe de proportionnalité de la nLPD et permet la détection d’incidents de sécurité, l’analyse des accès et la constitution de preuves en cas de violation avant suppression ou anonymisation automatique des données.
 
 La durée de conservation des journaux fait l’objet d’une réévaluation périodique en fonction de l’évolution des risques, des obligations légales et des recommandations des autorités compétentes.
 

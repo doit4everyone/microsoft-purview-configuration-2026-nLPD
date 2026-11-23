@@ -41,16 +41,22 @@ Cette partie présente quatre fonctionnalités avancées de Microsoft Purview qu
 
 Concept
 
-Une politique de rétention définit combien de temps un document ou un email doit être conservé et ce qui se passe quand ce délai expire (suppression automatique ou conservation archivée). C'est une obligation directe de la nLPD qui impose de ne pas conserver les données personnelles plus longtemps que nécessaire (art. 6 al. 4).
+Une politique de rétention définit combien de temps un document ou un email doit être conservé et ce qui se passe quand ce délai expire (suppression automatique ou conservation archivée). Elle aide à appliquer l’art. 6 al. 4 nLPD, selon lequel les données personnelles sont détruites ou anonymisées dès qu’elles ne sont plus nécessaires au regard des finalités du traitement. La nLPD ne fixe toutefois aucune durée de conservation : les durées découlent d’autres lois (Code des obligations notamment) et de la finalité propre à chaque catégorie de documents.
 
-Lien nLPD
+Durées utilisées dans ce POC et références
 
-| **Type de donnée** | **Rétention recommandée** | **Base légale nLPD** |
+| **Type de donnée** | **Durée configurée dans ce POC** | **Références et remarques** |
 | --- | --- | --- |
-| Emails Exchange | 3 ans puis suppression | Art. 6 al. 4, proportionnalité |
-| Docs RH (contrats, fiches salaire) | 10 ans (droit du travail CO) | Art. 6 al. 4 + CO art. 962 |
-| Docs Finances (factures, comptabilité) | 10 ans (délai légal comptable) | CO art. 958f |
-| Logs d’audit Purview | 1 an (inclus dans Purview Suite) | Art. 24, preuve incident |
+| Emails Exchange | 3 ans puis suppression | Choix organisationnel du POC, sans durée légale unique. Art. 6 al. 2 (proportionnalité) et al. 4 (destruction) nLPD |
+| Docs RH | 10 ans puis suppression | Pas de durée unique pour le dossier du personnel. Exemples : créances de salaire prescrites par 5 ans (art. 128 ch. 3 CO), droit au certificat de travail prescrit par 10 ans après la fin des rapports de travail (art. 127 CO), pièces comptables salariales 10 ans (art. 958f CO). Durée à définir document par document |
+| Docs Finances (factures, comptabilité) | 10 ans puis suppression | Art. 958f CO : 10 ans à compter de la fin de l’exercice |
+| Logs d’audit Purview | 1 an ou 180 jours selon la source | Audit (Premium) : 1 an par défaut pour Entra ID, Exchange, OneDrive et SharePoint, 180 jours pour les autres activités sauf politique de rétention d’audit. Utiles comme preuve en cas d’incident (art. 24 nLPD) |
+
+> ⚠️ **DURÉES DE DÉMONSTRATION, PAS UNE MATRICE LÉGALE : **les durées ci-dessus permettent de tester le mécanisme dans le POC. Elles ne constituent pas un calendrier de conservation applicable tel quel en production. Trois limites à connaître :
+>
+> 1. **Le point de départ.** Les politiques de ce guide comptent la durée à partir de la dernière modification du fichier. Les obligations légales partent d’autres événements : fin de l’exercice pour la comptabilité, fin des rapports de travail pour le certificat de travail. Pour un point de départ lié à un événement (départ d’un collaborateur, par exemple), Microsoft Purview propose la rétention basée sur un événement, qui s’appuie sur des **étiquettes de rétention** et non sur des politiques de rétention (documentation Microsoft « Start retention when an event occurs »).
+> 2. **L’emplacement ne détermine pas la nature du document.** Un contrat ou une pièce comptable peut se trouver dans une boîte aux lettres ou un OneDrive soumis à la politique de 3 ans. Selon les principes de rétention de Microsoft, la conservation l’emporte sur la suppression et la période de conservation la plus longue s’applique lorsque plusieurs paramètres se chevauchent : un document doit donc être couvert par le bon paramètre de conservation, et non seulement par celui de son emplacement.
+> 3. **En production**, établissez une matrice documentaire (contrats, fiches de salaire, justificatifs d’absence, certificats médicaux, pièces comptables, correspondances) indiquant pour chaque catégorie sa justification, son événement déclencheur et sa règle de suppression, validée avec la fiduciaire ou un juriste.
 
 Procédure de configuration
 
@@ -81,9 +87,9 @@ Cliquez sur **Modifier** → saisir l’URL du site dans le champ de recherche
 
 9. Créez une cinquième politique :
 
-**Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/transmissionexterne* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. Les documents sont automatiquement supprimés 48 heures après leur création, qu’ils aient été consultés ou non.
+**Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/transmission-externe* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. Les documents sont automatiquement supprimés 48 heures après leur création, qu’ils aient été consultés ou non.
 
-ℹ️** ATTENTION : **la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent confirmer que le destinataire a bien reçu le document avant les 48 heures.
+ℹ️** ATTENTION : **la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent confirmer que le destinataire a bien reçu le document avant les 48 heures. Cette suppression ne concerne que la copie présente dans le tenant : elle n’efface pas un document que le destinataire externe a déjà téléchargé, copié ou imprimé.
 
 Cliquez sur Soumettre. Les politiques s’appliquent dans un délai variable (quelques minutes à plusieurs jours selon le tenant).
 
@@ -94,9 +100,11 @@ Concept
 
 L’Insider Risk Management (IRM) détecte les comportements à risque des utilisateurs internes, téléchargements massifs de fichiers, envois vers des destinations non autorisées, accès inhabituels, exfiltration vers des services cloud personnels. Contrairement à la DLP qui bloque des règles précises, l’IRM analyse les patterns de comportement sur la durée et génère des alertes sur les cas suspects. L’IRM est inclus dans Microsoft 365 Business Premium + Purview Suite aucune licence E5 requise.
 
-Cadre nLPD obligatoire avant activation
+Cadre légal à examiner avant activation
 
-En droit suisse, la surveillance des employés est encadrée par l’art. 26 OLT3 (interdiction de la surveillance permanente) et le nLPD art. 6 (proportionnalité). L’IRM est légalement défendable uniquement si trois conditions sont remplies simultanément : (1) les employés concernés sont informés de l’existence de la surveillance (information préalable : règlement du personnel ou charte IT), (2) l’anonymisation est activée par défaut dans Purview, (3) un processus écrit encadre la levée d’anonymat. Sans ces trois éléments, la stratégie est juridiquement fragile. Voir Annexe G : Procédure de levée d’anonymat IRM.
+En droit suisse, la surveillance des employés est encadrée notamment par l’art. 26 OLT 3, qui interdit les systèmes de surveillance ou de contrôle destinés à surveiller le comportement des travailleurs à leur poste de travail, et par l’art. 6 al. 2 nLPD (proportionnalité). Selon le PFPDT, l’interdiction vise les systèmes dont le but unique ou principal est de surveiller le comportement des employés. Un système poursuivant un autre but, comme la sécurité ou la prévention des fuites de données, n’est pas interdit par principe, mais il doit être proportionné à ce but et les employés doivent en être informés au préalable.
+
+L’information préalable (art. 19 nLPD) est donc nécessaire mais ne suffit pas à rendre un dispositif licite. Avant activation, documentez au minimum : (1) le but poursuivi (prévention des fuites de données, pas l’évaluation des personnes), (2) le périmètre des personnes et des signaux couverts, (3) les personnes habilitées à examiner les alertes, (4) la durée de conservation des alertes et dossiers, (5) les modalités de contrôle humain, y compris l’anonymisation par défaut et le processus écrit de levée d’anonymat (voir Annexe G). Faites valider ce cadre par un juriste avant tout déploiement en production.
 
 Stratégies IRM recommandées pour une PME suisse
 
@@ -205,9 +213,9 @@ nLPD art. 8 → **Suivant.**
 
 Lien nLPD : articles concernés
 
-Art. 6 (proportionnalité). Populations limitées aux groupes exposés, pas à tous les utilisateurs. Art. 8 al. 3 (mesures techniques), IRM comme mesure complémentaire DLP. Art. 12 (transparence). Information préalable des employés obligatoire. Art. 24 (notification PFPD), les alertes IRM constituent des preuves de surveillance en cas d’incident. Art. 26 OLT3 (protection personnalité au travail), anonymisation activée par défaut, levée encadrée (voir Annexe G).
+Art. 6 al. 2 (proportionnalité). Populations limitées aux groupes exposés, pas à tous les utilisateurs. Art. 8 (sécurité des données), IRM comme mesure complémentaire à la DLP. Art. 19 (devoir d’informer). Information préalable des employés. Art. 24 (annonce des violations au PFPDT), les alertes IRM peuvent servir d’éléments de preuve en cas d’incident. Art. 26 OLT 3 (interdiction des systèmes destinés à surveiller le comportement), finalité de sécurité documentée, anonymisation activée par défaut, levée encadrée (voir Annexe G).
 
-📊 Note. Indicateur de couverture "faible" dans les 3 stratégies IRM : Purview affiche un indicateur de couverture faible ou moyen pour chaque stratégie car le périmètre est volontairement limité aux groupes GRP-Direction-Purview, GRP-RH-Purview et GRP-Finances-Purview. C'est le comportement attendu et conforme. La recommandation Microsoft d'étendre la couverture à tous les utilisateurs est une recommandation technique générique qui ne tient pas compte du cadre légal suisse. Étendre la surveillance à l'ensemble des 25 utilisateurs du tenant constituerait une violation du principe de proportionnalité (art. 6 nLPD) et de l'art. 26 OLT3. Ne pas modifier le périmètre des stratégies
+📊 Note. Indicateur de couverture "faible" dans les 3 stratégies IRM : Purview affiche un indicateur de couverture faible ou moyen pour chaque stratégie car le périmètre est volontairement limité aux groupes GRP-Direction-Purview, GRP-RH-Purview et GRP-Finances-Purview. C'est le comportement attendu et conforme. La recommandation Microsoft d'étendre la couverture à tous les utilisateurs est une recommandation technique générique qui ne tient pas compte du cadre légal suisse. Étendre la surveillance à l'ensemble des 25 utilisateurs du tenant sans justification serait difficilement compatible avec le principe de proportionnalité (art. 6 al. 2 nLPD) et augmenterait le risque de tomber sous l'interdiction de l'art. 26 OLT 3. Ne pas modifier le périmètre des stratégies
 
 Licence
 
@@ -345,7 +353,7 @@ Licence : inclus dans Microsoft Purview Suite pour Business Premium
 
 Prérequis :
 
-**⚠️ Obligation légale nLPD avant activation : **la surveillance des communications est une donnée sensible au sens de l’art. 5 nLPD. Les collaborateurs doivent être informés de cette surveillance dans le règlement intérieur **avant activation** (art. 19 nLPD obligation d’information). Consultez un juriste avant déploiement en production. Voir Annexe G pour le modèle de clause.
+**⚠️ Cadre légal à examiner avant activation : **les communications professionnelles ne sont pas en elles-mêmes des données sensibles au sens de l’art. 5 let. c nLPD, mais les contenus analysés peuvent en contenir (données sur la santé, opinions politiques ou syndicales, par exemple). Les collaborateurs doivent être informés de l’analyse **avant activation** (art. 19 nLPD, devoir d’informer), par exemple dans le règlement du personnel. Cette information ne rend toutefois pas le dispositif licite à elle seule : l’art. 26 OLT 3 interdit les systèmes destinés à surveiller le comportement des travailleurs, et le PFPDT exige que tout système de contrôle poursuive un autre but (sécurité, prévention des fuites ou du harcèlement) et soit proportionné à ce but. Définissez par écrit le but, le périmètre des utilisateurs et des canaux, les réviseurs habilités, la durée de conservation des alertes et les modalités de contrôle humain. Dans ce POC, les stratégies couvrent tous les utilisateurs à 100 % pour la démonstration : en production, limitez ce périmètre au strict nécessaire. Consultez un juriste avant déploiement en production.
 
 Rôle requis : **Communication Compliance Admin** ajouter admin@demo.ch via Purview → Paramètres → Rôles et étendues → Groupes de rôles → Communication Compliance.
 
@@ -383,7 +391,7 @@ Checklist Communication Compliance
 
 ✅ Stratégie CC-Contenu-Inapproprié-nLPD créée. classifieurs Sexual/Violence/Hate/Self-harm
 
-*⚠️ Note nLPD — La surveillance des communications est une donnée sensible au sens de l’art. 5 nLPD. Les collaborateurs doivent être informés de cette surveillance dans le règlement intérieur avant activation (art. 19 nLPD, obligation d’information). Consultez un juriste avant déploiement en production.*
+*⚠️ Note nLPD : l’information préalable des collaborateurs (art. 19 nLPD) est nécessaire mais ne suffit pas. Le dispositif doit poursuivre un but autre que la surveillance du comportement (art. 26 OLT 3) et rester proportionné à ce but (art. 6 al. 2 nLPD). Consultez un juriste avant déploiement en production.*
 
 ## 8.5 Gestionnaire de conformité
 

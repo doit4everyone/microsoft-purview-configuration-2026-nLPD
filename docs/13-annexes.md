@@ -28,7 +28,7 @@ lang: fr
 
 # Annexes
 
-## Annexe A — Glossaire Purview
+## Annexe A : Glossaire Purview
 
 | **Terme** | **Définition en langage simple** |
 | --- | --- |
@@ -41,24 +41,25 @@ lang: fr
 | Mode simulation | Mode d'une politique DLP ou auto-labelling où les règles s'évaluent sans bloquer ni modifier quoi que ce soit. Pour tester avant d'activer |
 | Conseil de stratégie | Message d'avertissement visible par l'utilisateur dans Word ou Outlook quand une règle DLP est déclenchée, sans bloquer |
 | Purview RBAC | Système de rôles propre à Purview, distinct des rôles Entra ID. Donne accès aux différentes sections du portail Purview. |
-| Organization Management | Groupe de rôles Exchange Online qui contient le droit Audit Logs, indispensable pour activer l'audit via PowerShell |
+| Compliance Management | Groupe de rôles Exchange Online qui contient le rôle Audit Logs, nécessaire pour activer l'audit via PowerShell. Organization Management le contient aussi, mais avec des droits Exchange beaucoup plus larges |
 | nLPD art. 8 | Obligation légale suisse de mettre en place des mesures techniques et organisationnelles pour protéger les données personnelles |
 
-## Annexe B — Articles nLPD et Purview
+## Annexe B : Articles nLPD et Purview
 
 | **Article nLPD** | **Obligation** | **Fonctionnalité Purview qui y répond** |
 | --- | --- | --- |
-| Art. 6 — Finalité | Données utilisées uniquement pour la finalité prévue | DLP + Labels empêchent l'utilisation non prévue |
-| Art. 6 — Proportionnalité | Pas plus de données que nécessaire | DLP complète les mécanismes de protection en auditant et restreignant certains usages Copilot (partage, exfiltration), sans en être le contrôle principal. Ordre de priorité : (1) Permissions M365, un utilisateur n’accède qu’à ce qu’il est autorisé à voir ; (2) Chiffrement RMS, protection intrinsèque du document ; (3) DLP Copilot, complète en bloquant certaines actions. Un utilisateur autorisé par RMS peut toujours interroger le contenu via Copilot, la DLP réduit le risque résiduel mais ne le supprime pas |
-| Art. 8 — Sécurité | Mesures techniques et organisationnelles obligatoires | Chiffrement + DLP + Audit = MTO complètes |
-| Art. 9 — Privacy by design | Protection intégrée dès la conception | Auto-labelling protège dès le dépôt du fichier |
-| Art. 24 — Notification PFPDT | Notifier dès que possible (art. 24 nLPD) en cas de violation | Audit logs = preuves et chronologie complète |
-| Art. 5 let. c — Données sensibles | Protection renforcée : AVS, santé, biométrie | Labels confidentiels + DLP types sensibles suisses |
-| Art. 62 — Secret professionnel | Obligation de confidentialité même sans intention | DSPM audite tous les accès Copilot aux données |
+| Art. 6 al. 3 : Finalité | Données utilisées uniquement pour la finalité prévue | DLP + Labels empêchent l'utilisation non prévue |
+| Art. 6 al. 2 : Proportionnalité | Pas plus de données que nécessaire | DLP complète les mécanismes de protection en auditant et restreignant certains usages Copilot (partage, exfiltration), sans en être le contrôle principal. Ordre de priorité : (1) Permissions M365, un utilisateur n’accède qu’à ce qu’il est autorisé à voir ; (2) Chiffrement RMS, protection intrinsèque du document ; (3) DLP Copilot, complète en bloquant certaines actions. Un utilisateur autorisé par RMS peut toujours interroger le contenu via Copilot, la DLP réduit le risque résiduel mais ne le supprime pas |
+| Art. 6 al. 4 : Destruction | Détruire ou anonymiser les données qui ne sont plus nécessaires | Politiques de rétention avec suppression automatique (section 8.1) |
+| Art. 8 : Sécurité | Mesures techniques et organisationnelles appropriées au risque | Chiffrement + DLP + Audit contribuent aux mesures techniques, à compléter par des mesures organisationnelles |
+| Art. 7 : Protection dès la conception et par défaut | Protection intégrée dès la conception | Auto-labelling protège dès le dépôt du fichier |
+| Art. 24 : Annonce au PFPDT | Annoncer dans les meilleurs délais une violation de la sécurité des données entraînant vraisemblablement un risque élevé | Audit logs = preuves et chronologie |
+| Art. 5 let. c : Données sensibles | Notamment données sur la santé, la sphère intime, l'origine raciale ou ethnique, données biométriques, opinions religieuses ou politiques. Le numéro AVS n'est pas une donnée sensible au sens de cet article, mais il justifie une protection élevée | Labels confidentiels + DLP types sensibles suisses |
+| Art. 62 : Devoir de discrétion | Divulgation intentionnelle de données personnelles secrètes apprises dans l'exercice d'une profession, punissable sur plainte | DSPM audite les accès Copilot aux données |
 
 Les mesures mises en place visent à réduire les usages non autorisés, dissuader les comportements à risque et assurer la traçabilité des accès. Aucune solution technique ne permet d’empêcher de manière absolue la reproduction visuelle d’une information par un utilisateur autorisé.
 
-## Annexe C — SIT personnalisé AVS-Suisse-PME
+## Annexe C : SIT personnalisé AVS-Suisse-PME
 
 Le type d’information sensible (SIT) natif de Microsoft « Swiss Social Security Number AHV » valide le checksum EAN-13 en confiance élevée et exige des mots-clés de proximité. Dans un tenant PME suisse avec des documents en plusieurs langues, cette contrainte provoque des non-détections. Le SIT personnalisé AVS-Suisse-PME utilise un regex direct sur le format suisse et des mots-clés dans les 4 langues nationales plus l’anglais, sans dépendance au checksum.
 
@@ -70,7 +71,7 @@ Ce regex détecte exactement le format suisse avec points obligatoires : 756.XXX
 
 **Paramètres du modèle Purview : **Type de correspondance = Correspondance de chaîne | Niveau de confiance = Moyen | Nombre d’instances min = 1.
 
-### C.2, Mots-clés multilingues (4 langues nationales + anglais)
+### C.2 : Mots-clés multilingues (4 langues nationales + anglais)
 
 Ces mots-clés sont des éléments de soutien, ils augmentent le niveau de confiance de la détection quand ils apparaissent dans une fenêtre de 300 caractères autour du numéro détecté. Ils ne ralentissent pas l’analyse et n’affectent pas les performances des politiques DLP ou d’auto-labelling.
 
@@ -150,7 +151,7 @@ Ces mots-clés ciblent les documents RH contenant des informations médicales no
 
 Communication Compliance et IRM : les règles qui référencent Medical-RH-Suisse sont déjà correctement configurées si vous avez créé ce SIT avant de configurer ces sections. Si vous l’avez créé après, vérifiez que le SIT apparaît dans les conditions de chaque règle concernée.
 
-## Annexe E — Différences POC vs Production
+## Annexe E : Différences POC vs Production
 
 Ce guide est conçu pour un environnement POC / LAB avec Microsoft 365 Business Premium + Purview Suite. Avant tout déploiement en production, appliquez les ajustements suivants. Toute déviation non documentée constitue un risque d’audit nLPD.
 
@@ -163,7 +164,7 @@ Ce guide est conçu pour un environnement POC / LAB avec Microsoft 365 Business 
 | Trainable Classifiers | Non disponible (Business Premium + Purview Suite) | Privilégier SITs personnalisés (Annexes C et D). Trainable Classifiers disponibles avec M365 E5 si évolution de licence. |
 | Restriction override DLP par groupe (Règle 1) | Override ouvert à tous les utilisateurs. Restriction implicite assurée par les permissions SharePoint : seuls RH et Direction ont accès aux fichiers RH et peuvent donc déclencher l’override. La condition “expéditeur est membre de” n’est pas disponible en Business Premium. | **Vérifier que les permissions SharePoint RH sont strictement limitées à RH + Direction (principe du moindre privilège Partie 11). Si évolution vers M365 E3/E5 : créer groupe DLP-Exceptions et utiliser la condition “L’expéditeur est membre de” pour architecture à deux règles (1 blocage strict tous users, 1b override groupe autorisé).** |
 
-## Annexe F — RUN & Responsabilités (PME suisse)
+## Annexe F : RUN & Responsabilités (PME suisse)
 
 **Exigence audit — responsabilité nominative**
 
@@ -178,24 +179,24 @@ Sans organisation associée aux mesures techniques, Purview devient une boîte n
 | Vérifier Activity Explorer — alertes DLP non traitées | Admin IT (personne nommée) | Hebdomadaire | Traiter dans les 48h, escalade Direction si violation nLPD |
 | Vérifier Content Explorer — documents non étiquetés | Admin IT | Mensuel | Campagne d’étiquetage manuel (section 2.7) |
 | Vérifier simulation auto-labelling — dérives détectées | Admin IT | Mensuel | Corriger la règle concernée dans Purview |
-| Auditer les accès Super User RMS — utilisation Break-glass | Direction + Admin IT | Chaque activation | Tracer dans registre incidents nLPD art. 12 |
+| Auditer les accès Super User RMS : utilisation Break-glass | Direction + Admin IT | Chaque activation | Tracer dans le registre interne des incidents |
 | Revoir configuration après changement (nouveau site SP, agent Copilot, flux PP) | Admin IT + responsable concerné | Systématique | Vérifier impact sur auto-labelling et DLP (section 7.3) |
 
-### F.2 — Escalade et incidents nLPD
+### F.2 : Escalade et incidents nLPD
 
 **Délai de notification PFPD : **dès que possible après la découverte d’une violation de données personnelles (art. 24 nLPD). Toute alerte DLP de gravité élevée non résolue dans les 48h doit être traitée comme un incident potentiel nLPD.
 
 **Chaîne d’escalade : **Alerte Purview → Admin IT (48h) → Direction (si violation confirmée) → Conseil juridique (si notification PFPD requise) → PFPD (dès que possible - art. 24 nLPD).
 
-**ℹ️ INFO : **Ce tableau RACI doit être intégré dans le registre des activités de traitement de l’organisation (art. 12 nLPD). Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
+**ℹ️ INFO : **Si l’organisation tient un registre des activités de traitement (art. 12 nLPD, voir Annexe I pour l’exemption des PME), intégrez-y ce tableau RACI. Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
 
-## Annexe G — Procédure de levée d’anonymat IRM (obligatoire nLPD)
+## Annexe G : Procédure de levée d’anonymat IRM (règle de gouvernance interne)
 
-L’Insider Risk Management de Purview anonymise les utilisateurs par défaut dans les alertes et rapports. La levée d’anonymat (identification de l’utilisateur concerné) est une action irréversible qui doit être encadrée par un processus écrit. Sans ce processus, la conformité nLPD s’effondre. Ce document constitue la procédure officielle de l’organisation Axonix SA.
+L’Insider Risk Management de Purview anonymise les utilisateurs par défaut dans les alertes et rapports. La levée d’anonymat (identification de l’utilisateur concerné) est une action irréversible qui doit être encadrée par un processus écrit. Ce processus n’est pas imposé textuellement par la loi, mais il permet de démontrer que le dispositif reste proportionné (art. 6 al. 2 nLPD) et qu’il ne sert pas à surveiller le comportement des collaborateurs (art. 26 OLT 3). Ce document constitue la procédure interne de l’organisation fictive Axonix SA.
 
-Prérequis : Information préalable des employés (art. 12 nLPD)
+Prérequis : Information préalable des employés (art. 19 nLPD)
 
-Avant toute activation des stratégies IRM, les employés concernés doivent être informés de l’existence du système de détection, de sa finalité (prévention des fuites de données), des types de signaux collectés, et des droits d’accès à leurs propres données. Cette information doit figurer dans le règlement du personnel ou la charte informatique, signée par chaque employé. Sans cette information préalable documentée, l’activation des stratégies IRM est juridiquement fragile en droit suisse (nLPD art. 12 + art. 26 OLT3).
+Avant toute activation des stratégies IRM, les employés concernés doivent être informés de l’existence du système de détection, de sa finalité (prévention des fuites de données), des types de signaux collectés, et des droits d’accès à leurs propres données. Cette information figure de préférence dans le règlement du personnel ou la charte informatique, signée par chaque employé. L’information préalable est nécessaire mais ne suffit pas : le but, le périmètre, les personnes habilitées, la durée de conservation et le contrôle humain doivent aussi être définis (voir section 8.2).
 
 Processus de traitement d’une alerte IRM
 
@@ -206,13 +207,13 @@ Processus de traitement d’une alerte IRM
 | **3** | Qualification — l’alerte est-elle un faux positif ? un incident mineur ? un incident grave ? | Admin IT + Direction | Décision documentée avec justification |
 | **4** | Décision de levée d’anonymat — uniquement si l’incident est qualifié grave et que la levée est **réellement nécessaire** pour l’investigation | Direction + Conseil juridique | Autorisation écrite signée Direction + date |
 | **5** | Levée d’anonymat dans Purview — Gestion des risques internes → Alertes → sélectionner l’alerte → action Afficher l’identité | Admin IRM (rôle Insider Risk Analyst) | Action loggée automatiquement dans Audit Log Purview |
-| **6** | Clôture — archivage du dossier complet (alerte, analyse, décision, levée d’anonymat si effectuée) | Admin IT + Direction | Dossier archivé 5 ans minimum (prescription civile suisse) |
+| **6** | Clôture : archivage du dossier complet (alerte, analyse, décision, levée d’anonymat si effectuée) | Admin IT + Direction | Dossier archivé pendant une durée définie et documentée (par exemple 5 ans), proportionnée à sa finalité, puis détruit (art. 6 al. 4 nLPD) |
 
 Principe fondamental
 
-**La levée d’anonymat est l’exception, pas la règle. **La grande majorité des alertes IRM doit pouvoir être qualifiée et clôturée sans levée d’anonymat , faux positif, formation utilisateur, correction technique. La levée d’anonymat n’est justifiée que si (a) l’incident est confirmé grave, (b) l’identification est indispensable à l’investigation, et (c) une décision écrite de la Direction est obtenue préalablement. Toute levée d’anonymat sans autorisation écrite constitue une violation de la protection de la personnalité au sens de l’art. 26 OLT3 et expose l’employeur à une responsabilité civile.
+**La levée d’anonymat est l’exception, pas la règle. **La grande majorité des alertes IRM doit pouvoir être qualifiée et clôturée sans levée d’anonymat , faux positif, formation utilisateur, correction technique. La levée d’anonymat n’est justifiée que si (a) l’incident est confirmé grave, (b) l’identification est indispensable à l’investigation, et (c) une décision écrite de la Direction est obtenue préalablement. La validation écrite préalable n’est pas une séquence imposée par l’art. 26 OLT 3, mais une règle interne recommandée : une levée d’anonymat non encadrée affaiblit la démonstration de proportionnalité et peut porter atteinte à la personnalité du collaborateur (art. 328 et 328b CO).
 
-## Annexe H — Gestion des comptes et rôles Purview
+## Annexe H : Gestion des comptes et rôles Purview
 
 Un auditeur PFPDT attend : (1) séparation des rôles critiques, (2) traçabilité des actions sensibles, (3) accès limité par fonction, (4) absence de compte fourre-tout. Ce modèle respecte l’art. 8 nLPD et l’OLT3 art. 26 avec 4 comptes couvrant 100 % des besoins Purview.
 
@@ -224,7 +225,7 @@ Compte : **admin-it@demo.ch** | État : Actif | MFA : Obligatoire | Licence : Bu
 
 **Rôles Purview RBAC : **Compliance Administrator, Data Security AI Admins, Data Security Viewers, eDiscovery Manager (Gestionnaire + Administrateur), Communication Compliance Admin, Insider Risk Management Analysts.
 
-**Exchange Online : **Organization Management (audit uniquement). **❌ Pas de Super User RMS. ❌ Pas de Global Admin (sauf POC).**
+**Exchange Online : **Compliance Management (rôle Audit Logs, moindre privilège). **❌ Pas de Super User RMS. ❌ Pas de Global Admin (sauf POC).**
 
 ### Compte 2 : Break-glass Chiffrement RMS (urgence uniquement)
 
@@ -234,7 +235,7 @@ Compte : **rms-breakglass@demo.ch** | Type : cloud-only, non nominatif | État :
 
 Activation temporaire uniquement, désactivation immédiate après usage. Chaque activation est tracée dans les journaux d’audit Entra ID (Journaux d’audit → Gestion des utilisateurs).
 
-### Compte 3 — Audit / Lecture conformité (optionnel)
+### Compte 3 : Audit / Lecture conformité (optionnel)
 
 Compte : **audit-purview@demo.ch** | État : Actif | MFA : Obligatoire | Licence : Business Premium + Purview Suite.
 
@@ -246,7 +247,7 @@ Compte : **audit-purview@demo.ch** | État : Actif | MFA : Obligatoire | Licence
 
 Compte : membre de **GRP-Direction-Purview** | État : Actif | MFA : Obligatoire | Licence : Business Premium + Purview Suite.
 
-**Rôle unique : **Data Security Viewers. **❌ Pas d’administration. ❌ Pas d’accès Content Explorer contenu.** Conforme art. 12 nLPD : le responsable supervise sans opérer.
+**Rôle unique : **Data Security Viewers. **❌ Pas d’administration. ❌ Pas d’accès Content Explorer contenu.** Séparation des tâches (mesure organisationnelle, art. 8 nLPD) : le responsable supervise sans opérer.
 
 ### Transition depuis admin@demo.ch procédure de désactivation safe
 
@@ -266,13 +267,19 @@ Le compte admin@demo.ch utilisé pendant le POC cumule tous les rôles. Ce modè
 
 **audit-purview@demo.ch:** configuré ❌ | voit contenu ❌ | casse chiffrement ❌ → « Audit sans sur-accès aux données. Très bien. »
 
-**direction-purview@demo.ch:** configuré ❌ | voit contenu ❌ | casse chiffrement ❌ → « Responsable supervise sans opérer. Conforme art. 12 nLPD. »
+**direction-purview@demo.ch:** configuré ❌ | voit contenu ❌ | casse chiffrement ❌ → « Responsable supervise sans opérer. Séparation des tâches respectée. »
 
 **admin@demo.ch (après transition) :** connexion bloquée ❌ | Global Admin conservé ✔ | break-glass de dernier recours uniquement → « Compte historique sécurisé. Traçabilité garantie. Acceptable en petite structure. »
 
-## Annexe I — Modèle de registre des activités de traitement (art. 12 nLPD)
+## Annexe I : Modèle de registre des activités de traitement (art. 12 nLPD)
 
-L’art. 12 nLPD impose aux responsables du traitement de tenir un registre des activités de traitement. Ce registre doit permettre de démontrer la conformité en cas de contrôle PFPDT. Le modèle ci-dessous est minimal et adapté à une PME suisse utilisant Microsoft 365 avec Purview.
+L’art. 12 nLPD impose en principe aux responsables du traitement de tenir un registre des activités de traitement. L’art. 12 al. 5 nLPD et l’art. 24 OPDo prévoient toutefois une exemption pour les entreprises qui emploient moins de 250 collaborateurs au 1er janvier d’une année, sauf si elles traitent des données sensibles à grande échelle ou effectuent un profilage à risque élevé. Dans ce cas, le registre n’est obligatoire que pour les traitements concernés.
+
+Pour une PME exemptée, le registre reste un outil de gouvernance **fortement recommandé** : il structure la réflexion sur les finalités et les durées de conservation, et facilite le respect du devoir d’informer (art. 19 nLPD) et la réponse aux demandes d’accès. Vérifiez votre situation avant de le présenter comme une obligation légale. Le modèle ci-dessous est minimal et adapté à une PME suisse utilisant Microsoft 365 avec Purview.
+
+### I.0 : Vérifier la localisation des données du tenant
+
+Les champs « Destinataires » et « Transfert hors Suisse » ci-dessous dépendent de la localisation réelle des données de votre tenant, qui varie selon le tenant et les services souscrits. Ne la supposez pas : vérifiez-la dans le Centre d’administration Microsoft 365, rubrique Paramètres de l’organisation, onglet Profil de l’organisation, élément Data location (libellés de l’interface anglaise : Settings → Org settings → Organization profile → Data location). Documentez le résultat, puis complétez les champs concernés. La localisation des données au repos ne décrit pas tous les flux : documentez aussi les accès possibles depuis l’étranger (support Microsoft, sous-traitants ultérieurs) selon les engagements contractuels applicables.
 
 ### I.1 : Informations générales de l’organisation
 
@@ -293,9 +300,9 @@ Activité 1 : Gestion des ressources humaines et de la paie
 | **Finalité du traitement (art. 6 nLPD)** | Administrer les contrats de travail, calculer et verser les salaires, gérer les absences, les congés et les évaluations. |
 | **Personnes concernées** | Employés actifs et anciens employés. |
 | **Catégories de données traitées** | Numéro AVS, coordonnées personnelles, salaire, évaluations, données médicales (certificats médicaux, arrêts maladie), données bancaires (IBAN). |
-| **Destinataires des données** | Service RH interne, fiduciaire / comptabilité externe, caisse AVS, assureur accident LAA, assureur maladie collective, Microsoft Corporation (sous-traitant, infrastructure M365, données hébergées dans des centres de données EU). |
-| **Transfert hors Suisse (art. 16 nLPD)** | Oui, Microsoft Azure, région EU, garanties adéquates selon la décision du Conseil fédéral et les DPA Microsoft. |
-| **Durée de conservation** | 10 ans après la fin du contrat de travail (CO art. 958f). Suppression automatique configurée via Purview - politique Retention-RH-10ans. |
+| **Destinataires des données** | Service RH interne, fiduciaire / comptabilité externe, caisse AVS, assureur accident LAA, assureur maladie collective, Microsoft (sous-traitant, infrastructure M365, localisation des données selon la vérification I.0). |
+| **Transfert hors Suisse (art. 16 nLPD)** | À compléter selon la vérification I.0. Si les données sont hébergées dans un État de l’UE ou de l’EEE, ces États figurent sur la liste des États assurant un niveau de protection adéquat (annexe 1 OPDo). Documenter également les accès possibles depuis d’autres pays et les garanties contractuelles Microsoft (DPA). |
+| **Durée de conservation** | À définir par catégorie de document, sans durée unique pour tout le dossier. Exemples : pièces comptables salariales 10 ans à compter de la fin de l’exercice (art. 958f CO), créances de salaire prescrites par 5 ans (art. 128 ch. 3 CO), droit au certificat de travail prescrit par 10 ans après la fin des rapports de travail (art. 127 CO), dossiers de candidature non retenue supprimés rapidement. POC : politique Retention-RH-10ans, comptée à partir de la dernière modification du fichier (voir les limites en section 8.1). |
 | **Base légale (art. 31 nLPD)** | Exécution du contrat de travail (art. 31 al. 2 let. a nLPD). Pour les données de santé : traitement de données sensibles nécessaire à l’exécution du contrat de travail (art. 31 al. 2 let. a nLPD). |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 4 - RH-Confidentiel (chiffrement AES-256, Azure RMS). Accès restreint : GRP-RH-Purview + GRP-Direction-Purview. Politique DLP-Protection-nLPD-demo (blocage partage externe AVS/IBAN). Rétention automatique 10 ans. MFA administrateurs actif. |
 
@@ -308,8 +315,8 @@ Activité 2 : Comptabilité et gestion financière
 | **Personnes concernées** | Fournisseurs, clients (contacts de facturation), employés (notes de frais). |
 | **Catégories de données traitées** | IBAN, coordonnées de facturation, montants des transactions, références de contrats. |
 | **Destinataires des données** | Fiduciaire externe, banque, Administration fédérale des contributions (AFC), administrations fiscales cantonales, Microsoft Corporation (sous-traitant). |
-| **Transfert hors Suisse (art. 16 nLPD)** | Oui, Microsoft Azure, région EU, garanties adéquates selon la décision du Conseil fédéral et les DPA Microsoft. |
-| **Durée de conservation** | 10 ans (CO art. 958f, délai légal comptable). Suppression automatique configurée via Purview - politique Retention-Finances-10ans. |
+| **Transfert hors Suisse (art. 16 nLPD)** | À compléter selon la vérification I.0. Si les données sont hébergées dans un État de l’UE ou de l’EEE, ces États figurent sur la liste des États assurant un niveau de protection adéquat (annexe 1 OPDo). Documenter également les accès possibles depuis d’autres pays et les garanties contractuelles Microsoft (DPA). |
+| **Durée de conservation** | 10 ans à compter de la fin de l’exercice (art. 958f CO, délai légal comptable). POC : politique Retention-Finances-10ans, comptée à partir de la dernière modification du fichier, ce qui peut différer de la fin de l’exercice (voir section 8.1). |
 | **Base légale (art. 31 nLPD)** | Obligation légale (CO art. 957 ss, droit comptable suisse). |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 5 - Finances-Confidentiel (chiffrement AES-256, Azure RMS). Accès restreint : GRP-Finances-Purview + GRP-Direction-Purview. Règle DLP Bloquer-IBAN-Externe (blocage strict sans remplacement possible). Rétention automatique 10 ans. |
 
@@ -322,7 +329,7 @@ Activité 3 : Gestion de la relation client
 | **Personnes concernées** | Contacts clients (personnes physiques, contexte B2B principalement). |
 | **Catégories de données traitées** | Nom, prénom, coordonnées professionnelles (email, téléphone, adresse), historique des commandes et contrats. |
 | **Destinataires des données** | Aucun destinataire externe sauf instruction explicite du client ou obligation légale. Microsoft Corporation (sous-traitant). |
-| **Transfert hors Suisse (art. 16 nLPD)** | Oui, Microsoft Azure, région EU, garanties adéquates selon la décision du Conseil fédéral et les DPA Microsoft. |
+| **Transfert hors Suisse (art. 16 nLPD)** | À compléter selon la vérification I.0. Si les données sont hébergées dans un État de l’UE ou de l’EEE, ces États figurent sur la liste des États assurant un niveau de protection adéquat (annexe 1 OPDo). Documenter également les accès possibles depuis d’autres pays et les garanties contractuelles Microsoft (DPA). |
 | **Durée de conservation** | Durée du contrat + 5 ans après échéance (délai de prescription ordinaire, CO art. 127). |
 | **Base légale (art. 31 nLPD)** | Exécution du contrat (art. 31 al. 2 let. a nLPD). |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 2 - Interne. Accès restreint par site SharePoint (permissions spécifiques). Politique DLP-Protection-nLPD-demo (surveillance partages externes). |
@@ -336,9 +343,9 @@ Activité 4 : Surveillance IT et journaux d’audit (Purview / IRM)
 | **Personnes concernées** | Employés membres des groupes GRP-RH-Purview, GRP-Finances-Purview et GRP-Direction-Purview uniquement (principe de proportionnalité, art. 6 nLPD). |
 | **Catégories de données traitées** | Journaux d’accès aux fichiers, alertes DLP (déclenchements de règles), comportements d’exfiltration détectés (téléchargements massifs, partages externes), interactions Copilot M365 avec des données sensibles. |
 | **Destinataires des données** | Administrateur IT Purview uniquement. Identités anonymisées par défaut, lève d’anonymat encadrée (voir Annexe G). |
-| **Transfert hors Suisse (art. 16 nLPD)** | Oui, Microsoft Azure, région EU, garanties adéquates selon la décision du Conseil fédéral et les DPA Microsoft. |
-| **Durée de conservation** | 1 an (journaux d’audit Purview Suite). Suppression automatique à échéance par Microsoft. |
-| **Base légale (art. 31 nLPD)** | Intérêt légitime de l’entreprise (art. 31 al. 1 nLPD). Obligation d’information préalable des employés satisfaite (art. 19 nLPD, règlement intérieur ou charte IT). Contraintes OLT3 art. 26 (interdiction de surveillance permanente) respectées par l’anonymisation par défaut. |
+| **Transfert hors Suisse (art. 16 nLPD)** | À compléter selon la vérification I.0. Si les données sont hébergées dans un État de l’UE ou de l’EEE, ces États figurent sur la liste des États assurant un niveau de protection adéquat (annexe 1 OPDo). Documenter également les accès possibles depuis d’autres pays et les garanties contractuelles Microsoft (DPA). |
+| **Durée de conservation** | Journaux d’audit : 1 an par défaut pour Entra ID, Exchange, OneDrive et SharePoint, 180 jours pour les autres activités (Audit Premium), sauf politique de rétention d’audit. Suppression automatique à échéance par Microsoft. Durée de conservation des alertes et dossiers IRM à définir et documenter. |
+| **Base légale (art. 31 nLPD)** | Intérêt prépondérant de l’entreprise à la sécurité des données (art. 31 al. 1 nLPD), à valider par un juriste. Information préalable des employés (art. 19 nLPD, règlement du personnel ou charte IT). Art. 26 OLT 3 : le dispositif poursuit un but de sécurité et non de surveillance du comportement, ce qui doit être démontré par la limitation du périmètre, l’anonymisation par défaut et l’encadrement de la levée d’anonymat (Annexe G). |
 | **Mesures de sécurité (art. 8 nLPD)** | Stratégies IRM-Fuites-Données-PME et IRM-Violations-Sécurité (section 8.2). Anonymisation activée par défaut. Procédure de levée d’anonymat documentée (Annexe G). Accès aux alertes limité au rôle Insider Risk Management Analysts. |
 
 Activité 5 : Transmission externe de documents
@@ -350,14 +357,14 @@ Activité 5 : Transmission externe de documents
 | **Personnes concernées** | Destinataires externes désignés au cas par cas par la Direction ou le service RH. |
 | **Catégories de données traitées** | Variable selon le document transmis. Peut inclure des données personnelles (contrats, avenants, correspondances RH) ou des données financières. |
 | **Destinataires des données** | Partenaires externes identifiés au cas par cas (avocats, experts, clients, fournisseurs). Microsoft Corporation (sous-traitant). |
-| **Transfert hors Suisse (art. 16 nLPD)** | Possible selon l’identité du destinataire externe — à vérifier au cas par cas. Infrastructure Microsoft : Azure EU, garanties adéquates. |
+| **Transfert hors Suisse (art. 16 nLPD)** | Possible selon l’identité du destinataire externe, à vérifier au cas par cas. Infrastructure Microsoft : selon la vérification I.0. |
 | **Durée de conservation** | 2 jours sur le site Transmission externe (suppression automatique, politique Retention-TransmissionExterne-2jours). Conservation originale maintenue dans le site source (RH : 10 ans, Finances : 10 ans) conformément à l’activité concernée. |
-| **Base légale (art. 31 nLPD)** | Exécution du contrat (art. 31 al. 2 let. a nLPD) lorsque la transmission découle d’une obligation contractuelle ou légale. Le consentement explicite de la personne concernée (art. 31 al. 2 let. b nLPD) n’est invoqué que subsidiairement, lorsqu’aucune base contractuelle ou légale ne couvre la transmission. |
+| **Base légale (art. 31 nLPD)** | Exécution du contrat (art. 31 al. 2 let. a nLPD) lorsque la transmission découle d’une obligation contractuelle ou légale. Le consentement de la personne concernée (art. 31 al. 1 nLPD) n’est invoqué que subsidiairement, lorsqu’aucune base contractuelle ou légale ne couvre la transmission. |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 6 - Transmission-Externe (marquages visuels, impression autorisée pour le destinataire). Politique DLP-Protection-Transmission-Externe (traçabilité nLPD art. 6, alerte admin). Label par défaut de bibliothèque SharePoint (protection automatique des dépôts sans étiquette). Suppression automatique 48 heures. |
 
 **Note pratique : **ce registre doit être tenu à jour à chaque modification significative des traitements (nouvel outil, nouveau prestataire, nouvelle catégorie de données). Il n’existe pas de formulaire officiel PFPDT, ce modèle est conforme aux exigences minimales de l’art. 12 nLPD. Conservez-le dans un emplacement contrôlé (ex. : site SharePoint Direction, accès restreint à Direction + DPO).
 
-## Annexe J — Soutien au travail de documentation
+## Annexe J : Soutien au travail de documentation
 
 Ce document est mis à disposition gratuitement.
 

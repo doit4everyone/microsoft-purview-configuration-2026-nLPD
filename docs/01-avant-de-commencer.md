@@ -52,9 +52,11 @@ Plusieurs étapes de cette procédure nécessitent PowerShell. Voici comment l'o
 
 2. **Vérifier la version** Tapez : $PSVersionTable.PSVersion et appuyez sur Entrée. Vous devez avoir la version 5.1 minimum. Si vous avez PowerShell 7 c'est encore mieux.
 
-3. **Autoriser l'exécution des scripts** Tapez : Set-ExecutionPolicy RemoteSigned -Scope CurrentUser et appuyez sur Entrée. Tapez O puis Entrée pour confirmer. Sans ça, les modules ne s'installent pas.
+3. **Vérifier la stratégie d'exécution (si nécessaire)** Tapez : Get-ExecutionPolicy -List et appuyez sur Entrée. Sur un poste Windows client, la valeur par défaut est Restricted : elle empêche l'exécution des scripts, y compris le chargement des modules PowerShell utilisés dans ce guide. Si la valeur effective est Restricted, tapez : Set-ExecutionPolicy RemoteSigned -Scope CurrentUser puis O et Entrée pour confirmer. Si la valeur est déjà RemoteSigned ou plus permissive, ne changez rien.
 
-> 🚨 **IMPORTANT : **Si PowerShell affiche une erreur rouge sur Set-ExecutionPolicy, c'est que vous n'êtes pas en mode Administrateur. Fermez et rouvrez PowerShell en administrateur (clic droit → Exécuter en tant qu'administrateur).
+> ℹ️ **INFO : **Le périmètre CurrentUser ne concerne que votre compte et ne nécessite pas d'élévation administrateur (seul le périmètre LocalMachine l'exige). Si un message indique que le paramètre est remplacé par une stratégie définie à un niveau plus spécifique, une stratégie de groupe (lignes MachinePolicy ou UserPolicy dans Get-ExecutionPolicy -List) impose la valeur : adressez-vous à l'administrateur du poste plutôt que de chercher à la contourner. RemoteSigned exige que les scripts téléchargés depuis Internet soient signés : ne l'assouplissez pas davantage.
+>
+> Le mode administrateur de l'étape 1 reste utile pour les commandes Install-Module de ce guide qui n'indiquent pas -Scope CurrentUser : sous Windows PowerShell 5.1, elles installent le module pour tous les utilisateurs du poste.
 
 **⚠️ Limites connues du dispositif**
 
@@ -98,13 +100,13 @@ Rôle Exchange Online via le Centre d'administration Exchange
 
 2. Dans le menu de gauche, cliquez sur Rôles → Rôles d'administrateur.
 
-3. Cherchez le groupe Organization Management (Gestion de l'organisation).
+3. Cherchez le groupe Compliance Management (Gestion de la conformité).
 
 4. Cliquez dessus → onglet Membres → + Ajouter des membres → cherchez votre compte → **Ajouter**.
 
 5. Attendez 5 à 10 minutes que le rôle se propage avant de continuer.
 
-> 🚨 **IMPORTANT : **Organization Management est le seul rôle Exchange qui contient le droit 'Audit Logs'. Sans ce groupe, la commande PowerShell d'activation de l'audit s'exécute sans erreur mais ne fait rien.
+> 🚨 **IMPORTANT : **L'activation de l'audit via PowerShell exige le rôle Exchange 'Audit Logs'. Selon la documentation Microsoft, ce rôle est attribué par défaut aux groupes Compliance Management et Organization Management. Compliance Management suffit pour ce guide et respecte le principe du moindre privilège : Organization Management donne un accès administratif très large à Exchange Online et ne doit pas être attribué à un compte d'exploitation pour ce seul besoin. Sans le rôle Audit Logs, la commande d'activation de l'audit peut s'exécuter sans erreur apparente sans produire d'effet.
 
 Rôles Purview RBAC via le portail Purview
 
@@ -123,6 +125,8 @@ Rôles Purview RBAC via le portail Purview
 > ⚠️ **ATTENTION : **Si vous ne trouvez pas ‘Data Security AI Admins’ dans la liste, c’est que Purview Suite n’est pas encore activé. Vérifiez dans admin.microsoft.com → Licences que Microsoft Purview Suite apparaît bien dans votre tenant.
 
 ## 0.4 Vérifier que Purview Suite est bien activé
+
+> ℹ️ **NOM COMMERCIAL : **dans ce guide, « Purview Suite » désigne l’offre **Microsoft Purview Suite for Microsoft 365 Business Premium**. Cette extension exige un abonnement Microsoft 365 Business Premium et est limitée à 300 licences par client. Elle ne doit pas être confondue avec l’extension Purview destinée aux environnements Microsoft 365 E3. Chaque utilisateur qui bénéficie des fonctionnalités Purview (administrateurs Purview et utilisateurs couverts par les politiques) doit disposer de cette licence.
 
 Avant de continuer, confirmez que la licence est active sur votre compte :
 
@@ -146,31 +150,64 @@ Par défaut, Microsoft 365 n’active pas la fonctionnalité permettant d’appl
 
 > 🚨 **PRÉREQUIS GLOBAL : **Sans cette activation, les étiquettes de type Groupes et sites n’apparaissent pas dans l’interface lors de la création d’un site SharePoint ou d’une équipe Teams. L’opération est irreversible mais sans impact négatif sur les étiquettes existantes. À exécuter une seule fois par tenant.
 
-Étape 1 : Connexion à Microsoft Graph
+Il faut distinguer deux objets : le **modèle** Group.Unified, fourni par Microsoft et toujours présent, et le **paramètre** Group.Unified, créé dans votre tenant à partir de ce modèle. Le paramètre peut ne pas exister, ou exister avec EnableMIPLabels à False. Le script ci-dessous traite les deux cas.
 
-Install-Module Microsoft.Graph -Scope CurrentUser
+Étape 1 : Installer les modules et se connecter à Microsoft Graph
 
+Les commandes Get-MgBetaDirectorySetting et New-MgBetaDirectorySetting appartiennent au module Microsoft Graph **Beta**, distinct du module Microsoft.Graph. Installez les deux sous-modules nécessaires :
+
+```powershell
+Install-Module Microsoft.Graph.Authentication -Scope CurrentUser
+Install-Module Microsoft.Graph.Beta.Identity.DirectoryManagement -Scope CurrentUser
 Connect-MgGraph -Scopes "Directory.ReadWrite.All"
+```
 
-Étape 2 : Vérifier si le setting Group.Unified existe déjà
+Étape 2 : Rechercher le paramètre Group.Unified existant dans le tenant
 
-$template = Get-MgBetaDirectorySettingTemplate -All | Where-Object { $_.DisplayName -eq "Group.Unified" }
-
-*→ Si aucun résultat : le setting n’existe pas encore, exécutez l’étape 3. Si un résultat apparaît : le setting existe déjà, passez directement à l’étape 4 pour vérifier la valeur.*
-
-Étape 3 : Créer le setting avec EnableMIPLabels = True
-
-$body = @{ templateId = $template.Id; values = @(@{ name = "EnableMIPLabels"; value = "True" }) }
-
-New-MgBetaDirectorySetting -BodyParameter $body
-
-Étape 4: Verification
-
+```powershell
 $setting = Get-MgBetaDirectorySetting -All | Where-Object { $_.DisplayName -eq "Group.Unified" }
-
 $setting.Values | Format-List
+```
 
-*→ Résultat attendu : Name : EnableMIPLabels | Value : True. Déconnectez-vous puis reconnectez-vous au portail Purview avant de continuer.*
+*→ Si aucun résultat : le paramètre n’existe pas encore, exécutez l’étape 3a. Si un résultat apparaît : le paramètre existe, exécutez l’étape 3b, quelle que soit la valeur affichée pour EnableMIPLabels.*
+
+Étape 3a : Le paramètre n’existe pas, le créer à partir du modèle
+
+```powershell
+$template = Get-MgBetaDirectorySettingTemplate -All | Where-Object { $_.DisplayName -eq "Group.Unified" }
+$body = @{ templateId = $template.Id; values = @(@{ name = "EnableMIPLabels"; value = "True" }) }
+New-MgBetaDirectorySetting -BodyParameter $body
+```
+
+Étape 3b : Le paramètre existe, mettre à jour EnableMIPLabels
+
+```powershell
+$params = @{ values = @(@{ name = "EnableMIPLabels"; value = "True" }) }
+Update-MgBetaDirectorySetting -DirectorySettingId $setting.Id -BodyParameter $params
+```
+
+*→ Si New-MgBetaDirectorySetting renvoie une erreur Request_BadRequest, le paramètre existe déjà : relancez l’étape 2 puis exécutez l’étape 3b.*
+
+Étape 4 : Vérification
+
+```powershell
+$setting = Get-MgBetaDirectorySetting -All | Where-Object { $_.DisplayName -eq "Group.Unified" }
+$setting.Values | Where-Object { $_.Name -eq "EnableMIPLabels" }
+```
+
+*→ Résultat attendu : Name : EnableMIPLabels | Value : True. Si la valeur est encore False, relancez l’étape 3b. Déconnectez-vous puis reconnectez-vous au portail Purview avant de continuer.*
+
+Étape 5 : Synchroniser les étiquettes vers Entra ID
+
+Microsoft indique que les étiquettes doivent aussi être synchronisées vers Entra ID. Cette commande s’exécute dans Security & Compliance PowerShell, fourni par le module ExchangeOnlineManagement (également utilisé en section 1.5) :
+
+```powershell
+Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser
+Connect-IPPSSession
+Execute-AzureAdLabelSync
+```
+
+*→ La disponibilité des étiquettes de conteneurs peut prendre jusqu’à 24 heures après la synchronisation.*
 
 ## 0.6 Résumé état requis avant de continuer
 
@@ -178,7 +215,7 @@ $setting.Values | Format-List
 | --- | --- | --- |
 | ☐ | Accès à https://purview.microsoft.com sans erreur | La page s'ouvre et affiche le menu Purview |
 | ☐ | 3 rôles Entra ID attribués | entra.microsoft.com → Rôles → vos attributions |
-| ☐ | Rôle Organization Management Exchange | admin.exchange.microsoft.com → Rôles → Membres |
+| ☐ | Rôle Compliance Management Exchange (contient Audit Logs) | admin.exchange.microsoft.com → Rôles → Membres |
 | ☐ | 5 groupes de rôles Purview attribués | Purview → Paramètres → Rôles → vos groupes |
 | ☐ | Licence Purview Suite attribuée à votre compte | admin.microsoft.com → Utilisateurs → votre compte → Licences |
 | ☐ | PowerShell ouvert en administrateur | Titre de la fenêtre contient 'Administrateur' |

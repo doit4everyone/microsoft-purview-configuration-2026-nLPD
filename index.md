@@ -143,7 +143,7 @@ Si votre tenant Microsoft 365 n'est pas encore prêt, suivez d'abord ce guide pa
 
 ## ⚖️ Avertissement
 
-Ce guide a été rédigé et validé terrain sur la base des interfaces Microsoft 365 et Microsoft Purview telles qu'elles se présentaient au moment de sa rédaction (avril 2026). Microsoft déploie des mises à jour d'interface de manière continue et sans préavis : les chemins de navigation, les libellés de boutons, la disposition des menus et la disponibilité de certaines fonctionnalités sont susceptibles d'évoluer à tout moment.
+Ce guide a été rédigé et validé terrain sur la base des interfaces Microsoft 365 et Microsoft Purview telles qu'elles se présentaient au moment de sa rédaction (avril 2026). Les chemins de navigation du portail Purview ont été revérifiés en novembre 2026. Microsoft déploie des mises à jour d'interface de manière continue et sans préavis : les chemins de navigation, les libellés de boutons, la disposition des menus et la disponibilité de certaines fonctionnalités sont susceptibles d'évoluer à tout moment.
 
 Ce guide est fourni à titre informatif et pédagogique uniquement. Il ne constitue pas un avis juridique et ne remplace pas un accompagnement professionnel adapté à votre organisation. La conformité à la nLPD relève de la responsabilité exclusive de l'organisation qui déploie ces configurations.
 

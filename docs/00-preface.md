@@ -64,7 +64,7 @@ Ce que Purview apporte c’est une couche de protection centrée sur la donnée 
 
 ## Note de limitation de responsabilité
 
-Ce guide a été rédigé et validé terrain sur la base des interfaces Microsoft 365 et Microsoft Purview telles qu'elles se présentaient au moment de sa rédaction (avril 2026). Microsoft déploie des mises à jour d'interface de manière continue et sans préavis : les chemins de navigation, les libellés de boutons, la disposition des menus et la disponibilité de certaines fonctionnalités sont susceptibles d'évoluer à tout moment, indépendamment de la volonté de l'auteur.
+Ce guide a été rédigé et validé terrain sur la base des interfaces Microsoft 365 et Microsoft Purview telles qu'elles se présentaient au moment de sa rédaction (avril 2026). Les chemins de navigation du portail Purview ont été revérifiés en novembre 2026. Microsoft déploie des mises à jour d'interface de manière continue et sans préavis : les chemins de navigation, les libellés de boutons, la disposition des menus et la disponibilité de certaines fonctionnalités sont susceptibles d'évoluer à tout moment, indépendamment de la volonté de l'auteur.
 
 L'auteur de ce document ne saurait être tenu responsable des divergences entre les procédures décrites et les interfaces effectivement rencontrées lors de l'exécution. En cas de doute sur une étape spécifique, il est recommandé de consulter la documentation officielle Microsoft disponible sur docs.microsoft.com, de contacter le support Microsoft, ou de faire appel à un consultant Microsoft 365 certifié.
 

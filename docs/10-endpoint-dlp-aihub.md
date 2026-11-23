@@ -212,8 +212,8 @@ Lien nLPD : pourquoi cette configuration compte
 
 | **Fonctionnalité** | **Ce que ça couvre (nLPD)** | **Article nLPD** |
 | --- | --- | --- |
-| Endpoint DLP | Mesures techniques contre la fuite physique de données (USB, impression) | Art. 8 al. 3 |
-| Contrôles IA Edge for Business | Contrôle du transfert de données vers des applications IA non gérées | Art. 8 al. 3 + Art. 9 |
+| Endpoint DLP | Mesures techniques contre la fuite physique de données (USB, impression) | Art. 8 |
+| Contrôles IA Edge for Business | Contrôle du transfert de données vers des applications IA non gérées | Art. 8 + Art. 9 (sous-traitance : un service IA externe traitant des données pour l'entreprise doit être encadré par un contrat) |
 | AI Hub / DSPM for AI | Preuve de surveillance et traçabilité pour notification PFPDT en cas d’incident | Art. 24 |
 
 Checklist de validation section 9

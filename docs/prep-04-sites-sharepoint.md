@@ -41,6 +41,9 @@ la création des sites standards.
 | Direction demo.ch | Équipe | sites/direction | GRP-Direction uniquement |
 | RH demo.ch | Équipe | sites/RH | GRP-RH + GRP-Direction (lecture) |
 | Finances demo.ch | Équipe | sites/Finances | GRP-Finances + GRP-Direction (lecture) |
+| Transmission externe | Équipe | sites/transmission-externe | Voir section dédiée |
+
+> ⚠️ **URL DE RÉFÉRENCE : **les adresses de ce tableau sont réutilisées telles quelles dans les politiques DLP, d’étiquetage automatique et de rétention du guide Purview (https://demo.sharepoint.com/sites/RH, /sites/Finances, /sites/direction, /sites/transmission-externe). Saisissez exactement ces adresses lors de la création des sites. Une adresse différente fait qu’une politique ne couvre pas le site attendu. Après création de chaque politique, vérifiez dans le portail Purview les emplacements réellement sélectionnés.
 
 ## 4.1 Accéder au Centre d'administration SharePoint
 
@@ -118,7 +121,7 @@ SharePoint crée automatiquement 3 groupes dès la création du site. Voici comm
 
 1. Sites actifs > + Créer > Site de l’équipe.
 
-2. Nom : RH demo.ch | Adresse : rh-demo.ch | Langue : Français.
+2. Nom : RH demo.ch | Adresse : RH | Langue : Français.
 
 3. Cliquez sur Créer.
 
@@ -148,7 +151,7 @@ Le site RH est accessible aux RH (modification) et aux Directeurs (lecture seule
 
 1. Sites actifs > + Créer > Site de l’équipe.
 
-2. Nom : Finances demo.ch | Adresse : finances-demo.ch | Langue : Français.
+2. Nom : Finances demo.ch | Adresse : Finances | Langue : Français.
 
 3. Cliquez sur Créer.
 

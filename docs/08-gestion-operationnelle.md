@@ -37,7 +37,13 @@ lang: fr
 | Désactiver une règle | DLP → politique → Règles → toggle OFF sur la règle spécifique | ⚠️ Moyen |
 | Désactiver la politique | DLP → politique → Mode : Désactivé | 🚨 Élevé — aucune protection |
 
-L’accès aux documents protégés par chiffrement est évalué dynamiquement. Le retrait d’un utilisateur d’un groupe associé à une étiquette entraîne la perte immédiate d’accès à l’ensemble des documents protégés, y compris ceux reçus antérieurement par courrier électronique ou déjà téléchargés.
+L’accès aux documents protégés par chiffrement est réévalué par le service Azure Rights Management, mais pas instantanément. Le retrait d’un utilisateur d’un groupe associé à une étiquette produit ses effets en trois temps :
+
+- **Nouvelles ouvertures en ligne :** Azure Rights Management met en cache l’appartenance aux groupes. Selon Microsoft, une modification peut prendre jusqu’à trois heures avant d’être prise en compte.
+- **Documents déjà ouverts sur un appareil :** à l’ouverture d’un document chiffré, l’utilisateur reçoit une licence d’utilisation. Tant qu’elle est valide, il n’est ni réauthentifié ni réautorisé pour ce contenu. Sa durée correspond au paramètre « Accès hors connexion » de l’étiquette, soit 30 jours dans ce guide pour les étiquettes 3b, 4 et 5. L’accès est réévalué à l’expiration de cette licence.
+- **Copies non protégées :** une impression, une capture d’écran ou un contenu recopié hors du document chiffré ne peut pas être rappelé par une modification de groupe.
+
+Pour un départ sensible, combinez le retrait des groupes avec le blocage du compte, et envisagez une durée d’accès hors connexion plus courte pour les étiquettes concernées.
 
 ## 7.2 Vérifications hebdomadaires recommandées
 
@@ -53,8 +59,8 @@ L’accès aux documents protégés par chiffrement est évalué dynamiquement. 
 | **Problème** | **Cause probable** | **Solution** |
 | --- | --- | --- |
 | Page Purview inaccessible | Rôle manquant | Vérifiez les 5 groupes Purview RBAC (section 0.3) |
-| Bouton audit grisé | Rôle Organization Management manquant | Ajoutez-vous au groupe Exchange (section 0.3) |
-| PowerShell = False malgré la commande | Rôle Audit Logs manquant | Vérifiez Organization Management Exchange |
+| Bouton audit grisé | Rôle Audit Logs manquant | Ajoutez-vous au groupe Exchange Compliance Management (section 0.3) |
+| PowerShell = False malgré la commande | Rôle Audit Logs manquant | Vérifiez l’appartenance au groupe Compliance Management Exchange |
 | Étiquettes invisibles dans Word après un délai variable | Politique d'étiquettes non publiée | Purview → Politiques d'étiquettes → vérifiez le statut |
 | Auto-labelling ne détecte rien | Fichiers pas dans les emplacements configurés | Vérifiez les sites SharePoint dans la stratégie |
 | DLP ne bloque pas | Politique en mode simulation | Changez le mode en Activé |
