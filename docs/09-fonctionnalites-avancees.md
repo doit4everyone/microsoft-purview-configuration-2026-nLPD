@@ -110,9 +110,9 @@ Stratégies IRM recommandées pour une PME suisse
 
 | **Stratégie** | **Modèle Purview** | **Finalité** |
 | --- | --- | --- |
-| **Socle PME (obligatoire)** | Fuites de données | Détecter les anomalies d’exfiltration proportionné, neutre juridiquement |
+| **Socle PME recommandé pour ce POC** | Fuites de données | Détecter les anomalies d’exfiltration dans un périmètre limité, sous réserve des validations juridiques et organisationnelles décrites ci-dessus |
 | **IA / Copilot (optionnel)** | Utilisation à risque de l’IA (préversion, Nouveau) | Encadrer les usages Copilot / IA générative. Stratégie séparée obligatoire |
-| **Sécurité (optionnel avancé)** | Violations de stratégie de sécurité | Désactivation antivirus, contournement DLP moins intrusif que la surveillance RH |
+| **Sécurité (optionnel avancé)** | Violations de stratégie de sécurité | Désactivation antivirus, contournement DLP : signaux techniques plus ciblés, qui restent soumis à l’analyse de l’art. 26 OLT 3 |
 
 Prérequis : Affecter les rôles IRM obligatoires
 
@@ -215,7 +215,7 @@ Lien nLPD : articles concernés
 
 Art. 6 al. 2 (proportionnalité). Populations limitées aux groupes exposés, pas à tous les utilisateurs. Art. 8 (sécurité des données), IRM comme mesure complémentaire à la DLP. Art. 19 (devoir d’informer). Information préalable des employés. Art. 24 (annonce des violations au PFPDT), les alertes IRM peuvent servir d’éléments de preuve en cas d’incident. Art. 26 OLT 3 (interdiction des systèmes destinés à surveiller le comportement), finalité de sécurité documentée, anonymisation activée par défaut, levée encadrée (voir Annexe G).
 
-📊 Note. Indicateur de couverture "faible" dans les 3 stratégies IRM : Purview affiche un indicateur de couverture faible ou moyen pour chaque stratégie car le périmètre est volontairement limité aux groupes GRP-Direction-Purview, GRP-RH-Purview et GRP-Finances-Purview. C'est le comportement attendu et conforme. La recommandation Microsoft d'étendre la couverture à tous les utilisateurs est une recommandation technique générique qui ne tient pas compte du cadre légal suisse. Étendre la surveillance à l'ensemble des 25 utilisateurs du tenant sans justification serait difficilement compatible avec le principe de proportionnalité (art. 6 al. 2 nLPD) et augmenterait le risque de tomber sous l'interdiction de l'art. 26 OLT 3. Ne pas modifier le périmètre des stratégies
+📊 Note. Indicateur de couverture "faible" dans les 3 stratégies IRM : Purview affiche un indicateur de couverture faible ou moyen pour chaque stratégie car le périmètre est volontairement limité aux groupes GRP-Direction-Purview, GRP-RH-Purview et GRP-Finances-Purview. C'est le comportement attendu et conforme. La recommandation Microsoft d'étendre la couverture à tous les utilisateurs est une recommandation technique générique qui ne tient pas compte du cadre légal suisse. Étendre la surveillance à l'ensemble des utilisateurs du tenant sans justification serait difficilement compatible avec le principe de proportionnalité (art. 6 al. 2 nLPD) et augmenterait le risque de tomber sous l'interdiction de l'art. 26 OLT 3. Ne pas modifier le périmètre des stratégies
 
 Licence
 

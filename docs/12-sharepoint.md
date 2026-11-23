@@ -28,7 +28,7 @@ lang: fr
 
 # Partie 11 — Gouvernance des accès SharePoint
 
-Purview classifie et protège les données mais il ne corrige pas les permissions. Si un site SharePoint est ouvert à tout le monde, Copilot peut y accéder, et un label confidentiel ne changera rien à cela. Cette partie explique comment auditer et corriger le sur-partage dans votre tenant Business Premium sans outil supplémentaire. C’est le complément indispensable de tout ce qui a été configuré dans les parties précédentes.
+Purview classifie et protège les données mais il ne corrige pas les permissions. Si un site SharePoint est ouvert à tout le monde, Copilot peut exploiter les fichiers non étiquetés ou étiquetés sans chiffrement pour tous les utilisateurs qui y ont accès. Seules les étiquettes avec chiffrement Azure RMS protègent aussi le contenu, indépendamment des permissions du site (voir section 11.5). Cette partie explique comment auditer et corriger le sur-partage dans votre tenant Business Premium sans outil supplémentaire. C’est le complément indispensable de tout ce qui a été configuré dans les parties précédentes.
 
 **⚠️ Rappel important :** La gouvernance des accès n’est pas optionnelle dans un contexte nLPD. L’art. 8 exige des mesures techniques adaptées et laisser des données RH accessibles à l’ensemble du personnel est contraire au principe de proportionnalité (art. 6 al. 2 nLPD).
 
@@ -50,7 +50,7 @@ SharePoint fonctionne avec trois niveaux qui héritent l’un de l’autre. Le n
 
 Procédure : Rapport de partage dans le Centre d’administration SharePoint
 
-1. Accédez directement à https://demo-admin.sharepoint.com (remplacez demo par le préfixe de votre tenant, l’adresse suit le format https://<préfixe>-admin.sharepoint.com). Vous arrivez dans le Centre d’administration SharePoint sans passer par admin.microsoft.com. Autre chemin : admin.microsoft.com → faites défiler le menu gauche jusqu’à la section Centres d’administration → SharePoint.
+1. Accédez directement à https://demo-admin.sharepoint.com (remplacez demo par le préfixe de votre tenant, l’adresse suit le format https://votretenant-admin.sharepoint.com). Vous arrivez dans le Centre d’administration SharePoint sans passer par admin.microsoft.com. Autre chemin : admin.microsoft.com → faites défiler le menu gauche jusqu’à la section Centres d’administration → SharePoint.
 
 2. Menu de gauche → Sites → Sites actifs. La liste affiche tous les sites SharePoint du tenant avec les colonnes Niveau de confidentialité et Partage externe. La colonne Partage externe indique l’état de chaque site : Désactivé ou Activé.
 
@@ -116,7 +116,7 @@ Si votre organisation n’a aucun besoin de partage avec des personnes extérieu
 
 ## 11.5 Lien Copilot : ce que la gouvernance des accès change concrètement
 
-Copilot M365 respecte strictement les permissions SharePoint. Si un utilisateur n’a pas accès à un fichier, Copilot ne peut pas le lui montrer quelles que soient les questions posées. Les étiquettes de sensibilité sans chiffrement ne remplacent pas ces permissions. En revanche, lorsqu’une étiquette applique un chiffrement Azure RMS, les droits définis dans l’étiquette protègent aussi le document : selon Microsoft, Copilot ne restitue le texte d’un document chiffré que si l’utilisateur dispose du droit d’usage EXTRACT (Copier). Les deux couches sont complémentaires : la gouvernance des permissions reste indispensable pour les fichiers non étiquetés ou non chiffrés et pour limiter le sur-partage général.
+Copilot M365 respecte strictement les permissions SharePoint. Si un utilisateur n’a pas accès à un fichier, Copilot ne peut pas le lui montrer quelles que soient les questions posées. Les étiquettes de sensibilité sans chiffrement ne remplacent pas ces permissions. En revanche, lorsqu’une étiquette applique un chiffrement Azure RMS, les droits définis dans l’étiquette protègent aussi le document : pour que Copilot puisse restituer le contenu d’un document chiffré, l’utilisateur doit disposer des droits d’usage VIEW (Afficher) et EXTRACT (Copier) ; selon Microsoft, VIEW sans EXTRACT ne suffit pas. Un document chiffré peut toutefois rester visible dans un site plus largement accessible, notamment par son nom et son emplacement. Les permissions SharePoint et le chiffrement RMS sont donc deux couches complémentaires : les permissions contrôlent l’accès au site et aux fichiers, le chiffrement protège le contenu, même lorsque le fichier est copié hors de son emplacement SharePoint. La gouvernance des permissions reste indispensable pour les fichiers non étiquetés ou non chiffrés et pour limiter le sur-partage général.
 
 | **Sans gouvernance des accès** | **Avec gouvernance des accès** |
 | --- | --- |

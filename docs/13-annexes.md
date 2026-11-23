@@ -65,9 +65,9 @@ Le type d’information sensible (SIT) natif de Microsoft « Swiss Social Secu
 
 ### C.1 : Regex et configuration du modèle
 
-**Expression régulière (regex) : **756\.\d{4}\.\d{4}\.\d{2}
+**Expression régulière (regex) : **`756\.\d{4}\.\d{4}\.\d{2}`
 
-Ce regex détecte exactement le format suisse avec points obligatoires : 756.XXXX.XXXX.XX. Le préfixe 756 est le code pays suisse. Les points échappés (\.) forcent le séparateur point, une séquence de chiffres collés comme 7561234567890 n’est pas détectée.
+Ce regex détecte exactement le format suisse avec points obligatoires : 756.XXXX.XXXX.XX. Le préfixe 756 est le code pays suisse. Les points échappés (`\.`) forcent le séparateur point, une séquence de chiffres collés comme 7561234567890 n’est pas détectée.
 
 **Paramètres du modèle Purview : **Type de correspondance = Correspondance de chaîne | Niveau de confiance = Moyen | Nombre d’instances min = 1.
 
@@ -91,11 +91,13 @@ Ces mots-clés sont des éléments de soutien, ils augmentent le niveau de confi
 
 1. Purview → Protection des données → Classifieurs → Types d’informations sensibles → + Créer un type d’informations sensibles.
 
-2. Nom : AVS-Suisse-PME | Description : Détection du numéro AVS suisse format 756.XXXX.XXXX.XX — 4 langues nationales + anglais. → Suivant.
+2. Nom : AVS-Suisse-PME | Description : Détection du numéro AVS suisse format 756.XXXX.XXXX.XX, 4 langues nationales + anglais. → Suivant.
 
 3. + Ajouter un modèle → Niveau de confiance : Moyen → + Ajouter un élément principal → Expression régulière → ID : regex-AVS-Suisse → collez le regex :
 
+```text
 756\.\d{4}\.\d{4}\.\d{2}
+```
 
 Sélectionnez Correspondance de chaîne (pas Correspondance de mot). Cliquez sur Terminé.
 
@@ -166,11 +168,11 @@ Ce guide est conçu pour un environnement POC / LAB avec Microsoft 365 Business 
 
 ## Annexe F : RUN & Responsabilités (PME suisse)
 
-**Exigence audit — responsabilité nominative**
+**Responsabilité nominative (bonne pratique de gouvernance)**
 
-Dans cette annexe, les rôles **Admin IT**, **Direction** et **Juridique/DPO** doivent correspondre à une personne physique nommée (Nom/Prénom) dans le registre interne. Un rôle générique seul n’est pas suffisant en audit PFPDT l’auditeur demandera qui, concrètement, est responsable et comment le prouver (art. 12 nLPD - registre des activités de traitement).
+Pour assurer une responsabilité opérationnelle claire, il est recommandé d’associer chaque rôle de cette annexe (**Admin IT**, **Direction**, **Juridique/DPO**) à une personne physique identifiée (Nom/Prénom). Si l’organisation tient un registre des activités de traitement (art. 12 nLPD, voir l’exemption des PME en Annexe I), les responsables opérationnels peuvent y être documentés. Cette formalisation constitue une bonne pratique de gouvernance, indépendamment de l’obligation légale de tenir un registre.
 
-Sans organisation associée aux mesures techniques, Purview devient une boîte noire que personne ne surveille. Cette annexe définit le minimum opérationnel requis pour une PME suisse sous nLPD. Le PFPD peut demander lors d’un audit la preuve que ces contrôles sont effectivement exercés (art. 12 nLPD - registre des activités de traitement).
+Sans organisation associée aux mesures techniques, Purview devient une boîte noire que personne ne surveille. Cette annexe définit le minimum opérationnel requis pour une PME suisse sous nLPD. En cas de contrôle, le PFPDT peut demander comment les mesures de sécurité sont effectivement appliquées (art. 8 nLPD) : un RACI tenu à jour permet de le démontrer.
 
 ### F.1 : RACI Purview PME
 
@@ -184,9 +186,11 @@ Sans organisation associée aux mesures techniques, Purview devient une boîte n
 
 ### F.2 : Escalade et incidents nLPD
 
-**Délai de notification PFPD : **dès que possible après la découverte d’une violation de données personnelles (art. 24 nLPD). Toute alerte DLP de gravité élevée non résolue dans les 48h doit être traitée comme un incident potentiel nLPD.
+**Annonce au PFPDT : **dans les meilleurs délais lorsque l’analyse conclut que la violation de la sécurité des données entraîne vraisemblablement un risque élevé pour la personnalité ou les droits fondamentaux des personnes concernées (art. 24 al. 1 nLPD). Toute violation n’entraîne donc pas automatiquement une annonce.
 
-**Chaîne d’escalade : **Alerte Purview → Admin IT (48h) → Direction (si violation confirmée) → Conseil juridique (si notification PFPD requise) → PFPD (dès que possible - art. 24 nLPD).
+**Déclencheur interne : **toute alerte DLP de gravité élevée non résolue dans les 48 heures déclenche une analyse d’incident. Ce délai est une règle interne d’escalade, pas un délai légal d’annonce.
+
+**Chaîne d’escalade : **Alerte Purview → Admin IT (48h) → Direction (si violation confirmée) → Conseil juridique (évaluation du risque élevé) → PFPDT (dans les meilleurs délais si l’annonce est requise, art. 24 al. 1 nLPD).
 
 **ℹ️ INFO : **Si l’organisation tient un registre des activités de traitement (art. 12 nLPD, voir Annexe I pour l’exemption des PME), intégrez-y ce tableau RACI. Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
 
@@ -339,7 +343,7 @@ Activité 4 : Surveillance IT et journaux d’audit (Purview / IRM)
 | **Champ** | **Valeur — Axonix SA** |
 | --- | --- |
 | **Désignation de l’activité** | Surveillance des comportements à risque, traçabilité des accès aux données sensibles, constitution de preuves en cas d’incident nLPD. |
-| **Finalité du traitement (art. 6 nLPD)** | Détecter les tentatives d’exfiltration de données, surveiller les violations des politiques de sécurité et satisfaire aux obligations de traçabilité imposées par l’art. 24 nLPD. Ces traitements ne sont pas utilisés à des fins de surveillance systématique du rendement ou du comportement individuel. |
+| **Finalité du traitement (art. 6 nLPD)** | Détecter les tentatives d’exfiltration de données, surveiller les violations des politiques de sécurité et constituer des traces utiles à l’analyse des incidents et, le cas échéant, à l’évaluation de l’obligation d’annonce prévue à l’art. 24 nLPD. Lorsque les conditions de l’art. 4 OPDo sont réunies (traitement automatisé de données sensibles à grande échelle ou profilage à risque élevé, mesures préventives insuffisantes), la journalisation devient une obligation légale, avec une conservation des journaux d’au moins un an. Ces traitements ne sont pas utilisés à des fins de surveillance systématique du rendement ou du comportement individuel. |
 | **Personnes concernées** | Employés membres des groupes GRP-RH-Purview, GRP-Finances-Purview et GRP-Direction-Purview uniquement (principe de proportionnalité, art. 6 nLPD). |
 | **Catégories de données traitées** | Journaux d’accès aux fichiers, alertes DLP (déclenchements de règles), comportements d’exfiltration détectés (téléchargements massifs, partages externes), interactions Copilot M365 avec des données sensibles. |
 | **Destinataires des données** | Administrateur IT Purview uniquement. Identités anonymisées par défaut, lève d’anonymat encadrée (voir Annexe G). |

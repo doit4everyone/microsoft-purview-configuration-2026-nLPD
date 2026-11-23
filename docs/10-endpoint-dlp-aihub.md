@@ -33,7 +33,7 @@ Cette partie couvre trois fonctionnalités complémentaires qui étendent la pro
 | **Fonctionnalité** | **Licence requise** | **Section** |
 | --- | --- | --- |
 | Endpoint DLP (protection sur l’appareil) | ✅ Purview Suite | 9.1 |
-| Contrôles IA dans Edge for Business | ✅ Business Premium | 9.2 |
+| Contrôles IA dans les navigateurs (configurés dans la règle Endpoint DLP) | ✅ Purview Suite | 9.2 |
 | Purview AI Hub / DSPM for AI (tableau de bord) | ✅ Purview Suite | 9.3 |
 
 ## 9.0 Positionnement de la DLP Appareils (Endpoint DLP)
@@ -111,7 +111,9 @@ L’Endpoint DLP doit être configuré dans une **politique séparée** et non d
 | **4 - RH-Confidentiel** | Documents RH chiffrés AES-256 |
 | **5 - Finances-Confidentiel** | Documents Finances chiffrés AES-256 |
 
-ℹ️** Avantage des étiquettes vs SIT : **un fichier étiqueté 4 - RH-Confidentiel sera protégé même s’il ne contient pas de pattern AVS ou IBAN détectable. Les étiquettes couvrent aussi les fichiers chiffrés dont le contenu ne peut pas être analysé par les SIT. Petit plus : ajouter également les SIT AVS-Suisse-PME, Swiss Social Security Number AHV, IBAN et Medical-RH-Suisse dans le même groupe (opérateur N’importe lequel), cela étend la protection aux fichiers non étiquetés contenant des données sensibles. Dans l’interface, ajoutez-les via Ajouter + Types d’infos confidentielles dans le groupe « Surveiller-Activités-Appareils ».
+ℹ️** Avantage des étiquettes vs SIT : **un fichier étiqueté 4 - RH-Confidentiel sera protégé même s’il ne contient pas de pattern AVS ou IBAN détectable. Les étiquettes couvrent aussi les fichiers chiffrés dont le contenu ne peut pas être analysé par les SIT. **Obligatoire :** ajoutez également les SIT AVS-Suisse-PME, Swiss Social Security Number AHV, IBAN et Medical-RH-Suisse dans le même groupe (opérateur N’importe lequel), via Ajouter + Types d’infos confidentielles dans le groupe « Surveiller-Activités-Appareils ». Ils étendent la protection aux fichiers non étiquetés, et surtout ils sont indispensables au contrôle du collage dans les navigateurs (section 9.2).
+
+> ⚠️ **ÉTIQUETTES ET COLLAGE : **les étiquettes s’appliquent aux activités portant sur des fichiers (copie USB, impression, upload). L’activité « Coller dans les navigateurs pris en charge » fonctionne différemment : selon Microsoft, Purview analyse le contenu collé, indépendamment de la classification du fichier d’origine, et la condition documentée pour cette activité est un type d’information sensible. Une règle reposant uniquement sur les étiquettes ne garantit donc pas le blocage d’un texte copié depuis un document RH chiffré et collé dans un site IA.
 
 7. Pas de condition « partage externe » : cette condition est incompatible avec l’emplacement Appareils. L’Endpoint DLP surveille toutes les activités sur l’appareil indépendamment de la destination. Dans section Actions → sélectionnez Auditer ou restreindre les activités sur les appareils → Appliquer des restrictions à une activité spécifique → configurez le tableau suivant :
 
@@ -142,7 +144,7 @@ Dans la règle Surveiller-Activités-Appareils → section Domaine de service et
 
 1. Téléchargement vers un domaine de service cloud restreint : cocher → + Choisir différentes restrictions pour les domaines de service sensibles → Ajouter un groupe → sélectionner Sites web d’IA générative (groupe prédéfini Microsoft, contient automatiquement ChatGPT, Gemini, Perplexity, Mistral, etc.) → Action : Auditer uniquement (Phase 1) puis **Bloquer avec remplacement** (Phase 2 après validation) → Enregistrer.
 
-2. Coller dans les navigateurs pris en charge : Phase 1 : Auditer uniquement. Phase 2 : Bloquer avec remplacement : bloque le copier-coller de contenu sensible dans un navigateur vers un site IA.
+2. Coller dans les navigateurs pris en charge : cocher → + Choisir différentes restrictions pour les domaines de service sensibles → Ajouter un groupe → sélectionner le même groupe Sites web d’IA générative → Phase 1 : Auditer uniquement. Phase 2 : Bloquer avec remplacement. Microsoft précise que cette activité exige des règles configurées avec des groupes de domaines de service sensibles : le groupe doit donc être référencé ici aussi, et pas seulement dans l’action d’upload. La détection repose sur les SIT de la règle (voir l’avertissement de la section 9.1) : pour vos tests, collez un texte contenant un numéro AVS ou un IBAN fictif, et non un simple extrait d’un document étiqueté.
 
 ⚠️ Couverture navigateur : « Coller dans les navigateurs » fonctionne selon le navigateur. Edge (version actuelle) natif, aucune extension requise. Chrome et Firefox nécessitent l’extension Microsoft Purview installée sur le poste. Sans extension, le copier-coller passe sans interception sur ces navigateurs. Les navigateurs non listés (Brave, Opera, etc.) ne sont pas couverts, à bloquer via Web Content Filtering si nécessaire. Note terrain : l'extension Firefox est en version Beta et son comportement peut être instable, des uploads ou copier-coller peuvent passer sans interception malgré une installation correcte. Edge reste le navigateur de référence pour une protection Endpoint DLP fiable.
 
@@ -166,23 +168,30 @@ L’approche Settings Catalog n’est pas valide pour Firefox dans le cas de Pur
 
 Méthode correcte (Microsoft + terrain) :
 
-Phase 1 — Importer les ADMX Firefox dans Intune : téléchargez le fichier ADMX officiel Firefox, importez-le dans Intune → Appareils → Profils de configuration → Paramètres de configuration.
+Les deux phases se configurent dans un profil Intune → Appareils → Profils de configuration → Créer → Windows 10 et ultérieur → Modèles → Personnalisé, onglet Paramètres → Ajouter, avec les valeurs ci-dessous (documentation Microsoft « Get started with the Microsoft Purview extension for Firefox »).
 
-Phase 2 — Créer un profil Custom (OMA-URI) avec ExtensionSettings contenant :
+Phase 1 : Importer les ADMX Firefox. Téléchargez la dernière version de firefox.admx depuis le dépôt GitHub officiel de Mozilla (mozilla/policy-templates, rubrique Releases), puis ajoutez ce paramètre OMA-URI :
 
-{
+```text
+OMA-URI : ./Device/Vendor/MSFT/Policy/ConfigOperations/ADMXInstall/Firefox/Policy/FirefoxAdmx
+Type    : String
+Valeur  : tout le contenu du fichier firefox.admx
+```
 
- "microsoft.defender.browser_extension.native_message_host@microsoft.com": {
+Phase 2 : Forcer l’installation de l’extension (ExtensionSettings) :
 
- "installation_mode": "force_installed",
+```text
+OMA-URI : ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Extensions/ExtensionSettings
+Type    : String
+```
 
- "install_url": "https://github.com/microsoft/purview/raw/main/endpointDLP/browser_extension/prod-1.1.0.212.xpi",
+Valeur, à copier telle quelle :
 
- "updates_disabled": false
+```xml
+<enabled/><data id="ExtensionSettings" value='{"microsoft.defender.browser_extension.native_message_host@microsoft.com":{"installation_mode":"force_installed","install_url":"https://github.com/microsoft/purview/raw/main/endpointDLP/browser_extension/prod-1.1.0.212.xpi","updates_disabled":false}}'/>
+```
 
- }
-
-}
+Microsoft précise que updates_disabled doit rester à false pour que l’extension se mette à jour automatiquement.
 
 **Vérification post-déploiement** — sur le poste cible après sync Intune (env. 15 min) : Chrome → chrome://extensions — Firefox → about:addons — vérifier la présence de « Microsoft Purview Extension » et son statut activé.
 
@@ -214,7 +223,7 @@ Lien nLPD : pourquoi cette configuration compte
 | --- | --- | --- |
 | Endpoint DLP | Mesures techniques contre la fuite physique de données (USB, impression) | Art. 8 |
 | Contrôles IA Edge for Business | Contrôle du transfert de données vers des applications IA non gérées | Art. 8 + Art. 9 (sous-traitance : un service IA externe traitant des données pour l'entreprise doit être encadré par un contrat) |
-| AI Hub / DSPM for AI | Preuve de surveillance et traçabilité pour notification PFPDT en cas d’incident | Art. 24 |
+| AI Hub / DSPM for AI | Traces opérationnelles utiles à l’investigation d’un incident et, le cas échéant, à l’évaluation de l’obligation d’annonce au PFPDT | Art. 8 (sécurité), art. 24 (annonce des violations à risque élevé) |
 
 Checklist de validation section 9
 
