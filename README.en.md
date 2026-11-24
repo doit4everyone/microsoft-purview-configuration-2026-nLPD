@@ -95,7 +95,11 @@ This repository explains how to:
 | Microsoft 365 Copilot | Optional (but supported) |
 
 💡 **Cost reference** (indicative):
-- Purview Suite: approx. CHF 11 / user / month
+- Microsoft 365 Business Premium: CHF 17.82 / user / month
+- Microsoft Purview Suite for Microsoft 365 Business Premium: CHF 8.10 / user / month
+- Total: CHF 25.92 / user / month
+
+*Microsoft Switzerland public list prices, excluding VAT, annual subscription paid yearly (November 2026). Prices may vary by reseller and billing option.*
 
 ---
 
@@ -104,7 +108,7 @@ This repository explains how to:
 The proposed configuration aligns with:
 - nLPD Art. 6: purpose limitation and proportionality
 - nLPD Art. 8: technical and organizational measures
-- nLPD Art. 24: incident traceability and notification
+- nLPD Art. 24: notification to the FDPIC of data security breaches likely to result in a high risk
 
 Auditability and evidence collection are **first-class design goals**.
 

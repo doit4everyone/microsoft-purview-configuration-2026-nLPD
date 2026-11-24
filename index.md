@@ -69,7 +69,7 @@ Cette procédure exhaustive peut être déployée progressivement sans interrupt
 
 | Période | Actions |
 |---|---|
-| Semaine 1 | Socle tenant : groupes de rôles, licences Purview Suite, audit, SIT personnalisés (AVS-Suisse-PME, Medical-RH-Suisse). |
+| Semaine 1 | Socle tenant : groupes de rôles, licences Purview Suite, audit, SIT personnalisés (AVS-Suisse, Medical-RH-Suisse). |
 | Semaine 2 | Étiquettes de sensibilité (7 étiquettes, publication) — Auto-labellisation (simulation + activation) — Politiques de rétention (5 politiques). |
 | Semaine 3 | Politiques DLP (Exchange, SharePoint, Copilot, Transmission externe) — Endpoint DLP + Edge for Business. |
 | Semaine 4 | DSPM for AI — Insider Risk Management (3 stratégies) — eDiscovery Premium — Communication Compliance — Étiquette 6 « Transmission-Externe ». |

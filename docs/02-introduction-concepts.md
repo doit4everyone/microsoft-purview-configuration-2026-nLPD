@@ -103,7 +103,7 @@ Connect-ExchangeOnline
 
 Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
 
-*→ Aucune réponse = succès. Si vous voyez une erreur rouge, vérifiez que vous disposez du rôle Audit Logs, via le groupe Compliance Management Exchange (section 0.3).*
+*→ Aucune réponse = succès. Si PowerShell affiche l’avertissement « L’exécution de la commande est terminée mais aucun paramètre de « Admin Audit Log Settings » n’a été modifié », l’audit était déjà actif : c’est normal. Si vous voyez une erreur rouge (commande non reconnue ou accès refusé), vérifiez que vous disposez du rôle Audit Logs, via le groupe Compliance Management Exchange (section 0.3).*
 
 **Étape 4 : Vérifier que l'audit est actif **
 

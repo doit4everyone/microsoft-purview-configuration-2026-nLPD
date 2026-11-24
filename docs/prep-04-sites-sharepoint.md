@@ -41,9 +41,9 @@ la création des sites standards.
 | Direction demo.ch | Équipe | sites/direction | GRP-Direction uniquement |
 | RH demo.ch | Équipe | sites/RH | GRP-RH + GRP-Direction (lecture) |
 | Finances demo.ch | Équipe | sites/Finances | GRP-Finances + GRP-Direction (lecture) |
-| Transmission externe | Équipe | sites/transmission-externe | Voir section dédiée |
+| Transmission externe | Équipe | sites/Transmissionexterne | Voir section dédiée |
 
-> ⚠️ **URL DE RÉFÉRENCE : **les adresses de ce tableau sont réutilisées telles quelles dans les politiques DLP, d’étiquetage automatique et de rétention du guide Purview (https://demo.sharepoint.com/sites/RH, /sites/Finances, /sites/direction, /sites/transmission-externe). Saisissez exactement ces adresses lors de la création des sites. Une adresse différente fait qu’une politique ne couvre pas le site attendu. Après création de chaque politique, vérifiez dans le portail Purview les emplacements réellement sélectionnés.
+> ⚠️ **URL DE RÉFÉRENCE : **les adresses de ce tableau sont réutilisées telles quelles dans les politiques DLP, d’étiquetage automatique et de rétention du guide Purview (https://demo.sharepoint.com/sites/RH, /sites/Finances, /sites/direction, /sites/Transmissionexterne). Saisissez exactement ces adresses lors de la création des sites. Une adresse différente fait qu’une politique ne couvre pas le site attendu. Après création de chaque politique, vérifiez dans le portail Purview les emplacements réellement sélectionnés.
 
 ## 4.1 Accéder au Centre d'administration SharePoint
 
@@ -184,6 +184,19 @@ Le partage s’effectue via des liens sécurisés nécessitant une authentificat
 
 Contrairement aux autres sites, le partage externe y est autorisé, mais de façon strictement contrôlée. La DLP et la stratégie de rétention qui s’appliquent à ce site seront décrites dans le guide Microsoft Purview.
 
+> **📤 POURQUOI UN SITE DÉDIÉ À LA TRANSMISSION EXTERNE ?** La politique DLP générale bloque le partage externe des données sensibles depuis les sites RH, Finances et Direction, et les étiquettes 3, 4 et 5 chiffrent les documents pour les seuls membres internes autorisés. Sans canal prévu à cet effet, aucun document sensible ne pourrait donc sortir de l’entreprise, même pour un échange légitime (contrats, fiches de salaire pour la fiduciaire, documents financiers pour la révision). Plutôt que d’affaiblir la politique générale, le guide crée un canal d’exception contrôlé : les partages externes légitimes restent possibles, mais passent par un espace dont les permissions, l’étiquetage et la traçabilité sont maîtrisés.
+>
+> **Le parcours d’un document :**
+> 1. Le collaborateur copie le document depuis son site d’origine (RH, Finances ou Direction) vers la bibliothèque de son département sur le site Transmission externe. L’original reste dans le site source, avec son étiquette et sa durée de conservation.
+> 2. Il applique manuellement l’étiquette 6 - Transmission-Externe, qui remplace l’étiquette d’origine de la copie : sans chiffrement, avec marquages visuels. Ce geste matérialise sa décision : le document a été vérifié et sa transmission est approuvée.
+> 3. Il le partage avec un lien nominatif : le destinataire externe doit s’authentifier.
+> 4. La politique DLP dédiée enregistre le partage et alerte l’administrateur si des données sensibles sont détectées. Elle ne bloque pas le partage.
+> 5. Après 2 jours, la copie est supprimée automatiquement du site. Une copie déjà téléchargée par le destinataire ne peut pas être rappelée.
+>
+> Ce site est le canal normal de tout envoi prévu de documents sensibles. Pour un cas ponctuel et imprévu (un e-mail urgent contenant un numéro AVS, par exemple), la règle DLP AVS permet un remplacement avec justification, enregistré et examiné ensuite par l’administrateur. L’IBAN reste bloqué sans exception hors de ce site.
+>
+> Configuration correspondante dans le guide Purview : étiquette 6 (section 2.4), règle d’usage entre les deux canaux (section 4.2), politique DLP-Protection-Transmission-Externe (section 4.3), rétention de 2 jours (section 8.1).
+
 > **📤 La LOGIQUE DE CE SITE : À LIRE AVANT DE COMMENCER** Chaque département dispose de SA PROPRE bibliothèque, isolée des autres. Un membre RH peut déposer dans la bibliothèque RH, il ne voit pas les bibliothèques Finance ou Direction. La racine du site est en lecture seule pour tout le monde sauf l’admin, on ne dépose rien à la racine. Le partage externe s’effectue exclusivement via des liens sécurisés nécessitant l’authentification de l’utilisateur externe (invité) ; aucun lien public accessible sans authentification n’est autorisé. La DLP et la rétention seront configurées par Purview, ne les touchez pas ici, cela sera décrit dans le guide Purview
 
 > **RISQUE OPÉRATIONNEL IDENTIFIÉ** La sécurité du site Transmission externe repose sur : • le respect strict de la procédure, • l’absence de modification manuelle des groupes et autorisations. Une erreur de manipulation administrateur peut réouvrir l’accès croisé entre départements. Ce risque est accepté dans le cadre du POC.
@@ -192,7 +205,7 @@ Contrairement aux autres sites, le partage externe y est autorisé, mais de faç
 
 Avant de créer le site, vous devez autoriser le partage externe dans les paramètres généraux de SharePoint. Sans cette étape, il est impossible de partager un document avec quelqu’un hors de votre organisation.
 
-> **⚠️ CETTE ACTION OUVRE LE PARTAGE POUR TOUT LE TENANT** Activer le partage externe au niveau du tenant est le prérequis technique, mais ce n’est pas une ouverture totale. Chaque site garde son propre niveau de partage. Les sites RH, Finances et Direction restent fermés à l’externe. Seul le site « Transmission externe » autorise le partage externe, via authentification des utilisateurs invités et jamais via des liens publics.
+> **⚠️ CETTE ACTION OUVRE LE PARTAGE POUR TOUT LE TENANT** Activer le partage externe au niveau du tenant est le prérequis technique, mais ce n’est pas une ouverture totale. Chaque site garde son propre niveau de partage, mais le niveau par défaut d’un site dépend de son type et de la configuration des groupes Microsoft 365 : un site existant peut donc être ouvert à l’externe sans que vous l’ayez voulu. Après cette étape, vérifiez et réglez individuellement le partage externe de RH, Finances, Direction, Intranet et Communication sur « Uniquement les personnes de votre organisation » (Centre d’administration SharePoint → Sites actifs → colonne Partage externe ; procédure détaillée en section 11.3 du guide Purview). Seul le site « Transmission externe » doit autoriser le partage externe, via authentification des utilisateurs invités et jamais via des liens publics.
 
 Connectez-vous sur https://admin.microsoft.com, puis cliquez sur Afficher tout > SharePoint > Stratégies > Partage.
 
@@ -244,7 +257,7 @@ Cette zone définit le type de lien proposé PAR DÉFAUT quand un utilisateur cl
 
 2. Choisissez Site de l’équipe.
 
-3. Nom du site : Transmission externe | Adresse : transmission-externe | Langue : Français.
+3. Nom du site : Transmission externe | Adresse : Transmissionexterne | Langue : Français.
 
 4. Propriétaire du site : admin@demo.ch.
 
@@ -374,7 +387,7 @@ Dans le ruban de la bibliothèque, cliquez sur Accorder des autorisations. Un di
 | Finance - Transmission externe | GRP-Finances-Purview | Transmission externe - Membres + Visiteurs | Propriétaires (Contrôle total) |
 | Direction - Transmission externe | GRP-Direction-Purview | Transmission externe - Membres + Visiteurs | Propriétaires (Contrôle total) |
 
-> **⚠️ ÉTAT FINAL ATTENDU POUR CHAQUE BIBLIOTHÈQUE** Propriétaires de Transmission externe : Contrôle total (conservé) Transmission externe - Membres : supprimé de la liste Transmission externe - Visiteurs : supprimé de la liste GRP-[Département]-Purview : Modification (entrée directe) admin@demo.ch : Modification (entrée directe)
+> **⚠️ ÉTAT FINAL ATTENDU POUR CHAQUE BIBLIOTHÈQUE** Propriétaires de Transmission externe : Contrôle total (conservé) Transmission externe - Membres : supprimé de la liste Transmission externe - Visiteurs : supprimé de la liste GRP-[Département]-Purview : Modification (entrée directe). admin@demo.ch n’a pas besoin d’entrée directe : il est couvert par le groupe Propriétaires de Transmission externe (Contrôle total).
 
 > **✅ VÉRIFICATION RAPIDE** Connectez-vous avec rh1@demo.ch et ouvrez le site Transmission externe > Contenu du site. Vous devez voir UNIQUEMENT la bibliothèque RH - Transmission externe, pas les deux autres. Si les 3 bibliothèques sont visibles : l’héritage n’a pas été correctement arrêté, reprenez depuis l’étape 5 (Arrêter l’héritage). Si les autorisations semblent correctes mais la visibilité croisée persiste : vérifiez qu’il ne reste pas de trace de Transmission externe - Membres dans la liste des permissions de la bibliothèque.
 
@@ -401,9 +414,9 @@ Maintenant que le site est sécurisé, configurez le niveau de partage externe a
 | Invités existants | Uniquement les personnes déjà présentes dans l’annuaire. Un partenaire inconnu ne peut pas recevoir de lien. | ❌ Non |
 | Uniquement les personnes de votre organisation | Aucun partage externe autorisé : réservé aux sites purement internes | ❌ Non |
 
-> **ℹ️ CE RÉGLAGE EST UN PLAFOND POUR CE SITE** Le niveau choisi ici ne peut pas dépasser le niveau défini au niveau du tenant (Zone 1 de l’Étape 1). Si le tenant est réglé sur « Invités nouveaux et existants », ce site peut aussi utiliser ce niveau ou être plus restrictif. Les autres sites (RH, Finances, Direction) restent sur « Uniquement les personnes de votre organisation » par défaut, ils ne sont pas affectés par ce réglage.
+> **ℹ️ CE RÉGLAGE EST UN PLAFOND POUR CE SITE** Le niveau choisi ici ne peut pas dépasser le niveau défini au niveau du tenant (Zone 1 de l’Étape 1). Si le tenant est réglé sur « Invités nouveaux et existants », ce site peut aussi utiliser ce niveau ou être plus restrictif. Ce réglage ne modifie pas les autres sites. Vérifiez que RH, Finances, Direction, Intranet et Communication sont bien sur « Uniquement les personnes de votre organisation » : ce n’est pas garanti par défaut.
 
-> **🔐 COMMENT FONCTIONNE LE PARTAGE EXTERNE SÉCURISÉ - POUR LE DÉBUTANT** 1. Un membre RH ouvre un document dans la bibliothèque RH - Transmission externe. 2. Il clique sur Partager et entre l’adresse email du partenaire externe. 3. Le partenaire reçoit un email avec un lien sécurisé. En cliquant, il est invité à s’authentifier avec son compte Microsoft ou Entra ID (ou à créer un compte invité s’il n’en a pas). 4. Il saisit le code et peut accéder au document pendant la durée configurée (30 jours selon Zone 2 de l’étape 1). Sans le code, le lien est inutilisable. 5. La DLP Purview analyse le document avant le partage et peut le bloquer si le contenu est trop sensible. → La configuration DLP et la rétention de ce site sont dans le guide Microsoft Purview (pas ici).
+> **🔐 COMMENT FONCTIONNE LE PARTAGE EXTERNE SÉCURISÉ - POUR LE DÉBUTANT** 1. Un membre RH dépose le document dans la bibliothèque RH - Transmission externe et lui applique manuellement l’étiquette 6 - Transmission-Externe, qui matérialise sa décision de le transmettre. 2. Il clique sur Partager et entre l’adresse email du partenaire externe. 3. Le partenaire reçoit un email avec un lien sécurisé. En cliquant, il est invité à s’authentifier avec son compte Microsoft ou Entra ID (ou à créer un compte invité s’il n’en a pas). 4. Il saisit le code et peut accéder au document pendant la durée configurée (30 jours selon Zone 2 de l’étape 1). Sans le code, le lien est inutilisable. 5. La politique DLP dédiée surveille les partages externes, détecte les données sensibles correspondant aux SIT configurés et génère une alerte pour l’administrateur. Elle ne bloque pas le partage : celui-ci repose sur la décision de l’utilisateur, le processus de validation interne et les permissions spécifiques du site. → La configuration DLP et la rétention de ce site sont dans le guide Microsoft Purview (pas ici).
 
 ---
 

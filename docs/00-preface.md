@@ -38,7 +38,7 @@ Pour toute organisation souhaitant déployer Microsoft Purview, vous trouverez i
 
 ## Chronologie de déploiement
 
-**Semaine 1 : **Socle tenant : groupes de rôles, licences Purview Suite, audit, SITs personnalisés (AVS-Suisse-PME, Medical-RH-Suisse).
+**Semaine 1 : **Socle tenant : groupes de rôles, licences Purview Suite, audit, SITs personnalisés (AVS-Suisse, Medical-RH-Suisse).
 
 **Semaine 2 : **Étiquettes de sensibilité (7 étiquettes, publication) - Auto-labellisation (simulation + activation) - Politiques de rétention (5 politiques).
 

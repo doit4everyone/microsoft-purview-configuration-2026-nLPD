@@ -77,12 +77,12 @@ Purview → DSPM → Tâches et actions → Tâches de configuration. Après con
 
 **Optionnel : nécessite extension navigateur Purview : **Étendre vos insights de découverte de données. Configure 3 stratégies Edge for Business (détection invites IA, visites sites IA, contenus collés sur sites IA), mode audit uniquement, zéro impact utilisateur.
 
-**Disponibles mais non prioritaires PME : **Intégrer des appareils à Microsoft Purview (section 7).
+**Disponibles mais non prioritaires PME : **Intégrer des appareils à Microsoft Purview (partie 9).
 Intégrez les solutions partenaires (Varonis, Cyera, BigID, hors scope PME).
 
 Extension navigateur Microsoft Purview : Valeur ajoutée et prérequis
 
-Sans l’extension navigateur, la DLP Purview couvre Exchange, SharePoint, OneDrive, Teams et Copilot mais pas le navigateur web. Un utilisateur peut contourner l’ensemble du dispositif en ouvrant Gmail ou WeTransfer dans Chrome et en attachant directement un fichier RH depuis son poste. L’extension comble cet angle mort : elle surveille et contrôle ce qui se passe dans le navigateur indépendamment du canal utilisé.
+Deux mécanismes distincts sont à ne pas confondre. **DSPM for AI** donne de la visibilité sur l’usage des applications d’IA (invites, sites visités, données partagées). **Endpoint DLP** (partie 9) contrôle et bloque les activités sur les postes intégrés, y compris dans le navigateur. Pour le navigateur, Edge est pris en charge nativement sur un poste intégré, sans extension (validé sur le terrain, section 9.2) ; Chrome et Firefox nécessitent l’extension Microsoft Purview. Sans poste intégré, ou avec Chrome ou Firefox sans extension, un utilisateur peut contourner le dispositif en ouvrant Gmail ou WeTransfer et en y attachant directement un fichier RH depuis son poste.
 
 **Ce que l’extension détecte et contrôle : **upload d’un fichier sensible vers un site externe (WeTransfer, Dropbox perso, Gmail web), copier-coller de contenu sensible dans un formulaire web ou une IA grand public (ChatGPT, Gemini), impression vers PDF depuis le navigateur, visite de sites IA non autorisés avec des données sensibles en mémoire.
 

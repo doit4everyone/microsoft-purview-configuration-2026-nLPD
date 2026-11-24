@@ -98,7 +98,11 @@ Ce dépôt montre comment :
 | Microsoft 365 Copilot | Optionnel (pris en charge) |
 
 💡 **Ordre de grandeur des coûts** :
-- Purview Suite : ~CHF 11 / utilisateur / mois
+- Microsoft 365 Business Premium : 17.82 CHF / utilisateur / mois
+- Microsoft Purview Suite for Microsoft 365 Business Premium : 8.10 CHF / utilisateur / mois
+- Total : 25.92 CHF / utilisateur / mois
+
+*Prix publics Microsoft Suisse, hors TVA, abonnement annuel avec paiement annuel (novembre 2026). Les tarifs peuvent varier selon le revendeur et le mode de paiement.*
 
 ---
 
@@ -107,7 +111,7 @@ Ce dépôt montre comment :
 La configuration proposée répond notamment aux exigences suivantes :
 - art. 6 nLPD : finalité et proportionnalité
 - art. 8 nLPD : mesures techniques et organisationnelles
-- art. 24 nLPD : traçabilité et notification des violations
+- art. 24 nLPD : annonce au PFPDT des violations de la sécurité des données présentant vraisemblablement un risque élevé
 
 L'auditabilité et la preuve de conformité sont des **objectifs centraux**.
 

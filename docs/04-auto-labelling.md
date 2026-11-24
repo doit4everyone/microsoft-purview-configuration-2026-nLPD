@@ -42,7 +42,7 @@ L’auto-labelling analyse les contenus de manière asynchrone en arrière-plan 
 Vous allez créer deux stratégies distinctes, une par étiquette cible car l’interface Purview associe un label unique à chaque stratégie.
 Accès : Purview → Protection des données → Stratégies → Stratégies d’étiquetage automatique → + Créer une stratégie d’étiquetage automatique.
 
-**⚠️ Séquence recommandée : **les SITs personnalisés **AVS-Suisse-PME** et **Medical-RH-Suisse** créés en section 2.3bis sont utilisés directement ci-dessous. Attendez la propagation (15–30 min) avant de continuer.
+**⚠️ Séquence recommandée : **les SITs personnalisés **AVS-Suisse** et **Medical-RH-Suisse** créés en section 2.3bis sont utilisés directement ci-dessous. Attendez la propagation (15–30 min) avant de continuer.
 
 Stratégie 1 : Détection AVS et données médicales → 4 - RH-Confidentiel
 
@@ -60,9 +60,9 @@ Cliquez sur choisir une étiquette → sélectionnez 4 : RH-Confidentiel → App
 
 Laissez sur Répertoire complet → **Suivant. Étape 5 : Choisir les emplacements**
 
-Activez les trois emplacements : Courrier Exchange (Tous utilisateurs et groupes), Sites SharePoint : Modifier → Exclure → saisir https://demo.sharepoint.com/sites/transmission-externe → + → Terminé (ce site est géré par DLP dédiée, l’étiquette 4 - RH-Confidentiel ne doit pas s’y appliquer automatiquement), Comptes OneDrive (Tous utilisateurs et groupes). Azure Storage : laisser désactivé. Cliquez sur **Suivant. Étape 6 : Configurer des règles**
+Activez les trois emplacements : Courrier Exchange (Tous utilisateurs et groupes), Sites SharePoint : Modifier → Exclure → saisir https://demo.sharepoint.com/sites/Transmissionexterne → + → Terminé (ce site est géré par DLP dédiée, l’étiquette 4 - RH-Confidentiel ne doit pas s’y appliquer automatiquement), Comptes OneDrive (Tous utilisateurs et groupes). Azure Storage : laisser désactivé. Cliquez sur **Suivant. Étape 6 : Configurer des règles**
 
-Sélectionnez Règles communes → **Suivant. Étape 7 : Définir des règles (+ Nouvelle règle) *Règle 1 : AVS suisse :*** Nom : Règle-AVS-Suisse | Le contenu contient → Nom du groupe : Règle-AVS-Suisse → +Ajouter → Types d’infos confidentielles → tapez AVS-Suisse-PME → sélectionnez AVS-Suisse-PME | Confiance moyenne | Nombre d’instances min : 1 → **Enregistrer. *Règle 2 : Médical :*** Nom : **Règle-Medical** → Le contenu contient → Nom du groupe : Règle-Medical | Opérateur du groupe : N’importe lequel de ces éléments (OU).
+Sélectionnez Règles communes → **Suivant. Étape 7 : Définir des règles (+ Nouvelle règle) *Règle 1 : AVS suisse :*** Nom : Règle-AVS-Suisse | Le contenu contient → Nom du groupe : Règle-AVS-Suisse → +Ajouter → Types d’infos confidentielles → tapez AVS-Suisse → sélectionnez AVS-Suisse | Confiance moyenne | Nombre d’instances min : 1 → **Enregistrer. *Règle 2 : Médical :*** Nom : **Règle-Medical** → Le contenu contient → Nom du groupe : Règle-Medical | Opérateur du groupe : N’importe lequel de ces éléments (OU).
 
 **Condition unique : **+ Ajouter → Types d’infos confidentielles → tapez et sélectionnez : **Medical-RH-Suisse** | Confiance : Moyenne | min : 2. → **Enregistrer**.
 

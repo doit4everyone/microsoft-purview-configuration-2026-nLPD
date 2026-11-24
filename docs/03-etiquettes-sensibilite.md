@@ -42,29 +42,52 @@ Deux méthodes coexistent selon votre contexte. **En environnement hybride (AD o
 
 Le moteur de chiffrement de Purview (Azure Rights Management) exige que les groupes assignés aux étiquettes aient une adresse email, on parle de groupes de sécurité mail-enabled. Vos groupes GRP-Direction, GRP-RH et GRP-Finances sont des groupes de sécurité simples sans email, ils ne peuvent pas être utilisés pour le chiffrement des étiquettes 3, 4 et 5. Pour les étiquettes utilisant le chiffrement avec attribution explicite des autorisations, seuls les utilisateurs et les groupes disposant d’une adresse email (groupes mail-enabled) peuvent être utilisés. Cette contrainte est liée au fonctionnement d’Azure Rights Management.
 
-> ⚠️ **ATTENTION :** En mode hybride, les groupes Entra ID existants ne peuvent pas être transformés en mail-enabled, il n’existe aucune commande de conversion. Les groupes doivent être créés dans l’Active Directory local, puis rendus mail-enabled avec les outils Exchange (Enable-DistributionGroup). Renseigner uniquement l’attribut mail avec Set-ADGroup ne crée pas un véritable groupe de sécurité à extension messagerie au sens d’Exchange. La gestion des membres doit se faire exclusivement dans l’AD local pas via Exchange Online ni via Entra ID. ⚠️ Dans un tenant purement MS 365 les manipulations suivantes peuvent être effectuées directement via le portail d’Exchange Online ou PowerShell.
+> ⚠️ **ATTENTION :** En mode hybride, les groupes Entra ID existants ne peuvent pas être transformés en mail-enabled, il n’existe aucune commande de conversion. Les groupes doivent être créés dans l’Active Directory local, avec une adresse email, puis synchronisés par Entra Connect (section 2.2.1). La gestion des membres doit se faire exclusivement dans l’AD local pas via Exchange Online ni via Entra ID. ⚠️ Dans un tenant purement MS 365 les manipulations suivantes peuvent être effectuées directement via le portail d’Exchange Online ou PowerShell.
 
 | **Type de groupe** | **Mail-enabled** | **Chiffrement Purview** | **Remarque** |
 | --- | --- | --- | --- |
 | Groupe de sécurité simple (Entra ID) | ❌ Non | ❌ Non | Vos GRP-RH, GRP-Direction etc. |
-| **Groupe sécurité mail-enabled (Exchange)** | ✅ Oui | ✅ Oui | Type MailUniversalSecurityGroup. Hybride : créé dans l’AD local, rendu mail-enabled par Enable-DistributionGroup, synchronisé via Entra Connect. Cloud pur : créé dans Exchange Online |
+| **Groupe sécurité mail-enabled (Exchange)** | ✅ Oui | ✅ Oui | Type MailUniversalSecurityGroup. Hybride : créé dans l’AD local avec une adresse email, synchronisé via Entra Connect. Cloud pur : créé dans Exchange Online |
 | Groupe Microsoft 365 | ✅ Oui | ✅ Oui | Créé automatiquement avec SharePoint |
 
 ### 2.2.1 Créer les 3 groupes dans l’Active Directory local
 
-Effectuez les opérations suivantes avec PowerShell AD local et les outils de gestion Exchange. Remplacez demo.ch par votre domaine réel.
+La méthode dépend de la présence ou non d’Exchange dans votre Active Directory local. Remplacez demo.ch par votre domaine réel.
 
-> ℹ️ **PRÉREQUIS HYBRIDE : **Enable-DistributionGroup est une commande Exchange Server. Elle s’exécute soit sur le serveur Exchange hybride (Exchange Management Shell), soit, si toutes les boîtes aux lettres sont déjà dans Exchange Online, avec les outils de gestion Exchange Server 2019 CU12 ou ultérieur installés sur un poste joint au domaine (composant de gestion des destinataires, chargé par Add-PSSnapin *RecipientManagement). Microsoft documente les prérequis de ce second scénario dans l’article « Manage recipients in Exchange Hybrid environments using Management tools ». Sans l’un de ces deux outils, utilisez la méthode cloud pur (section 2.2.3) avec des groupes non synchronisés.
+**Vérifier si le schéma Exchange est présent :**
 
-**Étape 1 : Créer le groupe de sécurité universel dans l’AD local :**
+```powershell
+$schema = (Get-ADRootDSE).schemaNamingContext
+Get-ADObject "CN=ms-Exch-Schema-Version-Pt,$schema" -Properties rangeUpper | Format-List Name, rangeUpper
+```
+
+*→ Erreur « Objet de l’annuaire non trouvé » : aucun Exchange n’a jamais été installé dans la forêt, c’est le cas le plus courant en PME passée directement à Exchange Online. Utilisez la méthode A. Une valeur rangeUpper s’affiche : le schéma Exchange est présent, utilisez la méthode B si un serveur Exchange hybride ou les outils de gestion Exchange sont disponibles, sinon la méthode A.*
+
+#### Méthode A : sans Exchange local (validée sur le terrain)
+
+Entra Connect synchronise un groupe AD comme groupe à extension messagerie lorsque son attribut proxyAddresses est vide et que son attribut mail est renseigné (documentation Microsoft « Microsoft Entra Connect Sync: Understanding Users, Groups, and Contacts »). Il suffit donc de renseigner l’attribut mail.
+
+**Étape 1 : Créer le groupe de sécurité dans l’AD local :**
 
 ```powershell
 New-ADGroup -Name "GRP-Direction-Purview" -GroupScope Universal -GroupCategory Security -Path "OU=Groupes,DC=demo,DC=ch"
 ```
 
-*→ Adaptez le chemin OU à la structure de votre AD. Répétez la commande pour GRP-RH-Purview et GRP-Finances-Purview. L’étendue Universal est requise : Exchange ne rend mail-enabled que des groupes de sécurité universels.*
+*→ Adaptez le chemin OU à la structure de votre AD. Répétez la commande pour GRP-RH-Purview et GRP-Finances-Purview.*
 
-**Étape 2 : Rendre chaque groupe mail-enabled avec Exchange :**
+**Étape 2 : Renseigner l’attribut mail sur chaque groupe :**
+
+```powershell
+Set-ADGroup -Identity "GRP-Direction-Purview" -Replace @{mail="grp-direction-purview@demo.ch"}
+Set-ADGroup -Identity "GRP-RH-Purview" -Replace @{mail="grp-rh-purview@demo.ch"}
+Set-ADGroup -Identity "GRP-Finances-Purview" -Replace @{mail="grp-finances-purview@demo.ch"}
+```
+
+*→ Résultat attendu après le prochain cycle de synchronisation Entra Connect (délai : 15 à 30 minutes) : dans Entra ID, les 3 groupes ont mailEnabled = True et une adresse principale SMTP ; dans Exchange Online, ils apparaissent comme groupes de type MailUniversalSecurityGroup. Vérification dans Exchange Online PowerShell : Get-Recipient -Identity "GRP-Direction-Purview" | FL RecipientTypeDetails,PrimarySmtpAddress. Aucun site SharePoint ni équipe Teams associé.*
+
+#### Méthode B : avec un serveur Exchange hybride ou les outils de gestion Exchange
+
+Si le schéma Exchange est présent et que vous gérez les destinataires depuis Exchange (Exchange Management Shell du serveur hybride, ou outils de gestion Exchange Server 2019 CU12 ou ultérieur chargés par Add-PSSnapin *RecipientManagement), rendez les groupes mail-enabled avec Exchange plutôt qu’avec Set-ADGroup : Exchange renseigne alors l’ensemble de ses attributs (alias, adresses proxy, type de destinataire). Créez le groupe comme à l’étape 1 de la méthode A (étendue Universal, requise par Exchange), puis :
 
 ```powershell
 Enable-DistributionGroup -Identity "GRP-Direction-Purview" -Alias "grp-direction-purview" -PrimarySmtpAddress "grp-direction-purview@demo.ch"
@@ -72,7 +95,7 @@ Enable-DistributionGroup -Identity "GRP-RH-Purview" -Alias "grp-rh-purview" -Pri
 Enable-DistributionGroup -Identity "GRP-Finances-Purview" -Alias "grp-finances-purview" -PrimarySmtpAddress "grp-finances-purview@demo.ch"
 ```
 
-*→ Cette commande renseigne l’ensemble des attributs Exchange du groupe (adresse, alias, adresses proxy, type de destinataire). Après le prochain cycle de synchronisation Entra Connect (délai : 15 à 30 minutes), les 3 groupes apparaissent dans Entra ID avec leur adresse email et, dans Exchange Online, comme groupes de type MailUniversalSecurityGroup (vérification : Get-DistributionGroup -Identity "GRP-Direction-Purview" | FL RecipientTypeDetails,PrimarySmtpAddress). Aucun site SharePoint ni équipe Teams associé.*
+*→ Même résultat attendu que pour la méthode A après synchronisation : groupes de type MailUniversalSecurityGroup dans Exchange Online.*
 
 ### 2.2.2 Ajouter les membres et vérifier
 
@@ -102,8 +125,7 @@ Dans un tenant purement Microsoft 365 sans Active Directory on-prem, les groupes
 
 Connect-ExchangeOnline
 
-*→ Une fenêtre de connexion Microsoft s’ouvre. Connectez-vous avec votre compte admin cela prend un peu de temps c’est normal*
-*. *
+*→ Une fenêtre de connexion Microsoft s’ouvre. Connectez-vous avec votre compte admin. La connexion peut prendre un peu de temps, c’est normal.*
 
 **Étape 2 : Créer les 3 groupes mail-enabled :**
 
@@ -143,22 +165,22 @@ Get-DistributionGroupMember "GRP-RH-Purview"
 
 Les SIT (Sensitive Information Types) personnalisés définissent les motifs de détection utilisés par les étiquettes, les règles DLP et l’auto-labelling. Ils doivent être créés avant la configuration des étiquettes et des politiques, afin que les procédures suivantes puissent les référencer directement. La propagation après création peut prendre 15 à 30 minutes, attendez avant de configurer les règles qui les utilisent.
 
-ℹ️ **Terminologie SIT : **dans ce guide, SIT (Sensitive Information Type) désigne ce que l’interface Purview appelle « Types d’infos confidentielles ». Le menu latéral affiche « Sensitive info types (classic) » en anglais. Quand le guide dit « sélectionnez AVS-Suisse-PME dans les SITs », cherchez + Ajouter → Types d’infos confidentielles dans l’interface.
+ℹ️ **Terminologie SIT : **dans ce guide, SIT (Sensitive Information Type) désigne ce que l’interface Purview appelle « Types d’infos confidentielles ». Le menu latéral affiche « Sensitive info types (classic) » en anglais. Quand le guide dit « sélectionnez AVS-Suisse dans les SITs », cherchez + Ajouter → Types d’infos confidentielles dans l’interface.
 
 > ℹ️ **Migration des classifieurs en cours (2026) :** Microsoft unifie progressivement les classifieurs dans une nouvelle interface. Les sous-menus actuels portent le suffixe « (classic) » : Trainable classifiers (classic), Sensitive info types (classic), EDM classifiers (classic). Un bandeau dans le portail propose « Go to Classifiers (preview) ». Les procédures de ce guide restent fonctionnelles avec l’interface classique. Lorsque la migration sera achevée, les chemins de navigation pourront évoluer.
 
-SIT 1 : AVS-Suisse-PME
+SIT 1 : AVS-Suisse
 
-Détecte les numéros AVS suisses au format exact 756.XXXX.XXXX.XX en 4 langues nationales + anglais. Complémentaire au SIT natif Swiss Social Security Number AHV : AVS-Suisse-PME ne valide pas le checksum EAN-13 et détecte les numéros AVS sur la base du format uniquement. Le SIT natif valide le checksum et rate donc les numéros dont le checksum est incorrect, ce qui peut arriver dans des documents de test ou des fichiers légèrement malformés. Les deux SITs sont complémentaires. Regex : 756\\\.\\d{4}\\\.\\d{4}\\\.\\d{2} | Niveau de confiance : Moyen | min : 1.
+Détecte les numéros AVS suisses au format exact 756.XXXX.XXXX.XX en 4 langues nationales + anglais. Complémentaire au SIT natif Swiss Social Security Number AHV : AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS sur la base du format uniquement. Le SIT natif valide le checksum et rate donc les numéros dont le checksum est incorrect, ce qui peut arriver dans des documents de test ou des fichiers légèrement malformés. Les deux SITs sont complémentaires. Regex : 756\\\.\\d{4}\\\.\\d{4}\\\.\\d{2} | Niveau de confiance : Moyen | min : 1.
 
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
 | **1** | **Navigation** | Purview → Protection des données → Classifieurs → Types d’infos confidentielles → **+ Créer un type d’informations sensibles** |
-| **2** | **Page 1 : Nommer** | Nom : **AVS-Suisse-PME** │ Description : Détection numéro AVS suisse 756.XXXX.XXXX.XX, 4 langues nationales + anglais. → **Suivant** |
+| **2** | **Page 1 : Nommer** | Nom : **AVS-Suisse** │ Description : Détection numéro AVS suisse 756.XXXX.XXXX.XX, 4 langues nationales + anglais. → **Suivant** |
 | **3** | **Page 2 : Définir les modèles** | + Ajouter un modèle → Niveau de confiance : **Moyen** → + Ajouter un élément principal → Expression régulière → ID : **regex-AVS-Suisse** → collez : **756\\.\\d{4}\\.\\d{4}\\.\\d{2}** → Correspondance de chaîne → **Terminé** |
 | **4** | **Page 2 : Ajouter les mots-clés** | + Ajouter des éléments de soutien → Liste de mots-clés → ID : **recherche-AVS-Suisse** → saisissez un mot-clé par ligne (voir Annexe C pour la liste complète en 4 langues) → **Terminé** |
 | **5** | **Page 3 : Tester et créer** | Suivant → testez avec un numéro format 756.XXXX.XXXX.XX → vérifiez la détection → Suivant → **Créer** |
-| **⚠️** | **Propagation 15 à 30 minutes : **attendez avant de configurer les règles qui utilisent ce SIT. AVS-Suisse-PME ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires : conservez-les en configuration OU pendant la période de propagation. |
+| **⚠️** | **Propagation 15 à 30 minutes : **attendez avant de configurer les règles qui utilisent ce SIT. AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires : conservez-les en configuration OU pendant la période de propagation. |
 
 SIT 2 : Medical-RH-Suisse
 
@@ -182,7 +204,7 @@ Vous allez créer 7 étiquettes dans cet ordre exact, du moins sensible au plus 
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 - Public | Vert | Non | Tous | Tous |
 | 2 | 2 - Interne | Bleu | Non | Tous | Internes uniquement |
-| 3 | 6 - Transmission-Externe | Orange | Non | Tous (label par défaut bibliothèque) | Destinataires externes (pas de chiffrement, impression autorisée) |
+| 3 | 6 - Transmission-Externe | Orange | Non | Tous (appliquée manuellement sur le site Transmission externe) | Destinataires externes (pas de chiffrement, impression autorisée) |
 | 4-5 | 3a - Direction - Site (conteneur) 3b - Direction - Documents (fichiers) | Violet | Oui | GRP-Direction-Purview + Admin | Direction + Admin |
 | 6 | 4 - RH-Confidentiel | Bordeaux | Oui | GRP-RH-Purview + GRP-Direction-Purview + Admin | RH + Direction + Admin |
 | 7 | 5 - Finances-Confidentiel | Orange | Oui | GRP-Finances-Purview + GRP-Direction-Purview + Admin | Finances + Direction + Admin |
@@ -207,10 +229,10 @@ Suivez ces étapes exactement. L’annexe visuelle illustre chaque étape par ca
 | **11** | **Sous-page : Marquage, pied de page** | Cochez **Ajouter un pied de page** → texte : « Document protégé nLPD, Ne pas diffuser » → couleur : Rouge → taille : 11 → Centré. → **Suivant** |
 | **12** | **Page 6 : Auto-labelling, activer** | Activez le toggle **Étiquetage automatique pour les fichiers et les e-mails** │ Cliquez sur **+ Ajouter une condition** |
 | **13** | **Auto-labelling : créer le groupe** | Choisissez **Le contenu contient** │ Nom du groupe : **RH-Donnees-Sensibles** │ Opérateur : **N’importe lequel de ces éléments (OU)** : les deux conditions déclenchent indépendamment l’étiquette. |
-| **14** | **Auto-labelling : Condition 1 (AVS)** | Cliquez **+ Ajouter → Types d’infos confidentielles** → tapez et sélectionnez **AVS-Suisse-PME** → Confiance : Moyenne → min : 1. |
-| **⚠️** | **SITs personnalisés : **AVS-Suisse-PME ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires, conservez-les en configuration OU pendant la période de propagation. Ne pas ajouter IBAN ici : l’IBAN déclenche l’étiquette 5 - Finances-Confidentiel (section 3.2). |
+| **14** | **Auto-labelling : Condition 1 (AVS)** | Cliquez **+ Ajouter → Types d’infos confidentielles** → tapez et sélectionnez **AVS-Suisse** → Confiance : Moyenne → min : 1. |
+| **⚠️** | **SITs personnalisés : **AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires, conservez-les en configuration OU pendant la période de propagation. Ne pas ajouter IBAN ici : l’IBAN déclenche l’étiquette 5 - Finances-Confidentiel (section 3.2). |
 | **15** | **Auto-labelling : Condition 2 (Médical)** | Cliquez **+ Créer un groupe** → opérateur : OU │ Cliquez **+ Ajouter → Types d’infos confidentielles** → tapez et sélectionnez **Medical-RH-Suisse** → Confiance : Moyenne → min : 2. |
-| **16** | **Auto-labelling : valider** | Vérifiez : **RH-Donnees-Sensibles** avec **AVS-Suisse-PME (min 1) OU Medical-RH-Suisse (min 2)**, Confiance Moyenne. Cliquez sur **Ajouter**, puis **Suivant** |
+| **16** | **Auto-labelling : valider** | Vérifiez : **RH-Donnees-Sensibles** avec **AVS-Suisse (min 1) OU Medical-RH-Suisse (min 2)**, Confiance Moyenne. Cliquez sur **Ajouter**, puis **Suivant** |
 | **17** | **Page 7 : Groupes et sites** | **Laissez telle quelle.** → **Suivant** |
 | **18** | **Page 8 : Ressources** | **Laissez telle quelle.** → **Suivant** |
 | **19** | **Page 9 : Créer et terminer** | Vérifiez le résumé : Chiffrement = Activé, Marquage = Activé. Cliquez sur **Créer une étiquette** │ Sélectionnez **Ne créez pas encore de stratégie** → **Terminer** |
@@ -275,27 +297,35 @@ Rôle : étiquette de transit sans chiffrement. Sa protection repose sur les mar
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
 | **1** | **Navigation** | Purview → Protection des données → Étiquettes de confidentialité → **+ Créer une étiquette** |
-| **2** | **Page 1 : Détails** | Nom : **6 - Transmission-Externe** │ Description utilisateurs : Document préparé pour transmission externe. Les données sensibles ont été vérifiées et approuvées pour partage par un responsable autorisé. │ Description admin : Étiquette transit sans chiffrement, marquages visuels seuls. │ Couleur : **Orange** → **Suivant** |
+| **2** | **Page 1 : Détails** | Nom : **6 - Transmission-Externe** │ Description utilisateurs : Document préparé pour transmission externe. En appliquant cette étiquette, vous confirmez que les données sensibles ont été vérifiées et que leur partage a été approuvé par un responsable autorisé. │ Description admin : Étiquette transit sans chiffrement, marquages visuels seuls. │ Couleur : **Orange** → **Suivant** |
 | **3** | **Page 2 : Portée** | Cochez **Fichiers et autres ressources de données** et **Groupes et sites** │ Décochez Courriers et Réunions → **Suivant** |
-| **⚠️** | **Groupes et sites obligatoire : **sans cette case cochée, l’étiquette n’apparaît pas dans le menu SharePoint Admin Center et ne peut pas être assignée comme label par défaut de bibliothèque. |
+| **ℹ️** | **Groupes et sites : **cette portée sert uniquement à appliquer l’étiquette au site Transmission externe comme repère visuel (encadré « Marquer le site » ci-dessous). Sans elle, l’étiquette n’apparaît pas dans le Centre d’administration SharePoint. Elle n’a aucun effet sur les fichiers. |
 | **4** | **Page 3 : Paramètres de protection** | Cochez uniquement **Appliquer le marquage de contenu** │ Ne cochez pas Contrôler l’accès (pas de chiffrement) → **Suivant** |
 | **5** | **Sous-page : Marquage, filigrane** | Activez le bouton **Marquage du contenu** │ Cochez **Ajouter un filigrane** → texte : « TRANSMISSION EXTERNE » → taille : 40 → diagonal → couleur : Rouge. |
 | **6** | **Sous-page : Marquage, en-tête** | Cochez **Ajouter un en-tête** → texte : « Axonix SA - Document transmis à titre confidentiel » → taille : 11 → couleur : Rouge → Centré. |
 | **7** | **Sous-page : Marquage, pied de page** | Cochez **Ajouter un pied de page** → texte : « Usage restreint au destinataire désigné - nLPD Art. 6 » → taille : 11 → couleur : Rouge → Centré. → **Suivant** |
-| **8** | **Page 6 : Auto-labelling** | **Laissez le toggle désactivé.** L’application se fait via le label par défaut de bibliothèque SharePoint. → **Suivant** |
+| **8** | **Page 6 : Auto-labelling** | **Laissez le toggle désactivé.** L’étiquette 6 est appliquée manuellement par l’utilisateur (voir ci-dessous). → **Suivant** |
 | **9** | **Page 7 : Groupes et sites** | Ne cochez rien. → **Suivant** |
 | **10** | **Page 9 : Créer et terminer** | Cliquez sur **Créer une étiquette** │ Sélectionnez **Ne créez pas encore de stratégie** → **Terminé** │ L’étiquette sera incluse dans la politique de publication en section 2.5. |
 
-Configurer le label par défaut sur le site Transmission externe
+Application de l’étiquette 6 : une décision manuelle de l’utilisateur
 
-L’auto-labelling Purview est basé sur le contenu (AVS, IBAN) ; il n’est pas adapté ici. La méthode correcte est le label par défaut de bibliothèque SharePoint : tout fichier uploadé sans étiquette existante reçoit automatiquement l’étiquette 6 - Transmission-Externe.
+L’étiquette 6 n’est pas appliquée automatiquement. L’utilisateur RH, Finances ou Direction qui prépare un document pour l’extérieur l’applique lui-même dans Word, Excel ou PowerPoint (bouton Confidentialité), avant ou après le dépôt dans sa bibliothèque du site Transmission externe. Ce geste matérialise sa décision : le document a été vérifié et son partage externe est approuvé. L’auto-labelling Purview, basé sur le contenu (AVS, IBAN), ne convient pas à cet usage, puisque c’est la décision de transmettre qui compte et non le contenu.
 
-**⚠️ Propagation pouvant atteindre 24 heures : **si l’étiquette n’apparaît pas dans le menu SharePoint Admin Center après 2 heures, vérifiez que la portée inclut bien Groupes et sites (condition obligatoire).
+**⚠️ Si l’utilisateur oublie l’étiquette : **le document part sans filigrane, en-tête ni pied de page. La politique DLP-Protection-Transmission-Externe détecte encore les données sensibles grâce aux SIT et alerte l’administrateur, mais elle ne remplace pas l’étape de classification manuelle. Rappelez-la dans la procédure interne de transmission.
+
+> ℹ️ **ALTERNATIVE NON UTILISÉE DANS CE GUIDE : **SharePoint permet de définir une étiquette par défaut sur une bibliothèque de documents (paramètres de la bibliothèque), appliquée automatiquement aux nouveaux fichiers sans étiquette. Ce guide ne l’utilise pas : l’application manuelle conserve le caractère volontaire de la décision de transmettre.
+
+Marquer le site Transmission externe (facultatif)
+
+Appliquer l’étiquette 6 au site lui-même sert de repère visuel dans le Centre d’administration SharePoint. L’étiquette n’ayant aucun paramètre de groupe ni de site, cette opération ne modifie ni le partage ni les permissions, et **ne se propage pas aux fichiers** du site.
+
+**⚠️ Propagation pouvant atteindre 24 heures : **si l’étiquette n’apparaît pas dans le menu SharePoint Admin Center après 2 heures, vérifiez que la portée inclut bien Groupes et sites.
 
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
 | **1** | **SharePoint Admin Center** | https://demo-admin.sharepoint.com → Sites → Sites actifs → **Transmission externe** → onglet Paramètres → section Étiquette de confidentialité → sélectionnez **6 - Transmission-Externe** → **Enregistrer** |
-| **✓** | Tout fichier déposé sans étiquette existante reçoit automatiquement l’étiquette 6 avec filigrane diagonal « TRANSMISSION EXTERNE » (rouge), en-tête « Axonix SA - Document transmis à titre confidentiel » et pied de page « Usage restreint au destinataire désigné - nLPD Art. 6 », sans chiffrement, impression disponible. |
+| **✓** | La colonne Niveau de confidentialité de la liste Sites actifs affiche 6 - Transmission-Externe pour ce site. Les fichiers déposés ne reçoivent pas l’étiquette automatiquement. |
 
 ## 2.5 Publier les étiquettes
 

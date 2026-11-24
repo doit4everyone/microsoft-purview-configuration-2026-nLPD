@@ -59,7 +59,7 @@ La protection Copilot nécessite une **politique DLP distincte** car c’est le 
 | **Emplacement** | **Inclure** |
 | --- | --- |
 | ✅ Courrier Exchange | Tous les utilisateurs |
-| ✅ Sites SharePoint | Tous les sites sauf **transmission-externe** → Modifier → Exclure → saisir https://demo.sharepoint.com/sites/transmission-externe → + → **Terminé.** Ce site est géré par la politique dédiée DLP-Protection-Transmission-Externe (section 4.3). |
+| ✅ Sites SharePoint | Tous les sites sauf **Transmissionexterne** → Modifier → Exclure → saisir https://demo.sharepoint.com/sites/Transmissionexterne → + → **Terminé.** Ce site est géré par la politique dédiée DLP-Protection-Transmission-Externe (section 4.3). |
 | ✅ Comptes OneDrive | Tous les comptes |
 | ✅ Messages de conversation et de canal Teams | Tous les utilisateurs |
 
@@ -76,7 +76,7 @@ Règle 1 : Bloquer partage externe AVS
 | **Paramètre** | **Ce que vous devez configurer** |
 | --- | --- |
 | Nom de la règle | Bloquer-AVS-Externe |
-| Conditions : Ajouter une condition | Le contenu inclut → + Ajouter → Types d’informations confidentielles → tapez AVS-Suisse-PME → sélectionnez AVS-Suisse-PME │ Confiance moyenne │ nombre min : 1. (SIT personnalisé créé en section 2.3bis.) |
+| Conditions : Ajouter une condition | Le contenu inclut → + Ajouter → Types d’informations confidentielles → tapez AVS-Suisse → sélectionnez AVS-Suisse │ Confiance moyenne │ nombre min : 1. (SIT personnalisé créé en section 2.3bis.) |
 | ET : Ajouter une condition | Du contenu est partagé à partir de Microsoft 365 → Avec des personnes externes à mon organisation |
 | Actions : Ajouter une action | Restreindre l'accès ou chiffrer le contenu dans les emplacements Microsoft 365 → Bloquer tout le monde |
 | Notifications utilisateur | Activez. Message : Ce document contient un numéro AVS suisse. Partage externe bloqué nLPD art. 8. |
@@ -102,9 +102,11 @@ Règle 2 : Bloquer partage externe IBAN
 
 La nLPD n’interdit pas la communication de données personnelles à des tiers : elle exige que le traitement respecte les principes de l’art. 6 (proportionnalité, finalité) et, s’il porte atteinte à la personnalité, qu’il repose sur un motif justificatif (art. 31). En pratique, la communication doit donc être **justifiée, proportionnée et traçable**. Un blocage strict sans override est contre-productif en PME, les utilisateurs contournent systématiquement la restriction via des canaux non surveillés (Gmail personnel, WeTransfer, WhatsApp), ce qui fait perdre toute traçabilité. Le blocage avec override justifié maintient l’utilisateur dans le canal M365 surveillé et génère automatiquement une preuve documentaire utile en cas de contrôle du PFPDT : justification horodatée, identité de l’expéditeur, fichier concerné, tout est enregistré dans l’Explorateur d’activités Purview. La Règle 2 (IBAN) reste en blocage strict sans override, car aucun motif légitime ne justifie l’envoi d’un IBAN en clair par email.
 
-**⚠️ Restriction production obligatoire**
+**⚠️ Remplacement avec justification : portée et production**
 
-En production, ne pas laisser l’override ouvert à tous les utilisateurs. Créer un **groupe de sécurité DLP-Exceptions** (Direction + RH uniquement) et le désigner comme seul groupe autorisé à outrepasser la règle : Modifier la règle → section Remplacements → *Limiter qui peut ignorer la règle* → sélectionner le groupe DLP-Exceptions. Note : cette option granulaire par groupe nécessite M365 E3/E5 et n’est pas disponible en Business Premium. En Business Premium, la restriction est assurée implicitement par les **permissions SharePoint**,: seuls les utilisateurs ayant accès au site RH peuvent physiquement partager un fichier RH et donc déclencher l’override. Par construction, ce sont uniquement RH et Direction ce qui constitue une restriction implicite suffisante. Voir Annexe E pour le détail.
+Le blocage reste la règle : le remplacement avec justification est une exception volontaire, enregistrée avec sa justification. Dans ce POC, il est ouvert à tous les utilisateurs, et cela vaut pour les quatre emplacements de la politique (Exchange, SharePoint, OneDrive, Teams). Ce choix garde les utilisateurs dans l’environnement Microsoft 365 surveillé plutôt que de les pousser vers des services personnels. Pour les fichiers du site RH, les permissions SharePoint limitent en pratique le remplacement aux membres RH et Direction, seuls à pouvoir partager ces fichiers. Pour Exchange, OneDrive et Teams, en revanche, tout utilisateur bloqué peut l’utiliser. En production : examinez régulièrement les justifications dans l’Explorateur d’activités ; orientez les partages externes de données sensibles vers le site Transmission externe (section 4.3) ; et, si votre licence le permet, réservez le remplacement à un **groupe de sécurité DLP-Exceptions** (Direction + RH uniquement). Lors de la rédaction, la condition par groupe n’était pas disponible avec Business Premium : vérifiez sa disponibilité dans votre tenant. Voir Annexe E pour le détail.
+
+> 📌 **RÈGLE D’USAGE ENTRE LES DEUX CANAUX DE SORTIE : **le guide prévoit deux chemins pour faire sortir une donnée sensible, à ne pas confondre. **Le site Transmission externe** (section 4.3) est le canal normal pour tout envoi prévu de documents sensibles à un partenaire (fiduciaire, réviseur, avocat, client) : copie du document, étiquette 6 appliquée manuellement, lien nominatif, suppression après 2 jours. **Le remplacement avec justification** de la règle AVS est réservé aux cas ponctuels et imprévus, par exemple un e-mail urgent contenant un numéro AVS. Chaque justification est enregistrée et doit être examinée ensuite par l’administrateur (Explorateur d’activités, filtre Remplacement de la stratégie DLP par l’utilisateur). Un recours répété au remplacement pour le même type d’échange signale un besoin qui doit passer par le site Transmission externe. Inscrivez cette règle dans la procédure interne ou la charte informatique.
 
 Cliquez sur **Enregistrer.**
 
@@ -113,7 +115,7 @@ Règle 3 : Avertir pour données sensibles en interne
 | **Paramètre** | **Ce que vous devez configurer** |
 | --- | --- |
 | Nom de la règle | Avertir-Données-Sensibles-Interne |
-| Condition 1 | Le contenu contient → AVS OU IBAN OU données médicales tapez AVS-Suisse-PME et sélectionner : AVS-Suisse-PME, confiance moyenne. Tapez IBAN et sélectionner : International Banking Account Number (IBAN), confiance élevée. Tapez Medical-RH-Suisse et sélectionner : Medical-RH-Suisse, confiance moyenne │ Nb d’instance 1 |
+| Condition 1 | Le contenu contient → AVS OU IBAN OU données médicales tapez AVS-Suisse et sélectionner : AVS-Suisse, confiance moyenne. Tapez IBAN et sélectionner : International Banking Account Number (IBAN), confiance élevée. Tapez Medical-RH-Suisse et sélectionner : Medical-RH-Suisse, confiance moyenne │ Nb d’instance 1 |
 | Condition 2 | Partagé avec des personnes à l'intérieur de mon organisation |
 | Action | Aucun blocage : ne cochez aucune action |
 | Notifications utilisateur | Activez les conseils de stratégie : Message : Ce document contient des données sensibles. Vérifiez que le destinataire est autorisé. |
@@ -130,7 +132,7 @@ Cliquez sur **Enregistrer.**
 
 ## 4.3 DLP-Protection-Transmission-Externe
 
-Politique dédiée au site Transmission externe, séparée de la politique principale DLP-Protection-nLPD-demo car ce site a des règles spécifiques (partage vers l’extérieur autorisé sous conditions + surveillance interne). Contient 2 règles : Règle 1 (surveillance traçabilité partages externes), Règle 2 (avertissement interne pour données sensibles). Note : la protection des fichiers mal étiquetés est assurée par les permissions SharePoint et le label par défaut de bibliothèque (section 2.4). Toutes les règles sont documentées ci-dessous.
+Politique dédiée au site Transmission externe, séparée de la politique principale DLP-Protection-nLPD-demo car ce site a des règles spécifiques (partage vers l’extérieur autorisé sous conditions + surveillance interne). Contient 2 règles : Règle 1 (surveillance traçabilité partages externes), Règle 2 (avertissement interne pour données sensibles). Note : l’étiquette 6 est appliquée manuellement par l’utilisateur (section 2.4) ; cette politique surveille et alerte, elle ne bloque pas le partage. Ce site est le canal normal des envois prévus ; le remplacement justifié de la règle AVS reste réservé aux cas ponctuels (voir la règle d’usage en section 4.2). La logique d’ensemble du site et le parcours d’un document sont décrits dans la préparation du tenant (section 4.7, encadré « Pourquoi un site dédié à la transmission externe ? »). Toutes les règles sont documentées ci-dessous.
 
 1. Purview → Protection contre la perte de données → Stratégies → **+ Créer une stratégie** → Personnalisé → Personnalisé → Suivant.
 
@@ -140,7 +142,7 @@ Politique dédiée au site Transmission externe, séparée de la politique princ
 
 4. Page Emplacements → activez **uniquement** l’emplacement suivant :
 
-**Sites SharePoint : **Modifier → Inclure → saisir **https://demo.sharepoint.com/sites/transmission-externe** → + → Terminé. **Ce site uniquement** ne pas activer Exchange ni OneDrive (déjà couverts par la politique principale DLP-Protection-nLPD-demo, doublon évité). → **Suivant.**
+**Sites SharePoint : **Modifier → Inclure → saisir **https://demo.sharepoint.com/sites/Transmissionexterne** → + → Terminé. **Ce site uniquement** ne pas activer Exchange ni OneDrive (déjà couverts par la politique principale DLP-Protection-nLPD-demo, doublon évité). → **Suivant.**
 
 6. Page Règles de DLP avancées → créez les 2 règles suivantes une par une en cliquant **+ Créer une règle** après chaque règle enregistrée.
 
@@ -149,7 +151,7 @@ Règle 1 : Surveiller les partages externes (traçabilité nLPD)
 | **Paramètre** | **Ce que vous devez configurer** |
 | --- | --- |
 | Nom de la règle | **Surveiller-Partage-Externe** |
-| Condition 1 | Le contenu contient → tapez **AVS-Suisse-PME** et sélectionner : **AVS-Suisse-PME**, confiance moyenne. Tapez **IBAN** et sélectionner : **International Banking Account Number (IBAN)**, confiance élevée. Tapez **Medical-RH-Suisse** et sélectionner : **Medical-RH-Suisse**, confiance moyenne, min 3. |
+| Condition 1 | Le contenu contient → tapez **AVS-Suisse** et sélectionner : **AVS-Suisse**, confiance moyenne. Tapez **IBAN** et sélectionner : **International Banking Account Number (IBAN)**, confiance élevée. Tapez **Medical-RH-Suisse** et sélectionner : **Medical-RH-Suisse**, confiance moyenne, min 3. |
 | Condition 2 | Du contenu est partagé à partir de Microsoft 365 → Avec des personnes externes à mon organisation |
 | Action | Aucun blocage : surveillance uniquement. |
 | Notifications utilisateur | Activez par Message : Ce partage externe est enregistré conformément à la nLPD art. 6. |
@@ -157,14 +159,14 @@ Règle 1 : Surveiller les partages externes (traçabilité nLPD)
 
 *Objectif : traçabilité nLPD. L’étiquette 6 appliquée manuellement = décision consciente. Cliquez sur **Enregistrer**.*
 
-**⚠️ Filet de sécurité : **la condition « étiquette n’est pas appliquée » n’existe pas dans les politiques DLP SharePoint. La protection est assurée par : (1) permissions SharePoint (seuls RH et Direction peuvent déposer) ; (2) label par défaut de bibliothèque (section 2.4) qui applique automatiquement l’étiquette 6 à tout fichier déposé sans étiquette.
+**⚠️ Si l’étiquette 6 n’est pas appliquée : **la condition « étiquette n’est pas appliquée » n’existe pas dans les politiques DLP SharePoint. Les garde-fous sont : (1) les permissions SharePoint (seuls les membres des groupes RH, Finances et Direction peuvent déposer, chacun dans sa bibliothèque) ; (2) la détection des SIT par cette politique, qui alerte l’administrateur en cas de partage externe de données sensibles ; (3) la procédure interne qui impose l’application manuelle de l’étiquette 6 avant tout partage. Un document partagé sans étiquette part sans marquage visuel.
 
 Règle 2 : Avertir pour données sensibles en interne
 
 | **Paramètre** | **Ce que vous devez configurer** |
 | --- | --- |
 | Nom de la règle | Avertir-Données-Sensibles-Interne |
-| Condition 1 | Le contenu contient → AVS OU IBAN OU données médicales tapez AVS-Suisse-PME et sélectionner : AVS-Suisse-PME, confiance moyenne. Tapez IBAN et sélectionner : International Banking Account Number (IBAN), confiance élevée. Tapez Medical-RH-Suisse et sélectionner : Medical-RH-Suisse, confiance moyenne Nb d’instance 3 |
+| Condition 1 | Le contenu contient → AVS OU IBAN OU données médicales tapez AVS-Suisse et sélectionner : AVS-Suisse, confiance moyenne. Tapez IBAN et sélectionner : International Banking Account Number (IBAN), confiance élevée. Tapez Medical-RH-Suisse et sélectionner : Medical-RH-Suisse, confiance moyenne Nb d’instance 3 |
 | Condition 2 | Partagé avec des personnes à l'intérieur de mon organisation |
 | Action | Aucun blocage : ne cochez aucune action |
 | Notifications utilisateur | Activez les conseils de stratégie par Message : Ce document contient des données sensibles. Vérifiez que le destinataire est autorisé. |

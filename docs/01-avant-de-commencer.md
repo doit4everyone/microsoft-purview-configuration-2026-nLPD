@@ -162,6 +162,12 @@ Install-Module Microsoft.Graph.Beta.Identity.DirectoryManagement -Scope CurrentU
 Connect-MgGraph -Scopes "Directory.ReadWrite.All"
 ```
 
+> ⚠️ **SI LA FENÊTRE POWERSHELL SE FERME : **sous Windows PowerShell 5.1, Connect-MgGraph peut fermer brutalement la fenêtre au moment de l’authentification. Ce comportement a été constaté sur un poste où plusieurs versions des modules Microsoft Graph coexistaient (vérification : Get-Module -ListAvailable Microsoft.Graph* | Select-Object Name, Version). Rouvrez PowerShell et connectez-vous par code d’appareil, méthode validée sur le terrain : Connect-MgGraph -Scopes "Directory.ReadWrite.All" -UseDeviceCode. PowerShell affiche un code à saisir sur https://microsoft.com/devicelogin.
+>
+> Le mélange de versions peut aussi produire l’erreur « Impossible de charger le fichier ou l’assembly 'Microsoft.Graph.Authentication, Version=…' » : une commande issue d’un module installé dans une version plus ancienne exige une autre version du module Authentication que celle déjà chargée. Les modules Microsoft.Graph.Authentication et Microsoft.Graph.Beta.Identity.DirectoryManagement utilisés dans cette section doivent avoir la même version.
+>
+> Exécutez l’étape 5 (Connect-IPPSSession) dans une fenêtre PowerShell séparée, après Disconnect-MgGraph : charger les modules Graph et Exchange Online dans la même session peut provoquer des conflits.
+
 Étape 2 : Rechercher le paramètre Group.Unified existant dans le tenant
 
 ```powershell
@@ -181,9 +187,18 @@ New-MgBetaDirectorySetting -BodyParameter $body
 
 Étape 3b : Le paramètre existe, mettre à jour EnableMIPLabels
 
+Selon la documentation de l’API Microsoft Graph, une mise à jour de ce paramètre doit transmettre la collection complète des valeurs : envoyer uniquement EnableMIPLabels risquerait d’effacer les autres réglages de Group.Unified (création de groupes, invités, etc.). Le script ci-dessous sauvegarde d’abord les valeurs existantes, modifie uniquement EnableMIPLabels, puis renvoie l’ensemble :
+
 ```powershell
-$params = @{ values = @(@{ name = "EnableMIPLabels"; value = "True" }) }
-Update-MgBetaDirectorySetting -DirectorySettingId $setting.Id -BodyParameter $params
+# Sauvegarde des valeurs actuelles (permet une restauration en cas de besoin)
+$setting.Values | Select-Object Name, Value | Export-Csv "$env:USERPROFILE\Group.Unified-avant.csv" -NoTypeInformation -Encoding UTF8
+
+# Reprise de toutes les valeurs existantes, modification de EnableMIPLabels uniquement
+$values = @($setting.Values | ForEach-Object { @{ name = $_.Name; value = $_.Value } })
+$mip = $values | Where-Object { $_.name -eq "EnableMIPLabels" }
+if ($mip) { $mip.value = "True" } else { $values += @{ name = "EnableMIPLabels"; value = "True" } }
+
+Update-MgBetaDirectorySetting -DirectorySettingId $setting.Id -BodyParameter @{ values = $values }
 ```
 
 *→ Si New-MgBetaDirectorySetting renvoie une erreur Request_BadRequest, le paramètre existe déjà : relancez l’étape 2 puis exécutez l’étape 3b.*
@@ -195,7 +210,15 @@ $setting = Get-MgBetaDirectorySetting -All | Where-Object { $_.DisplayName -eq "
 $setting.Values | Where-Object { $_.Name -eq "EnableMIPLabels" }
 ```
 
-*→ Résultat attendu : Name : EnableMIPLabels | Value : True. Si la valeur est encore False, relancez l’étape 3b. Déconnectez-vous puis reconnectez-vous au portail Purview avant de continuer.*
+*→ Résultat attendu : Name : EnableMIPLabels | Value : True. Si la valeur est encore False, relancez l’étape 3b. Si vous avez exécuté l’étape 3b, comparez aussi l’ensemble des valeurs avec la sauvegarde : seule EnableMIPLabels doit avoir changé.*
+
+```powershell
+$avant = Import-Csv "$env:USERPROFILE\Group.Unified-avant.csv"
+$apres = (Get-MgBetaDirectorySetting -All | Where-Object { $_.DisplayName -eq "Group.Unified" }).Values | Select-Object Name, Value
+Compare-Object $avant $apres -Property Name, Value
+```
+
+*→ Déconnectez-vous puis reconnectez-vous au portail Purview avant de continuer.*
 
 Étape 5 : Synchroniser les étiquettes vers Entra ID
 

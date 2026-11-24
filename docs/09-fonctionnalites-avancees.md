@@ -30,7 +30,7 @@ lang: fr
 
 Cette partie présente quatre fonctionnalités avancées de Microsoft Purview qui complètent les protections configurées dans les parties précédentes. Elles sont toutes pertinentes pour la conformité nLPD et pour la préparation à la certification SC-401. Ces fonctionnalités ne sont pas licenciées individuellement : elles sont accessibles via Microsoft Purview Suite, disponible aussi bien pour Business Premium que pour E3 ou E5.
 
-| **Fonctionnalité** | **Business Premium seul** | **Purview Suite (BP/E3) ou E5** | **Section** |
+| **Fonctionnalité** | **Business Premium seul** | **Business Premium + Microsoft Purview Suite for Microsoft 365 Business Premium** | **Section** |
 | --- | --- | --- | --- |
 | Retention policies (rétention) | ⚠️ Standard uniquement | ✅ Inclus | 8.1 |
 | Insider Risk Management | ❌ Non disponible | ✅ Inclus | 8.2 |
@@ -50,7 +50,7 @@ Durées utilisées dans ce POC et références
 | Emails Exchange | 3 ans puis suppression | Choix organisationnel du POC, sans durée légale unique. Art. 6 al. 2 (proportionnalité) et al. 4 (destruction) nLPD |
 | Docs RH | 10 ans puis suppression | Pas de durée unique pour le dossier du personnel. Exemples : créances de salaire prescrites par 5 ans (art. 128 ch. 3 CO), droit au certificat de travail prescrit par 10 ans après la fin des rapports de travail (art. 127 CO), pièces comptables salariales 10 ans (art. 958f CO). Durée à définir document par document |
 | Docs Finances (factures, comptabilité) | 10 ans puis suppression | Art. 958f CO : 10 ans à compter de la fin de l’exercice |
-| Logs d’audit Purview | 1 an ou 180 jours selon la source | Audit (Premium) : 1 an par défaut pour Entra ID, Exchange, OneDrive et SharePoint, 180 jours pour les autres activités sauf politique de rétention d’audit. Utiles comme preuve en cas d’incident (art. 24 nLPD) |
+| Logs d’audit Purview | 1 an ou 180 jours selon la source | Audit (Premium) : 1 an par défaut pour Entra ID, Exchange, OneDrive et SharePoint, 180 jours pour les autres activités sauf politique de rétention d’audit. Utiles pour analyser un incident et évaluer l’obligation d’annonce au PFPDT (art. 24 nLPD) |
 
 > ⚠️ **DURÉES DE DÉMONSTRATION, PAS UNE MATRICE LÉGALE : **les durées ci-dessus permettent de tester le mécanisme dans le POC. Elles ne constituent pas un calendrier de conservation applicable tel quel en production. Trois limites à connaître :
 >
@@ -87,7 +87,7 @@ Cliquez sur **Modifier** → saisir l’URL du site dans le champ de recherche
 
 9. Créez une cinquième politique :
 
-**Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/transmission-externe* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. Les documents sont automatiquement supprimés 48 heures après leur création, qu’ils aient été consultés ou non.
+**Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/Transmissionexterne* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. Les documents sont automatiquement supprimés 48 heures après leur création, qu’ils aient été consultés ou non.
 
 ℹ️** ATTENTION : **la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent confirmer que le destinataire a bien reçu le document avant les 48 heures. Cette suppression ne concerne que la copie présente dans le tenant : elle n’efface pas un document que le destinataire externe a déjà téléchargé, copié ou imprimé.
 
@@ -144,7 +144,7 @@ Purview → Gestion des risques internes → Stratégies → + → Politique de 
 
 6. Étiquettes de confidentialité : sélectionnez : 3a - Direction - Site, 3b - Direction - Documents, 4 - RH-Confidentiel, 5 - Finances-Confidentiel. Ne pas ajouter 1 - Public ni 2 - Interne.
 
-7. Types d’infos confidentielles : ajoutez : AVS-Suisse-PME (confiance moyenne), Swiss Social Security Number AHV (confiance élevée), International Banking Account Number IBAN (confiance élevée). Cela couvre les fichiers non étiquetés contenant des données sensibles.
+7. Types d’infos confidentielles : ajoutez : AVS-Suisse (confiance moyenne), Swiss Social Security Number AHV (confiance élevée), International Banking Account Number IBAN (confiance élevée). Cela couvre les fichiers non étiquetés contenant des données sensibles.
 
 8. Score : sélectionnez « Obtenir des alertes pour toutes les activités » → **Suivant.**
 
@@ -168,7 +168,7 @@ Stratégie 2 : IRM-Risque-IA (optionnel en préversion)
 
 4. Contenu à prioriser : cochez uniquement : Sites SharePoint, Étiquettes de confidentialité, Types d’infos confidentielles → décochez Extensions de fichiers et Classifieurs → **Suivant.**
 
-5. Sites SharePoint : RH, Finances, Direction. Étiquettes : 3, 3b, 4, 5. SIT : AVS-Suisse-PME, Medical-RH-Suisse, IBAN, Swiss Social Security Number AHV → **Suivant.**
+5. Sites SharePoint : RH, Finances, Direction. Étiquettes : 3, 3b, 4, 5. SIT : AVS-Suisse, Medical-RH-Suisse, IBAN, Swiss Social Security Number AHV → **Suivant.**
 
 6. Score : « Obtenir des alertes pour toutes les activités » → **Suivant.**
 
@@ -365,7 +365,7 @@ Objectif : détecter les communications contenant des données personnelles sens
 
 2. Nom : **CC-Surveillance-Données-Sensibles-nLPD** → Utilisateurs concernés : Tous les utilisateurs, → Réviseurs : admin@demo.ch.
 
-3. Informations sensibles à détecter → cliquez : Ajouter des informations sensibles ou un dictionnaire de mots clés → ajoutez les 4 SITs : AVS Suisse, Medical-RH-Suisse, International Banking Account Number (IBAN), Swiss Social Security Number AHV → **Créer une stratégie**.
+3. Informations sensibles à détecter → cliquez : Ajouter des informations sensibles ou un dictionnaire de mots clés → ajoutez les 4 SITs : AVS-Suisse, Medical-RH-Suisse, International Banking Account Number (IBAN), Swiss Social Security Number AHV → **Créer une stratégie**.
 
 Paramètres automatiques : Exchange + Teams + Viva Engage. Direction : Entrant, Sortant, Interne, Pourcentage : 100 %. Résultat : statut Activating / Intègre. La stratégie devient active dans les 24 heures.
 

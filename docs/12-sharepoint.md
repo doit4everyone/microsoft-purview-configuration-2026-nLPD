@@ -36,7 +36,7 @@ Purview classifie et protège les données mais il ne corrige pas les permission
 
 Les trois niveaux de permissions
 
-SharePoint fonctionne avec trois niveaux qui héritent l’un de l’autre. Le niveau Site est le plus large :celui qui a accès au site a accès à tout son contenu par défaut. Le niveau Bibliothèque permet de restreindre l’accès à un dossier ou une bibliothèque de documents spécifique. Le niveau Document permet de restreindre l’accès à un fichier unique, à utiliser avec parcimonie car cela complexifie la gestion.
+SharePoint fonctionne avec trois niveaux qui héritent l’un de l’autre. Le niveau Site est le plus large : celui qui a accès au site a accès à tout son contenu par défaut. Le niveau Bibliothèque permet de restreindre l’accès à un dossier ou une bibliothèque de documents spécifique. Le niveau Document permet de restreindre l’accès à un fichier unique, à utiliser avec parcimonie car cela complexifie la gestion.
 
 | **Niveau** | **Risque de sur-partage** | **Recommandation** |
 | --- | --- | --- |

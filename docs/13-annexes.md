@@ -59,9 +59,9 @@ lang: fr
 
 Les mesures mises en place visent à réduire les usages non autorisés, dissuader les comportements à risque et assurer la traçabilité des accès. Aucune solution technique ne permet d’empêcher de manière absolue la reproduction visuelle d’une information par un utilisateur autorisé.
 
-## Annexe C : SIT personnalisé AVS-Suisse-PME
+## Annexe C : SIT personnalisé AVS-Suisse
 
-Le type d’information sensible (SIT) natif de Microsoft « Swiss Social Security Number AHV » valide le checksum EAN-13 en confiance élevée et exige des mots-clés de proximité. Dans un tenant PME suisse avec des documents en plusieurs langues, cette contrainte provoque des non-détections. Le SIT personnalisé AVS-Suisse-PME utilise un regex direct sur le format suisse et des mots-clés dans les 4 langues nationales plus l’anglais, sans dépendance au checksum.
+Le type d’information sensible (SIT) natif de Microsoft « Swiss Social Security Number AHV » valide le checksum EAN-13 en confiance élevée et exige des mots-clés de proximité. Dans un tenant PME suisse avec des documents en plusieurs langues, cette contrainte provoque des non-détections. Le SIT personnalisé AVS-Suisse utilise un regex direct sur le format suisse et des mots-clés dans les 4 langues nationales plus l’anglais, sans dépendance au checksum.
 
 ### C.1 : Regex et configuration du modèle
 
@@ -91,7 +91,7 @@ Ces mots-clés sont des éléments de soutien, ils augmentent le niveau de confi
 
 1. Purview → Protection des données → Classifieurs → Types d’informations sensibles → + Créer un type d’informations sensibles.
 
-2. Nom : AVS-Suisse-PME | Description : Détection du numéro AVS suisse format 756.XXXX.XXXX.XX, 4 langues nationales + anglais. → Suivant.
+2. Nom : AVS-Suisse | Description : Détection du numéro AVS suisse format 756.XXXX.XXXX.XX, 4 langues nationales + anglais. → Suivant.
 
 3. + Ajouter un modèle → Niveau de confiance : Moyen → + Ajouter un élément principal → Expression régulière → ID : regex-AVS-Suisse → collez le regex :
 
@@ -107,17 +107,17 @@ Sélectionnez Correspondance de chaîne (pas Correspondance de mot). Cliquez sur
 
 ### C.4 : Remplacement dans les politiques existantes
 
-Une fois le SIT AVS-Suisse-PME créé, remplacez Swiss Social Security Number AHV par AVS-Suisse-PME dans les 4 emplacements suivants :
+Cette section concerne uniquement la migration d’anciennes politiques qui utilisaient encore le SIT natif Swiss Social Security Number AHV seul. Une fois le SIT AVS-Suisse créé, remplacez le SIT natif par AVS-Suisse dans les 3 emplacements suivants :
 
-1. Auto-labelling Auto-Label-RH-Sensible → Règle-AVS-Suisse → remplacez le SIT natif par AVS-Suisse-PME.
+1. Auto-labelling Auto-Label-RH-Sensible → Règle-AVS-Suisse → remplacez le SIT natif par AVS-Suisse.
 
-2. Auto-labelling Auto-Label-RH-Sensible → Règle-Medical → Condition unique → remplacez le SIT natif par AVS-Suisse-PME.
+2. DLP DLP-Protection-nLPD-demo → règle Bloquer-AVS-Externe → condition Le contenu inclut → remplacez le SIT natif par AVS-Suisse.
 
-3. DLP DLP-Protection-nLPD-demo → règle Bloquer-AVS-Externe → condition Le contenu inclut → remplacez le SIT natif par AVS-Suisse-PME.
+3. DLP DLP-Protection-nLPD-demo → règle Avertir-Donnees-Sensibles-Interne → condition Le contenu inclut → remplacez le SIT natif par AVS-Suisse.
 
-4. DLP DLP-Protection-nLPD-demo → règle Avertir-Donnees-Sensibles-Interne → condition Le contenu inclut → remplacez le SIT natif par AVS-Suisse-PME.
+La règle Règle-Medical de l’auto-labelling n’est pas concernée : elle utilise le SIT Medical-RH-Suisse (section C.5). Ne supprimez pas non plus le SIT natif Swiss Social Security Number AHV des politiques Insider Risk Management et Endpoint DLP : il y complète volontairement AVS-Suisse.
 
-**ℹ️ INFO — **Après remplacement, relancez la simulation des politiques d’auto-labelling et vérifiez dans l’onglet Éléments correspondants que vos fichiers de test apparaissent. Le SIT personnalisé détecte tout numéro au format 756.XXXX.XXXX.XX indépendamment de la validité du checksum.
+**ℹ️ INFO : **Après remplacement, relancez la simulation des politiques d’auto-labelling et vérifiez dans l’onglet Éléments correspondants que vos fichiers de test apparaissent. Le SIT personnalisé détecte tout numéro au format 756.XXXX.XXXX.XX indépendamment de la validité du checksum.
 
 ### C.5 : SIT personnalisé Medical-RH-Suisse
 
@@ -164,7 +164,7 @@ Ce guide est conçu pour un environnement POC / LAB avec Microsoft 365 Business 
 | **Endpoint DLP / Edge IA** | Auditer 7 jours puis bloquer | **Minimum 2 à 4 semaines audit-only. Désigner un sponsor métier. Documenter les usages légitimes à exclure avant blocage.** |
 | **Power Platform DLP** | Blocage connecteurs sans procédure rollback | **Exporter tous les flux Power Automate avant activation. Définir point de restauration. Tester sur environnement de développement avant prod.** |
 | Trainable Classifiers | Non disponible (Business Premium + Purview Suite) | Privilégier SITs personnalisés (Annexes C et D). Trainable Classifiers disponibles avec M365 E5 si évolution de licence. |
-| Restriction override DLP par groupe (Règle 1) | Override ouvert à tous les utilisateurs. Restriction implicite assurée par les permissions SharePoint : seuls RH et Direction ont accès aux fichiers RH et peuvent donc déclencher l’override. La condition “expéditeur est membre de” n’est pas disponible en Business Premium. | **Vérifier que les permissions SharePoint RH sont strictement limitées à RH + Direction (principe du moindre privilège Partie 11). Si évolution vers M365 E3/E5 : créer groupe DLP-Exceptions et utiliser la condition “L’expéditeur est membre de” pour architecture à deux règles (1 blocage strict tous users, 1b override groupe autorisé).** |
+| Restriction override DLP par groupe (Règle 1) | Override avec justification ouvert à tous les utilisateurs, sur les quatre emplacements (Exchange, SharePoint, OneDrive, Teams). Pour les fichiers du site RH, les permissions SharePoint limitent en pratique l’override à RH et Direction ; pour Exchange, OneDrive et Teams, tout utilisateur bloqué peut l’utiliser. Lors de la rédaction, la condition “expéditeur est membre de” n’était pas disponible en Business Premium. Règle d’usage : le site Transmission externe pour les envois prévus, le remplacement pour les cas ponctuels (section 4.2). | **Vérifier que les permissions SharePoint RH sont strictement limitées à RH + Direction (principe du moindre privilège Partie 11). Si évolution vers M365 E3/E5 : créer groupe DLP-Exceptions et utiliser la condition “L’expéditeur est membre de” pour architecture à deux règles (1 blocage strict tous users, 1b override groupe autorisé).** |
 
 ## Annexe F : RUN & Responsabilités (PME suisse)
 
@@ -364,7 +364,7 @@ Activité 5 : Transmission externe de documents
 | **Transfert hors Suisse (art. 16 nLPD)** | Possible selon l’identité du destinataire externe, à vérifier au cas par cas. Infrastructure Microsoft : selon la vérification I.0. |
 | **Durée de conservation** | 2 jours sur le site Transmission externe (suppression automatique, politique Retention-TransmissionExterne-2jours). Conservation originale maintenue dans le site source (RH : 10 ans, Finances : 10 ans) conformément à l’activité concernée. |
 | **Base légale (art. 31 nLPD)** | Exécution du contrat (art. 31 al. 2 let. a nLPD) lorsque la transmission découle d’une obligation contractuelle ou légale. Le consentement de la personne concernée (art. 31 al. 1 nLPD) n’est invoqué que subsidiairement, lorsqu’aucune base contractuelle ou légale ne couvre la transmission. |
-| **Mesures de sécurité (art. 8 nLPD)** | Étiquette 6 - Transmission-Externe (marquages visuels, impression autorisée pour le destinataire). Politique DLP-Protection-Transmission-Externe (traçabilité nLPD art. 6, alerte admin). Label par défaut de bibliothèque SharePoint (protection automatique des dépôts sans étiquette). Suppression automatique 48 heures. |
+| **Mesures de sécurité (art. 8 nLPD)** | Étiquette 6 - Transmission-Externe (marquages visuels, impression autorisée pour le destinataire). Politique DLP-Protection-Transmission-Externe (traçabilité nLPD art. 6, alerte admin). Application manuelle de l’étiquette 6 par l’utilisateur, qui matérialise la décision de transmettre. Permissions propres à chaque bibliothèque. Suppression automatique 48 heures. |
 
 **Note pratique : **ce registre doit être tenu à jour à chaque modification significative des traitements (nouvel outil, nouveau prestataire, nouvelle catégorie de données). Il n’existe pas de formulaire officiel PFPDT, ce modèle est conforme aux exigences minimales de l’art. 12 nLPD. Conservez-le dans un emplacement contrôlé (ex. : site SharePoint Direction, accès restreint à Direction + DPO).
 
