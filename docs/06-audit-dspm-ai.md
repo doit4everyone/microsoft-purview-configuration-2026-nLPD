@@ -1,5 +1,5 @@
 ---
-title: "Partie 5 — Audit et DSPM for AI (surveillance Copilot) | Configuration Microsoft Purview 2026"
+title: "Partie 5 : Audit et DSPM for AI (surveillance Copilot) | Configuration Microsoft Purview 2026"
 description: "Configurer DSPM for AI et l'audit Purview pour surveiller les interactions Copilot M365 : Activity Explorer, recherche d'accès spécifiques dans les journaux d'audit."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 5 — Audit et DSPM for AI (surveillance Copilot)
+# Partie 5 : Audit et DSPM for AI (surveillance Copilot)
 
 ## 5.1 Configurer DSPM for AI
 
@@ -148,4 +148,4 @@ Pour rechercher qui a accédé à un fichier précis (ex : le contrat de Valéri
 
 ---
 
-[← Partie 4 — Politiques DLP (Data Loss Prevention)](05-politiques-dlp.html) | [Partie 6 — Scénarios de test et validation →](07-tests-validation.html)
+[← Partie 4 : Politiques DLP (Data Loss Prevention)](05-politiques-dlp.html) | [Partie 6 : Scénarios de test et validation →](07-tests-validation.html)

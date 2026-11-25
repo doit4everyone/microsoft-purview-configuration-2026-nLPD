@@ -1,5 +1,5 @@
 ---
-title: "Partie 3 — Auto-labelling (étiquetage automatique) | Configuration Microsoft Purview 2026"
+title: "Partie 3 : Auto-labelling (étiquetage automatique) | Configuration Microsoft Purview 2026"
 description: "Configurer l'étiquetage automatique des données sensibles (AVS, IBAN, données médicales) dans Microsoft Purview : politique d'auto-labelling, mode simulation et vérification des résultats."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 3 — Auto-labelling (étiquetage automatique)
+# Partie 3 : Auto-labelling (étiquetage automatique)
 
 ## 3.1 Comprendre l'auto-labelling
 
@@ -116,4 +116,4 @@ Une fois la simulation terminée (délai variable selon le tenant), voici commen
 
 ---
 
-[← Partie 2 — Les Étiquettes de sensibilité (Labels)](03-etiquettes-sensibilite.html) | [Partie 4 — Politiques DLP (Data Loss Prevention) →](05-politiques-dlp.html)
+[← Partie 2 : Les Étiquettes de sensibilité (Labels)](03-etiquettes-sensibilite.html) | [Partie 4 : Politiques DLP (Data Loss Prevention) →](05-politiques-dlp.html)

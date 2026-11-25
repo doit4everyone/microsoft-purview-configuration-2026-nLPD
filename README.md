@@ -23,7 +23,7 @@ Ce dépôt contient une **procédure technique complète**, pas à pas, pour con
 
 ✅ **Inclus**
 - Microsoft 365 Business Premium  
-- Microsoft Purview Suite (add-on)
+- Microsoft Purview Suite for Microsoft 365 Business Premium (module complémentaire)
 - SharePoint Online et OneDrive
 - Microsoft 365 Copilot
 - Conformité nLPD (Suisse)
@@ -94,7 +94,7 @@ Ce dépôt montre comment :
 | Composant | Licence |
 |--------|--------|
 | Microsoft 365 Business Premium | Requis |
-| Microsoft Purview Suite | Requis |
+| Microsoft Purview Suite for Microsoft 365 Business Premium | Requis |
 | Microsoft 365 Copilot | Optionnel (pris en charge) |
 
 💡 **Ordre de grandeur des coûts** :

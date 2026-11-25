@@ -1,5 +1,5 @@
 ---
-title: "Partie 11 — Gouvernance des accès SharePoint | Configuration Microsoft Purview 2026"
+title: "Partie 11 : Gouvernance des accès SharePoint | Configuration Microsoft Purview 2026"
 description: "Gouvernance des accès SharePoint : modèle de permissions, audit du sur-partage, correction des permissions selon le principe du moindre privilège, blocage du partage externe et routine opérationnelle de contrôle, y compris OneDrive."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 11 — Gouvernance des accès SharePoint
+# Partie 11 : Gouvernance des accès SharePoint
 
 Purview classifie et protège les données mais il ne corrige pas les permissions. Si un site SharePoint est ouvert à tout le monde, Copilot peut exploiter les fichiers non étiquetés ou étiquetés sans chiffrement pour tous les utilisateurs qui y ont accès. Seules les étiquettes avec chiffrement Azure RMS protègent aussi le contenu, indépendamment des permissions du site (voir section 11.5). Cette partie explique comment auditer et corriger le sur-partage dans votre tenant Business Premium sans outil supplémentaire. C’est le complément indispensable de tout ce qui a été configuré dans les parties précédentes.
 
@@ -102,7 +102,7 @@ Si un site SharePoint est actuellement accessible à Tout le monde de l’organi
 
 4. Pour supprimer un utilisateur ou groupe : dans la page Paramètres avancés des autorisations, cochez la case à gauche de l’entrée → menu Actions → Supprimer les autorisations utilisateur → confirmez.
 
-**⚠️ ATTENTION —** Avant de supprimer des accès, vérifiez qu’au moins un administrateur reste Propriétaire du site. Sans propriétaire, vous perdez la gestion du site. Il est recommandé de faire ces modifications en dehors des heures de bureau et de prévenir les utilisateurs concernés.
+**⚠️ ATTENTION :** Avant de supprimer des accès, vérifiez qu’au moins un administrateur reste Propriétaire du site. Sans propriétaire, vous perdez la gestion du site. Il est recommandé de faire ces modifications en dehors des heures de bureau et de prévenir les utilisateurs concernés.
 
 ## 11.4 Bloquer le partage externe au niveau du tenant
 
@@ -175,11 +175,11 @@ Checklist de validation section 11
 
 | **✓** | **Action** | **Statut** |
 | --- | --- | --- |
-| ☐ | Rapport des sites actifs consulté — aucun site ouvert à Tout le monde | à faire |
+| ☐ | Rapport des sites actifs consulté : aucun site ouvert à Tout le monde | à faire |
 | ☐ | Sites RH, Finance, Direction restreints aux groupes de sécurité correspondants | à faire |
-| ☐ | Content Explorer vérifié — fichiers RH-Confidentiel sur sites correctement restreints | à faire |
+| ☐ | Content Explorer vérifié : fichiers RH-Confidentiel sur sites correctement restreints | à faire |
 | ☐ | Partage externe bloqué au niveau du tenant (si applicable) | à faire |
 
 ---
 
-[← Partie 10 — Gouvernance Copilot Studio et Power Platform](11-power-platform.html) | [Annexes →](13-annexes.html)
+[← Partie 10 : Gouvernance Copilot Studio et Power Platform](11-power-platform.html) | [Annexes →](13-annexes.html)

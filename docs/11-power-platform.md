@@ -1,5 +1,5 @@
 ---
-title: "Partie 10 — Gouvernance Copilot Studio et Power Platform | Configuration Microsoft Purview 2026"
+title: "Partie 10 : Gouvernance Copilot Studio et Power Platform | Configuration Microsoft Purview 2026"
 description: "Gouvernance des agents Copilot Studio et des connecteurs Power Platform : politique DLP connecteur, inventaire des agents et flux existants, Managed Environments."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 10 — Gouvernance Copilot Studio et Power Platform
+# Partie 10 : Gouvernance Copilot Studio et Power Platform
 
 Cette partie couvre la gouvernance des agents Copilot Studio et des connecteurs Power Platform. Commencez par la section 10.2 (inventaire) avant d’appliquer la section 10.1 (blocage), la politique DLP connecteur s’active immédiatement et sans mode simulation. Les sections 10.2 et 10.3 s’appliquent aussi si des agents sont déjà publiés ou en cours de construction.
 ## 10.1 Politiques DLP connecteur : inclus Business Premium
@@ -89,4 +89,4 @@ admin.powerplatform.microsoft.com → icône Gérer → Paramètres du client �
 
 ---
 
-[← Partie 9 — Endpoint DLP, Edge for Business et AI Hub](10-endpoint-dlp-aihub.html) | [Partie 11 — Gouvernance des accès SharePoint →](12-sharepoint.html)
+[← Partie 9 : Endpoint DLP, Edge for Business et AI Hub](10-endpoint-dlp-aihub.html) | [Partie 11 : Gouvernance des accès SharePoint →](12-sharepoint.html)

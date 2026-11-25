@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Création des comptes utilisateurs | Configuration Microsoft Purview 2026"
+title: "Préparation : Création des comptes utilisateurs | Configuration Microsoft Purview 2026"
 description: "Créer les 15 comptes utilisateurs, les affecter à leurs groupes et activer le MFA pour l'administrateur."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l'index](../)
 
-# Partie 3 — Création des comptes utilisateurs
+# Partie 3 : Création des comptes utilisateurs
 
 ## 3.1 Créer les 15 comptes
 
@@ -78,4 +78,4 @@ Cette étape est indispensable avant de continuer. Elle protège le compte admin
 
 ---
 
-[← Préparation — Création des groupes Entra ID](prep-02-groupes-entra-id.html) | [Préparation — Création des sites SharePoint →](prep-04-sites-sharepoint.html)
+[← Préparation : Création des groupes Entra ID](prep-02-groupes-entra-id.html) | [Préparation : Création des sites SharePoint →](prep-04-sites-sharepoint.html)

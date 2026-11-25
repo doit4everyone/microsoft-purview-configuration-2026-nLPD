@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Annexes | Configuration Microsoft Purview 2026"
+title: "Préparation : Annexes | Configuration Microsoft Purview 2026"
 description: "Checklist de validation avant de démarrer le guide Purview, glossaire et portails utiles pour la préparation du tenant."
 lang: fr
 ---
@@ -28,7 +28,7 @@ lang: fr
 
 # Annexes
 
-## Annexe A — Checklist de validation
+## Annexe A : Checklist de validation
 
 Cochez chaque item avant de passer au guide Microsoft Purview. Ne commencez pas le guide si une case n'est pas cochée.
 
@@ -98,7 +98,7 @@ Phase 4 : Audit et documents de démonstration
 
 > **🚀 PRÊT À COMMENCER LE GUIDE PURVIEW** Si toutes les cases ci-dessus sont cochées, vous pouvez ouvrir le document : Configuration Microsoft Purview (2026). Commencez par la Partie 0 du guide, elle suppose que votre tenant est dans l'état décrit ici.
 
-## Annexe B — Glossaire
+## Annexe B : Glossaire
 
 | **Terme** | **Définition simple** |
 | --- | --- |
@@ -112,7 +112,7 @@ Phase 4 : Audit et documents de démonstration
 | nLPD | Nouvelle Loi sur la Protection des Données : Loi suisse en vigueur depuis septembre 2023. |
 | POC | Proof of Concept : test technique sur un environnement de démonstration avant déploiement en production. |
 
-## Annexe C — Portails utiles
+## Annexe C : Portails utiles
 
 | **Portail** | **URL** | **Usage dans ce document** |
 | --- | --- | --- |
@@ -124,4 +124,4 @@ Phase 4 : Audit et documents de démonstration
 
 ---
 
-[← Préparation — Documents de démonstration](prep-06-documents-demo.html) | [Préface — Configuration Microsoft Purview 2026 →](00-preface.html)
+[← Préparation : Documents de démonstration](prep-06-documents-demo.html) | [Préface : Configuration Microsoft Purview 2026 →](00-preface.html)

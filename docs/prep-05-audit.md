@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Activer l'audit Microsoft 365 | Configuration Microsoft Purview 2026"
+title: "Préparation : Activer l'audit Microsoft 365 | Configuration Microsoft Purview 2026"
 description: "Vérifier et activer l'audit Microsoft 365 (Unified Audit Log), première étape requise par le guide Purview."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l'index](../)
 
-# Partie 5 — Activer l'audit Microsoft 365
+# Partie 5 : Activer l'audit Microsoft 365
 
 L'activation de l'audit est la première étape du guide Microsoft Purview (Partie 0 du guide). Elle est placée ici car elle doit être activée le plus tôt possible. Les logs ne sont enregistrés qu'à partir du moment où l'audit est actif.
 
@@ -56,4 +56,4 @@ Disconnect-ExchangeOnline -Confirm:$false
 
 ---
 
-[← Préparation — Création des sites SharePoint](prep-04-sites-sharepoint.html) | [Préparation — Documents de démonstration →](prep-06-documents-demo.html)
+[← Préparation : Création des sites SharePoint](prep-04-sites-sharepoint.html) | [Préparation : Documents de démonstration →](prep-06-documents-demo.html)

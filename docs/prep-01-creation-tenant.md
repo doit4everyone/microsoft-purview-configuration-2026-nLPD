@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Création du tenant Microsoft 365 | Configuration Microsoft Purview 2026"
+title: "Préparation : Création du tenant Microsoft 365 | Configuration Microsoft Purview 2026"
 description: "Créer un tenant Microsoft 365 Business Premium et ajouter les licences Purview Suite pour le POC."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l'index](../)
 
-# Partie 1 — Création du tenant Microsoft 365
+# Partie 1 : Création du tenant Microsoft 365
 
 ## 1.1 Créer le tenant
 
@@ -66,4 +66,4 @@ Purview Suite est une licence complémentaire à Business Premium. Elle est indi
 
 ---
 
-[← Préparation — Vue d'ensemble et prérequis](prep-00-vue-ensemble.html) | [Préparation — Création des groupes Entra ID →](prep-02-groupes-entra-id.html)
+[← Préparation : Vue d'ensemble et prérequis](prep-00-vue-ensemble.html) | [Préparation : Création des groupes Entra ID →](prep-02-groupes-entra-id.html)

@@ -1,5 +1,5 @@
 ---
-title: "Partie 1 — Introduction et concepts Purview | Configuration Microsoft Purview 2026"
+title: "Partie 1 : Introduction et concepts Purview | Configuration Microsoft Purview 2026"
 description: "Qu'est-ce que Microsoft Purview, pourquoi il est indispensable avec Copilot M365, les 4 piliers de la configuration (étiquettes, auto-labelling, DLP, audit), l'ordre de configuration obligatoire et l'activation de l'audit Microsoft 365."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 1 — Introduction et concepts Purview
+# Partie 1 : Introduction et concepts Purview
 
 ## 1.1 Qu'est-ce que Microsoft Purview ?
 
@@ -142,4 +142,4 @@ La durée de conservation des journaux fait l’objet d’une réévaluation pé
 
 ---
 
-[← Partie 0 — Avant de commencer](01-avant-de-commencer.html) | [Partie 2 — Les Étiquettes de sensibilité (Labels) →](03-etiquettes-sensibilite.html)
+[← Partie 0 : Avant de commencer](01-avant-de-commencer.html) | [Partie 2 : Les Étiquettes de sensibilité (Labels) →](03-etiquettes-sensibilite.html)

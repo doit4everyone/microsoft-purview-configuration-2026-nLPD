@@ -1,5 +1,5 @@
 ---
-title: "Partie 9 — Endpoint DLP, Edge for Business et AI Hub | Configuration Microsoft Purview 2026"
+title: "Partie 9 : Endpoint DLP, Edge for Business et AI Hub | Configuration Microsoft Purview 2026"
 description: "Endpoint DLP Purview Suite, contrôles IA dans Edge for Business avec déploiement de l'extension navigateur via Intune, et Purview AI Hub pour la surveillance unifiée de l'IA dans le tenant."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 9 — Endpoint DLP, Edge for Business et AI Hub
+# Partie 9 : Endpoint DLP, Edge for Business et AI Hub
 
 Cette partie couvre trois fonctionnalités complémentaires qui étendent la protection de vos données jusqu’aux appareils physiques et aux interactions avec l’intelligence artificielle. Les parties précédentes protégeaient vos données dans le cloud (SharePoint, Exchange, Teams). Cette partie protège ce qui se passe sur l’ordinateur lui-même par exemple quand un utilisateur copie un fichier sur une clé USB, imprime un document confidentiel, ou demande à ChatGPT de reformuler un contrat RH.
 
@@ -63,7 +63,7 @@ Prérequis : intégrer les appareils Windows dans Purview
 
 Pour que l’Endpoint DLP fonctionne, chaque poste Windows doit être intégré dans Purview (onboarding). Cela se fait via Microsoft Intune si vos appareils sont gérés (MDM), ou via un script local pour les appareils non-MDM. Voici la procédure pour un appareil individuel :
 
-> ⚠️ **RISQUE RÉSIDUEL : BYOD (Bring Your Own Device) **La protection assurée par l’Endpoint DLP ne s’applique qu’aux appareils intégrés (onboarded) dans Purview. Les ordinateurs personnels non gérés (BYOD) constituent un risque résiduel : si un utilisateur télécharge un fichier confidentiel sur son poste professionnel protégé, puis le copie sur son ordinateur personnel, aucune règle Endpoint DLP ne s’applique sur ce dernier. Le chiffrement Azure RMS reste la dernière ligne de défense dans ce scénario. Le fichier demeure illisible hors du tenant même sur un appareil non géré, pour autant que l’étiquette de chiffrement ait été appliquée.
+> ⚠️ **RISQUE RÉSIDUEL, BYOD (Bring Your Own Device) : **La protection assurée par l’Endpoint DLP ne s’applique qu’aux appareils intégrés (onboarded) dans Purview. Les ordinateurs personnels non gérés (BYOD) constituent un risque résiduel : si un utilisateur télécharge un fichier confidentiel sur son poste professionnel protégé, puis le copie sur son ordinateur personnel, aucune règle Endpoint DLP ne s’applique sur ce dernier. Le chiffrement Azure RMS reste la dernière ligne de défense dans ce scénario. Le fichier demeure illisible hors du tenant même sur un appareil non géré, pour autant que l’étiquette de chiffrement ait été appliquée.
 
 1. Dans Purview → Paramètres → Intégration d'un appareil → Intégration : sélectionnez le système d'exploitation Windows 10 → Méthode de déploiement : Script local (jusqu'à 10 ordinateurs) → Télécharger le package. Un fichier .zip est téléchargé.
 
@@ -73,7 +73,7 @@ Pour que l’Endpoint DLP fonctionne, chaque poste Windows doit être intégré 
 
 ⚠️ Script identique à Defender for Endpoint : si vos postes sont déjà intégrés dans Microsoft Defender for Endpoint (ce qui est le cas sur tout tenant Business Premium correctement configuré), ils apparaissent automatiquement dans la liste des appareils Purview sans exécuter le script. Vérifiez d'abord Purview → Paramètres** → **Intégration d'un appareil** → **Appareils avant de procéder à l'onboarding manuel.
 
-**ℹ️ INFO :** si vos postes sont gérés par Intune (Azure AD joint), l'intégration peut se faire en masse depuis Purview** → **Paramètres** → **Intégration d'un appareil** → **Intégration** → **Méthode de déploiement** : **Microsoft Intune**. **Tous les appareils Intune sont alors intégrés automatiquement sans script manuel.
+**ℹ️ INFO :** si vos postes sont gérés par Intune (Azure AD joint), l'intégration peut se faire en masse depuis Purview → **Paramètres** → **Intégration d'un appareil** → **Intégration** → **Méthode de déploiement** : **Microsoft Intune**. Tous les appareils Intune sont alors intégrés automatiquement, sans script manuel.
 
 Prérequis : Vérifier la protection en temps réel (RTP) et l’analyse comportementale (BM)
 
@@ -95,7 +95,7 @@ L’Endpoint DLP doit être configuré dans une **politique séparée** et non d
 
 1. Purview → Protection contre la perte de données → Stratégies → + Créer une stratégie → Personnalisé → Personnalisé → Suivant.
 
-2. Nom : **DLP-Protection-Endpoint** : Description : Protection Endpoint DLP appareils Windows → **Suivant.**
+2. Nom : **DLP-Protection-Endpoint** │ Description : Protection Endpoint DLP appareils Windows → **Suivant.**
 
 3. Unités administratives : Répertoire complet → **Suivant.**
 
@@ -111,7 +111,7 @@ L’Endpoint DLP doit être configuré dans une **politique séparée** et non d
 | **4 - RH-Confidentiel** | Documents RH chiffrés AES-256 |
 | **5 - Finances-Confidentiel** | Documents Finances chiffrés AES-256 |
 
-ℹ️** Avantage des étiquettes vs SIT : **un fichier étiqueté 4 - RH-Confidentiel sera protégé même s’il ne contient pas de pattern AVS ou IBAN détectable. Les étiquettes couvrent aussi les fichiers chiffrés dont le contenu ne peut pas être analysé par les SIT. **Obligatoire :** ajoutez également les SIT AVS-Suisse, Swiss Social Security Number AHV, IBAN et Medical-RH-Suisse dans le même groupe (opérateur N’importe lequel), via Ajouter + Types d’infos confidentielles dans le groupe « Surveiller-Activités-Appareils ». Ils étendent la protection aux fichiers non étiquetés, et surtout ils sont indispensables au contrôle du collage dans les navigateurs (section 9.2).
+ℹ️ **Avantage des étiquettes vs SIT : **un fichier étiqueté 4 - RH-Confidentiel sera protégé même s’il ne contient pas de pattern AVS ou IBAN détectable. Les étiquettes couvrent aussi les fichiers chiffrés dont le contenu ne peut pas être analysé par les SIT. **Obligatoire :** ajoutez également les SIT AVS-Suisse, Swiss Social Security Number AHV, IBAN et Medical-RH-Suisse dans le même groupe (opérateur N’importe lequel), via Ajouter + Types d’infos confidentielles dans le groupe « Surveiller-Activités-Appareils ». Ils étendent la protection aux fichiers non étiquetés, et surtout ils sont indispensables au contrôle du collage dans les navigateurs (section 9.2).
 
 > ⚠️ **ÉTIQUETTES ET COLLAGE : **les étiquettes s’appliquent aux activités portant sur des fichiers (copie USB, impression, upload). L’activité « Coller dans les navigateurs pris en charge » fonctionne différemment : selon Microsoft, Purview analyse le contenu collé, indépendamment de la classification du fichier d’origine, et la condition documentée pour cette activité est un type d’information sensible. Une règle reposant uniquement sur les étiquettes ne garantit donc pas le blocage d’un texte copié depuis un document RH chiffré et collé dans un site IA.
 
@@ -130,9 +130,9 @@ L’Endpoint DLP doit être configuré dans une **politique séparée** et non d
 
 9. Mode de la stratégie → **Exécuter la stratégie en mode simulation** → Soumettre. Après 1-2 semaines, consulter l’Activity Explorer → valider l’absence de faux positifs → activer la stratégie et passer les activités clés en Phase 2.
 
-ℹ️** Bloquer avec remplacement : **l’action est bloquée mais l’utilisateur peut cliquer « Remplacer » et saisir une justification professionnelle pour outrepasser le blocage. La justification + l’identité de l’utilisateur sont enregistrées dans l’Activity Explorer. C’est l’équilibre idéal pour une PME : protection réelle sans blocage total des cas légitimes.
+ℹ️ **Bloquer avec remplacement : **l’action est bloquée mais l’utilisateur peut cliquer « Remplacer » et saisir une justification professionnelle pour outrepasser le blocage. La justification + l’identité de l’utilisateur sont enregistrées dans l’Activity Explorer. C’est l’équilibre idéal pour une PME : protection réelle sans blocage total des cas légitimes.
 
-ℹ️** Impression : comportement Phase 2 **l'action Bloquer avec remplacement affiche une notification : l'utilisateur doit cliquer sur Remplacer et saisir une justification. L'impression repart ensuite automatiquement. Ce n'est pas un blocage définitif : c'est une friction consciente qui génère une trace horodatée dans l'Activity Explorer (utilisateur, justification, fichier concerné).
+ℹ️ **Impression, comportement Phase 2 : **l'action Bloquer avec remplacement affiche une notification : l'utilisateur doit cliquer sur Remplacer et saisir une justification. L'impression repart ensuite automatiquement. Ce n'est pas un blocage définitif : c'est une friction consciente qui génère une trace horodatée dans l'Activity Explorer (utilisateur, justification, fichier concerné).
 
 ## 9.2 Contrôles IA dans les navigateurs (Edge, Chrome, Firefox)
 
@@ -152,13 +152,13 @@ Dans la règle Surveiller-Activités-Appareils → section Domaine de service et
 
 ⚠️ Couverture navigateur : « Coller dans les navigateurs » fonctionne selon le navigateur. Edge (version actuelle) natif, aucune extension requise. Chrome et Firefox nécessitent l’extension Microsoft Purview installée sur le poste. Sans extension, le copier-coller passe sans interception sur ces navigateurs. Les navigateurs non listés (Brave, Opera, etc.) ne sont pas couverts, à bloquer via Web Content Filtering si nécessaire. Note terrain : l'extension Firefox est en version Beta et son comportement peut être instable, des uploads ou copier-coller peuvent passer sans interception malgré une installation correcte. Edge reste le navigateur de référence pour une protection Endpoint DLP fiable.
 
-ℹ️** Le groupe « Sites web d’IA générative » est maintenu automatiquement par Microsoft : **vous n’avez pas à lister manuellement ChatGPT, Gemini, etc. Microsoft met à jour la liste au fil des nouvelles plateformes IA. Cette configuration s’applique à tous les navigateurs (Edge, Chrome, Firefox) sur les appareils intégrés dans Purview.
+ℹ️ **Le groupe « Sites web d’IA générative » est maintenu automatiquement par Microsoft : **vous n’avez pas à lister manuellement ChatGPT, Gemini, etc. Microsoft met à jour la liste au fil des nouvelles plateformes IA. Cette configuration s’applique à tous les navigateurs (Edge, Chrome, Firefox) sur les appareils intégrés dans Purview.
 
 ### 9.2.1 Déploiement de l’extension navigateur Microsoft Purview via Intune
 
-L’extension navigateur Microsoft Purview est requise pour que Chrome et Firefox interceptent les activités copier-coller et upload. Microsoft Edge (Windows) intègre nativement les contrôles Purview Endpoint DLP pour les activités navigateur ; aucune extension supplémentaire n’est requise. L’extension ne s’installe pas automatiquement même sur un poste géré Intune — un profil de configuration doit être créé explicitement.
+L’extension navigateur Microsoft Purview est requise pour que Chrome et Firefox interceptent les activités copier-coller et upload. Microsoft Edge (Windows) intègre nativement les contrôles Purview Endpoint DLP pour les activités navigateur ; aucune extension supplémentaire n’est requise. L’extension ne s’installe pas automatiquement même sur un poste géré Intune : un profil de configuration doit être créé explicitement.
 
-**Chrome — via Intune Settings Catalog**
+**Chrome : via Intune Settings Catalog**
 
 Intune → Appareils → Profils de configuration → **Créer** → Windows 10 et ultérieur → Settings Catalog → chercher *Google Chrome* → Extensions → **Configure the list of force-installed apps and extensions** → ajouter :
 
@@ -197,7 +197,7 @@ Valeur, à copier telle quelle :
 
 Microsoft précise que updates_disabled doit rester à false pour que l’extension se mette à jour automatiquement.
 
-**Vérification post-déploiement** — sur le poste cible après sync Intune (env. 15 min) : Chrome → chrome://extensions — Firefox → about:addons — vérifier la présence de « Microsoft Purview Extension » et son statut activé.
+**Vérification post-déploiement** : sur le poste cible après sync Intune (env. 15 min) : Chrome → chrome://extensions, Firefox → about:addons, puis vérifier la présence de « Microsoft Purview Extension » et son statut activé.
 
 ⚠️ Risque résiduel : Le presse-papiers partagé VM/hôte (vmtoolsd.exe) sur les postes exécutant une VM (VMware Tools), le presse-papiers peut transiter via vmtoolsd.exe entre la VM et l’hôte physique. Endpoint DLP détecte cet événement (FileCopiedToClipboard, application vmtoolsd.exe) mais ne peut pas bloquer ce vecteur il opère au niveau hyperviseur, hors portée de Purview.
 
@@ -241,4 +241,4 @@ Checklist de validation section 9
 
 ---
 
-[← Partie 8 — Fonctionnalités avancées Purview](09-fonctionnalites-avancees.html) | [Partie 10 — Gouvernance Copilot Studio et Power Platform →](11-power-platform.html)
+[← Partie 8 : Fonctionnalités avancées Purview](09-fonctionnalites-avancees.html) | [Partie 10 : Gouvernance Copilot Studio et Power Platform →](11-power-platform.html)

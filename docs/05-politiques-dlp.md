@@ -1,5 +1,5 @@
 ---
-title: "Partie 4 — Politiques DLP (Data Loss Prevention) | Configuration Microsoft Purview 2026"
+title: "Partie 4 : Politiques DLP (Data Loss Prevention) | Configuration Microsoft Purview 2026"
 description: "Créer les politiques DLP Microsoft Purview : politique principale, protection de la transmission externe et protection Copilot, pour bloquer la fuite de données sensibles."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 4 — Politiques DLP (Data Loss Prevention)
+# Partie 4 : Politiques DLP (Data Loss Prevention)
 
 ## 4.1 Comprendre la DLP
 
@@ -63,7 +63,7 @@ La protection Copilot nécessite une **politique DLP distincte** car c’est le 
 | ✅ Comptes OneDrive | Tous les comptes |
 | ✅ Messages de conversation et de canal Teams | Tous les utilisateurs |
 
-⚠️** Appareils, Instances, Référentiels locaux, **ces emplacements apparaissent dans la liste mais ne doivent pas être activés pour ce POC. Appareils nécessite Endpoint DLP + onboarding Intune (section 9). Instances nécessite une licence supplémentaire. Référentiels locaux nécessite un scanner Purview on-premise.
+⚠️ **Appareils, Instances, Référentiels locaux : **ces emplacements apparaissent dans la liste mais ne doivent pas être activés pour ce POC. Appareils nécessite Endpoint DLP + onboarding Intune (section 9). Instances nécessite une licence supplémentaire. Référentiels locaux nécessite un scanner Purview on-premise.
 
 7. Cliquez sur **Suivant.**
 
@@ -80,7 +80,7 @@ Règle 1 : Bloquer partage externe AVS
 | ET : Ajouter une condition | Du contenu est partagé à partir de Microsoft 365 → Avec des personnes externes à mon organisation |
 | Actions : Ajouter une action | Restreindre l'accès ou chiffrer le contenu dans les emplacements Microsoft 365 → Bloquer tout le monde |
 | Notifications utilisateur | Activez. Message : Ce document contient un numéro AVS suisse. Partage externe bloqué nLPD art. 8. |
-| Remplacements utilisateur | Section Notifications utilisateur : activer “Afficher le conseil de stratégie sous forme de boîte de dialogue avant l’envoi” (Exchange uniquement). Section Remplacements par l’utilisateur : (1) ☑ Permettre aux utilisateurs d’outrepasser les restrictions — (2) ☑ Exiger une justification pour ignorer — (3) ☑ Exiger que l’utilisateur final reconnaisse explicitement le remplacement (Exchange uniquement). Laisser décoché : Ignorer la règle si faux positif. |
+| Remplacements utilisateur | Section Notifications utilisateur : activer “Afficher le conseil de stratégie sous forme de boîte de dialogue avant l’envoi” (Exchange uniquement). Section Remplacements par l’utilisateur : (1) ☑ Permettre aux utilisateurs d’outrepasser les restrictions ; (2) ☑ Exiger une justification pour ignorer ; (3) ☑ Exiger que l’utilisateur final reconnaisse explicitement le remplacement (Exchange uniquement). Laisser décoché : Ignorer la règle si faux positif. |
 | Rapports d'incident | Niveau de gravité : Élevé │ Envoyer une alerte aux administrateurs : votre email admin |
 
 Cliquez sur Enregistrer pour sauvegarder la règle
@@ -106,7 +106,7 @@ La nLPD n’interdit pas la communication de données personnelles à des tiers 
 
 Le blocage reste la règle : le remplacement avec justification est une exception volontaire, enregistrée avec sa justification. Dans ce POC, il est ouvert à tous les utilisateurs, et cela vaut pour les quatre emplacements de la politique (Exchange, SharePoint, OneDrive, Teams). Ce choix garde les utilisateurs dans l’environnement Microsoft 365 surveillé plutôt que de les pousser vers des services personnels. Pour les fichiers du site RH, les permissions SharePoint limitent en pratique le remplacement aux membres RH et Direction, seuls à pouvoir partager ces fichiers. Pour Exchange, OneDrive et Teams, en revanche, tout utilisateur bloqué peut l’utiliser. En production : examinez régulièrement les justifications dans l’Explorateur d’activités ; orientez les partages externes de données sensibles vers le site Transmission externe (section 4.3) ; et, si votre licence le permet, réservez le remplacement à un **groupe de sécurité DLP-Exceptions** (Direction + RH uniquement). Lors de la rédaction, la condition par groupe n’était pas disponible avec Business Premium : vérifiez sa disponibilité dans votre tenant. Voir Annexe E pour le détail.
 
-> 📌 **RÈGLE D’USAGE ENTRE LES DEUX CANAUX DE SORTIE : **le guide prévoit deux chemins pour faire sortir une donnée sensible, à ne pas confondre. **Le site Transmission externe** (section 4.3) est le canal normal pour tout envoi prévu de documents sensibles à un partenaire (fiduciaire, réviseur, avocat, client) : copie du document, étiquette 6 appliquée manuellement, lien nominatif, suppression après 2 jours. **Le remplacement avec justification** de la règle AVS est réservé aux cas ponctuels et imprévus, par exemple un e-mail urgent contenant un numéro AVS. Chaque justification est enregistrée et doit être examinée ensuite par l’administrateur (Explorateur d’activités, filtre Remplacement de la stratégie DLP par l’utilisateur). Un recours répété au remplacement pour le même type d’échange signale un besoin qui doit passer par le site Transmission externe. Inscrivez cette règle dans la procédure interne ou la charte informatique.
+> 📌 **RÈGLE D’USAGE ENTRE LES DEUX CANAUX DE SORTIE : **le guide prévoit deux chemins pour faire sortir une donnée sensible, à ne pas confondre. **Le site Transmission externe** (section 4.3) est le canal normal pour tout envoi prévu de documents sensibles à un partenaire (fiduciaire, réviseur, avocat, client) : copie du document, étiquette 6 appliquée manuellement, lien nominatif, rétention de 2 jours. **Le remplacement avec justification** de la règle AVS est réservé aux cas ponctuels et imprévus, par exemple un e-mail urgent contenant un numéro AVS. Chaque justification est enregistrée et doit être examinée ensuite par l’administrateur (Explorateur d’activités, filtre Remplacement de la stratégie DLP par l’utilisateur). Un recours répété au remplacement pour le même type d’échange signale un besoin qui doit passer par le site Transmission externe. Inscrivez cette règle dans la procédure interne ou la charte informatique.
 
 Cliquez sur **Enregistrer.**
 
@@ -151,13 +151,13 @@ Règle 1 : Surveiller les partages externes (traçabilité nLPD)
 | **Paramètre** | **Ce que vous devez configurer** |
 | --- | --- |
 | Nom de la règle | **Surveiller-Partage-Externe** |
-| Condition 1 | Le contenu contient → tapez **AVS-Suisse** et sélectionner : **AVS-Suisse**, confiance moyenne. Tapez **IBAN** et sélectionner : **International Banking Account Number (IBAN)**, confiance élevée. Tapez **Medical-RH-Suisse** et sélectionner : **Medical-RH-Suisse**, confiance moyenne, min 3. |
+| Condition 1 | Le contenu contient → opérateur du groupe : **N’importe lequel de ces éléments** (OU) → tapez **AVS-Suisse** et sélectionner : **AVS-Suisse**, confiance moyenne. Tapez **IBAN** et sélectionner : **International Banking Account Number (IBAN)**, confiance élevée. Tapez **Medical-RH-Suisse** et sélectionner : **Medical-RH-Suisse**, confiance moyenne, min 3. Un seul de ces types suffit à déclencher la règle. |
 | Condition 2 | Du contenu est partagé à partir de Microsoft 365 → Avec des personnes externes à mon organisation |
 | Action | Aucun blocage : surveillance uniquement. |
-| Notifications utilisateur | Activez par Message : Ce partage externe est enregistré conformément à la nLPD art. 6. |
+| Notifications utilisateur | Activez par Message : Ce partage externe contient des données sensibles détectées. Il fait l’objet d’une alerte et d’un contrôle interne. |
 | Rapports d’incident | Niveau de gravité : Faible │ Alerte admin : Activé │ Email : admin@demo.ch |
 
-*Objectif : traçabilité nLPD. L’étiquette 6 appliquée manuellement = décision consciente. Cliquez sur **Enregistrer**.*
+*Objectif : détecter et signaler les partages externes de contenus sensibles reconnus par les SIT. Un document sans correspondance SIT peut être partagé sans alerte DLP : la traçabilité de tous les partages, y compris ceux-là, repose sur le journal d’audit Microsoft 365 (activités de partage). Une alerte DLP ne démontre pas à elle seule la conformité juridique de la transmission. L’étiquette 6 appliquée manuellement matérialise la décision de transmettre. Cliquez sur **Enregistrer**.*
 
 **⚠️ Si l’étiquette 6 n’est pas appliquée : **la condition « étiquette n’est pas appliquée » n’existe pas dans les politiques DLP SharePoint. Les garde-fous sont : (1) les permissions SharePoint (seuls les membres des groupes RH, Finances et Direction peuvent déposer, chacun dans sa bibliothèque) ; (2) la détection des SIT par cette politique, qui alerte l’administrateur en cas de partage externe de données sensibles ; (3) la procédure interne qui impose l’application manuelle de l’étiquette 6 avant tout partage. Un document partagé sans étiquette part sans marquage visuel.
 
@@ -221,8 +221,8 @@ Limite 2 : Copilot standalone (copilot.microsoft.com) protection partielle.
 La politique DLP-Protection-Copilot couvre les expériences Copilot intégrées à Microsoft 365 (Copilot dans Word, Excel, Teams, SharePoint). L'application Copilot standalone accessible via copilot.microsoft.com ou l'application Windows est hors périmètre de cette politique. La DLP-Protection-Endpoint (créée plus loin) assure une protection complémentaire sur les postes intégrés : l'upload de fichiers vers copilot.microsoft.com est bloqué via le groupe Sites web d'IA générative, et le copier-coller de contenu sensible est bloqué sur Edge natif via l'action Coller dans les navigateurs pris en charge. Ces deux vecteurs sont donc couverts. Cette protection ne s'applique pas sur Firefox et Chrome sans extension Purview installée, ni sur les postes non intégrés dans Purview. La saisie manuelle de contenu sensible dans Copilot standalone (frappe directe au clavier, sans copier-coller ni upload) reste le seul angle mort techniquement non blocable par la DLP-Protection-Endpoint, aucune opération de presse-papiers ou de fichier n'est interceptable dans ce cas. Pour une couverture complète de ce vecteur résiduel, une politique Shadow AI complémentaire (Web Content Filtering + MDCA) est recommandée.
 
 **Limite 3 : Bandeau « Protection des données d’entreprise » ≠ protection Purview.**
-Le bandeau affiché dans Copilot standalone indique une protection de session Entra/Intune (les données de la conversation ne sont pas partagées avec des tiers pour l’entraînement). Il ne signifie pas que Purview DLP inspecte ou bloque le contenu saisi. Ces deux mécanismes sont indépendants — ne pas les confondre en démonstration client.
+Le bandeau affiché dans Copilot standalone indique une protection de session Entra/Intune (les données de la conversation ne sont pas partagées avec des tiers pour l’entraînement). Il ne signifie pas que Purview DLP inspecte ou bloque le contenu saisi. Ces deux mécanismes sont indépendants : ne pas les confondre en démonstration client.
 
 ---
 
-[← Partie 3 — Auto-labelling (étiquetage automatique)](04-auto-labelling.html) | [Partie 5 — Audit et DSPM for AI (surveillance Copilot) →](06-audit-dspm-ai.html)
+[← Partie 3 : Auto-labelling (étiquetage automatique)](04-auto-labelling.html) | [Partie 5 : Audit et DSPM for AI (surveillance Copilot) →](06-audit-dspm-ai.html)

@@ -1,5 +1,5 @@
 ---
-title: "Partie 7 — Gestion opérationnelle et démos | Configuration Microsoft Purview 2026"
+title: "Partie 7 : Gestion opérationnelle et démos | Configuration Microsoft Purview 2026"
 description: "Gestion opérationnelle de Microsoft Purview au quotidien : suspendre les protections pour une démo, vérifications hebdomadaires, résolution des problèmes courants et pilotage de la dette de labellisation."
 lang: fr
 ---
@@ -26,16 +26,16 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 7 — Gestion opérationnelle et démos
+# Partie 7 : Gestion opérationnelle et démos
 
 ## 7.1 Suspendre les protections pour une démo
 
 | **Méthode** | **Comment faire** | **Risque** |
 | --- | --- | --- |
-| Mode simulation DLP | DLP → votre politique → Modifier → Mode : Simulation | ✅ Aucun — recommandé |
+| Mode simulation DLP | DLP → votre politique → Modifier → Mode : Simulation | ✅ Aucun, recommandé |
 | Exclure un utilisateur | DLP → politique → Modifier → Emplacements → Exclure → votre compte test | ⚠️ Faible : 1 utilisateur |
 | Désactiver une règle | DLP → politique → Règles → toggle OFF sur la règle spécifique | ⚠️ Moyen |
-| Désactiver la politique | DLP → politique → Mode : Désactivé | 🚨 Élevé — aucune protection |
+| Désactiver la politique | DLP → politique → Mode : Désactivé | 🚨 Élevé, aucune protection |
 
 L’accès aux documents protégés par chiffrement est réévalué par le service Azure Rights Management, mais pas instantanément. Le retrait d’un utilisateur d’un groupe associé à une étiquette produit ses effets en trois temps :
 
@@ -76,7 +76,7 @@ Le chiffrement Purview ne nécessite pas que vous transmettiez un mot de passe a
 | **Accès du partenaire externe** | Le code est généré automatiquement par Microsoft au moment où le partenaire clique sur le lien, uniquement s’il ne possède pas de compte Microsoft ou Entra ID. |
 | **Durée de validité** | Si un code email est utilisé, il est valable 15 minutes. Après expiration, le partenaire doit cliquer à nouveau sur Envoyer le code. |
 | **Le partenaire ne reçoit pas le code** | Vérifiez les spams. L’email provient de microsoft.com. Si le problème persiste, demandez au partenaire d’essayer avec un autre navigateur ou de vider le cache. |
-| **Conseil support général** | Recommandez la version Web (navigateur) plutôt que l’application de bureau pour une authentification invité (navigateur recommandé). Rappel : ne jamais transmettre un code de vérification reçu par email via un autre canal — il est à usage unique et lié à la session. |
+| **Conseil support général** | Recommandez la version Web (navigateur) plutôt que l’application de bureau pour une authentification invité (navigateur recommandé). Rappel : ne jamais transmettre un code de vérification reçu par email via un autre canal : il est à usage unique et lié à la session. |
 
 ## 7.5 Identifier et piloter la dette de labellisation
 
@@ -119,4 +119,4 @@ Ces trois indicateurs constituent le tableau de bord minimal pour piloter la det
 
 ---
 
-[← Partie 6 — Scénarios de test et validation](07-tests-validation.html) | [Partie 8 — Fonctionnalités avancées Purview →](09-fonctionnalites-avancees.html)
+[← Partie 6 : Scénarios de test et validation](07-tests-validation.html) | [Partie 8 : Fonctionnalités avancées Purview →](09-fonctionnalites-avancees.html)

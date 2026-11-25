@@ -1,5 +1,5 @@
 ---
-title: "Partie 6 — Scénarios de test et validation | Configuration Microsoft Purview 2026"
+title: "Partie 6 : Scénarios de test et validation | Configuration Microsoft Purview 2026"
 description: "Scénarios de test pour valider le déploiement Purview : auto-labelling, blocage DLP du partage externe, protection Copilot et checklist de validation finale."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 6 — Scénarios de test et validation
+# Partie 6 : Scénarios de test et validation
 
 > ⚠️ **ATTENTION : **Avant de commencer les tests : vérifiez que les politiques DLP et auto-labelling sont bien activées (pas en simulation) et que l'audit est actif. Attendez 24-48h après activation avant de tester.
 
@@ -42,9 +42,9 @@ lang: fr
 
 4. **Vérifier dans Activity Explorer** Purview → Activity Explorer → filtrez Type d'activité = Étiquette appliquée automatiquement. Le fichier doit apparaître dans la liste.
 
-> ⚠️ **ATTENTION — **Si le label n'apparaît pas après ce délai : vérifiez que la stratégie d'auto-labelling est bien en mode Activé (pas Simulation) et que le site SharePoint RH est bien inclus dans les emplacements de la stratégie.
+> ⚠️ **ATTENTION : **Si le label n'apparaît pas après ce délai : vérifiez que la stratégie d'auto-labelling est bien en mode Activé (pas Simulation) et que le site SharePoint RH est bien inclus dans les emplacements de la stratégie.
 
-## 6.2 Test 2 — DLP bloque le partage externe
+## 6.2 Test 2 : DLP bloque le partage externe
 
 1. **Ouvrir Outlook Web** Allez sur https://outlook.office.com et connectez-vous avec votre compte de test (rh1@demo.ch).
 
@@ -56,9 +56,9 @@ lang: fr
 
 5. **Vérifier dans Activity Explorer** Attendez quelques minutes puis allez dans Purview → Activity Explorer → filtrez Type = Correspondance de règle DLP. L'événement doit apparaître.
 
-> ⚠️ **ATTENTION — **Si aucun blocage n'apparaît : vérifiez que la politique DLP est en mode Activé et non Simulation. En mode simulation, les règles ne bloquent pas.
+> ⚠️ **ATTENTION : **Si aucun blocage n'apparaît : vérifiez que la politique DLP est en mode Activé et non Simulation. En mode simulation, les règles ne bloquent pas.
 
-## 6.3 Test 3 — Protection Copilot
+## 6.3 Test 3 : Protection Copilot
 
 1. **Ouvrir Copilot M365** Allez sur https://microsoft365.com → connectez-vous avec votre compte de test → cliquez sur l'icône Copilot en haut à droite ou dans le menu.
 
@@ -81,10 +81,10 @@ lang: fr
 | ✅ | DLP-Protection-Copilot activée | Purview → DLP → Stratégies |
 | ✅ | DLP-Protection-Transmission-Externe activée (2 règles) | Purview → DLP → Stratégies |
 | ✅ | Audit actif PowerShell = True | Get-AdminAuditLogConfig │ FL |
-| ☐ | DSPM — Tâches de configuration vérifiées | Purview → DSPM → Vue d'ensemble |
+| ☐ | DSPM : tâches de configuration vérifiées | Purview → DSPM → Vue d'ensemble |
 | ✅ | Test DLP email externe bloqué | Activity Explorer → Correspondance DLP |
 | ✅ | Test Copilot protégé | Copilot ne résume pas les docs confidentiels |
 
 ---
 
-[← Partie 5 — Audit et DSPM for AI (surveillance Copilot)](06-audit-dspm-ai.html) | [Partie 7 — Gestion opérationnelle et démos →](08-gestion-operationnelle.html)
+[← Partie 5 : Audit et DSPM for AI (surveillance Copilot)](06-audit-dspm-ai.html) | [Partie 7 : Gestion opérationnelle et démos →](08-gestion-operationnelle.html)

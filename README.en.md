@@ -23,7 +23,7 @@ This repository contains a **step-by-step technical procedure** to configure **M
 
 ✅ **Included**
 - Microsoft 365 Business Premium  
-- Microsoft Purview Suite (add-on)
+- Microsoft Purview Suite for Microsoft 365 Business Premium (add-on)
 - SharePoint Online & OneDrive
 - Microsoft 365 Copilot
 - Swiss nLPD compliance requirements
@@ -91,7 +91,7 @@ This repository explains how to:
 | Component | License |
 |--------|--------|
 | Microsoft 365 Business Premium | Required |
-| Microsoft Purview Suite | Required |
+| Microsoft Purview Suite for Microsoft 365 Business Premium | Required |
 | Microsoft 365 Copilot | Optional (but supported) |
 
 💡 **Cost reference** (indicative):

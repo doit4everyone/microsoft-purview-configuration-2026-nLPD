@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Documents de démonstration | Configuration Microsoft Purview 2026"
+title: "Préparation : Documents de démonstration | Configuration Microsoft Purview 2026"
 description: "Répartition et dépôt des fichiers de démonstration (contrats, fiches de salaire, registre du personnel, IBAN) dans les sites SharePoint pour tester l'auto-labelling Purview."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l'index](../)
 
-# Partie 6 — Déposer les documents de démonstration dans SharePoint
+# Partie 6 : Déposer les documents de démonstration dans SharePoint
 
 Le guide Purview utilise des documents contenant des données sensibles réelles pour tester la détection automatique (auto-labelling). Les fichiers du dossier FICHIERS_DEMO_AXONIX.zip sont prêts à l'emploi.
 Ils contiennent des numéros AVS, des IBAN et des informations confidentielles fictives d'une société fictive (Axonix SA).
@@ -109,4 +109,4 @@ Document de référence technique interne.
 
 ---
 
-[← Préparation — Activer l'audit Microsoft 365](prep-05-audit.html) | [Préparation — Annexes →](prep-annexes.html)
+[← Préparation : Activer l'audit Microsoft 365](prep-05-audit.html) | [Préparation : Annexes →](prep-annexes.html)

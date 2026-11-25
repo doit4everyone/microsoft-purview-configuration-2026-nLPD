@@ -1,5 +1,5 @@
 ---
-title: "Partie 8 — Fonctionnalités avancées Purview | Configuration Microsoft Purview 2026"
+title: "Partie 8 : Fonctionnalités avancées Purview | Configuration Microsoft Purview 2026"
 description: "Fonctionnalités avancées de Purview Suite : politiques de rétention, Insider Risk Management, eDiscovery Premium, Communication Compliance et gestionnaire de conformité."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 8 — Fonctionnalités avancées Purview
+# Partie 8 : Fonctionnalités avancées Purview
 
 Cette partie présente quatre fonctionnalités avancées de Microsoft Purview qui complètent les protections configurées dans les parties précédentes. Elles sont toutes pertinentes pour la conformité nLPD et pour la préparation à la certification SC-401. Ces fonctionnalités ne sont pas licenciées individuellement : elles sont accessibles via Microsoft Purview Suite, disponible aussi bien pour Business Premium que pour E3 ou E5.
 
@@ -75,6 +75,22 @@ Cliquez sur **Modifier** → saisir l’URL du site dans le champ de recherche
 
 6. Page Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → 10 ans → Démarrer la période fondée sur : **Lorsque les éléments ont été modifiés en dernier lieu** → À la fin de la période : **Supprimer automatiquement les éléments** → **Suivant **→ **Soumettre.**
 
+> ⚠️ **RH : LA LOI NE FIXE PAS UNE DURÉE UNIQUE POUR LE DOSSIER DU PERSONNEL.** La politique Retention-RH-10ans couvre la durée la plus longue qui peut se justifier pour un document RH. Elle ne dispense pas de trier le dossier par catégorie :
+>
+> | **Catégorie** | **Durée** | **Base** |
+> | --- | --- | --- |
+> | Décomptes de salaire, pièces comptables | 10 ans après la fin de l’exercice | CO 958f |
+> | Données utiles au certificat de travail (fonction, durée, évaluations, formations) | 10 ans après la fin des rapports de travail, car le droit au certificat se prescrit par 10 ans | CO 127 |
+> | Créances de salaire, vacances, heures supplémentaires | 5 ans après leur exigibilité | CO 128 ch. 3 |
+> | Dossiers de candidature | à restituer ou détruire, au plus tard à la fin des rapports de travail | CO 328b |
+> | Le reste du dossier | à nettoyer régulièrement : ce qui ne sert plus est détruit | CO 328b, art. 6 al. 4 nLPD |
+>
+> Deux conséquences techniques à connaître :
+> 1. **Une politique de rétention empêche la suppression définitive avant son échéance.** Un fichier supprimé du site RH (une candidature non retenue, une ancienne évaluation) est déplacé dans la bibliothèque de conservation du site et y reste jusqu’au terme des 10 ans. Il n’est plus visible des utilisateurs, mais il est conservé. Documentez cette limite dans le registre (Annexe I, activité 1).
+> 2. **La suppression automatique part de la dernière modification du fichier, pas du départ du collaborateur.** Un document d’un collaborateur encore en poste, non modifié depuis 10 ans, serait supprimé. Vérifiez à l’échéance qu’aucun dossier actif n’est concerné, ou choisissez « Ne rien faire » à la fin de la période et faites le tri manuellement.
+>
+> En production, une rétention conforme à ce tableau passe par des étiquettes de rétention par catégorie, avec une durée qui démarre à un événement (fin des rapports de travail). Revoyez le dossier du personnel au moins lors de la révision annuelle.
+
 7. Répétez pour créer :
 
 **Retention-Finances-10ans :** même procédure, saisir *https://demo.sharepoint.com/sites/Finances* + cliquer « + » → 10 ans → supprimer.
@@ -87,9 +103,9 @@ Cliquez sur **Modifier** → saisir l’URL du site dans le champ de recherche
 
 9. Créez une cinquième politique :
 
-**Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/Transmissionexterne* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. Les documents sont automatiquement supprimés 48 heures après leur création, qu’ils aient été consultés ou non.
+**Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/Transmissionexterne* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. La durée de rétention configurée est de 2 jours à compter de la création du fichier, qu’il ait été consulté ou non. Le traitement de la suppression par SharePoint est asynchrone : il peut intervenir plusieurs jours après l’échéance, et le fichier passe ensuite par les corbeilles du site avant sa suppression définitive. Cette politique ne garantit donc pas une fin d’accès exactement 48 heures après le dépôt.
 
-ℹ️** ATTENTION : **la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent confirmer que le destinataire a bien reçu le document avant les 48 heures. Cette suppression ne concerne que la copie présente dans le tenant : elle n’efface pas un document que le destinataire externe a déjà téléchargé, copié ou imprimé.
+⚠️ **ATTENTION : **la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent s’assurer que le destinataire a reçu le document dans les 2 jours. Dès la réception confirmée, l’utilisateur supprime lui-même la copie ou le partage, sans attendre la rétention : c’est le seul moyen de garantir une fin d’accès rapide. Cette suppression ne concerne que la copie présente dans le tenant : elle n’efface pas un document que le destinataire externe a déjà téléchargé, copié ou imprimé.
 
 Cliquez sur Soumettre. Les politiques s’appliquent dans un délai variable (quelques minutes à plusieurs jours selon le tenant).
 
@@ -132,7 +148,7 @@ Procédure : Stratégie 1 : IRM-Fuites-Données-PME
 
 Purview → Gestion des risques internes → Stratégies → + → Politique de douane (c’est traduit comme ça dans l’interface en Français).
 
-1. Modèle de stratégie — sélectionnez Fuites de données → sous-modèle Fuites de données (le neutre, pas « utilisateurs à risque » ni « utilisateurs prioritaires ») → **Suivant.**
+1. Modèle de stratégie : sélectionnez Fuites de données → sous-modèle Fuites de données (le neutre, pas « utilisateurs à risque » ni « utilisateurs prioritaires ») → **Suivant.**
 
 2. Nom : IRM-Fuites-Données-PME | Description : Détection des fuites de données internes, groupes exposés à des données sensibles, nLPD art. 8 → **Suivant.**
 
@@ -172,9 +188,9 @@ Stratégie 2 : IRM-Risque-IA (optionnel en préversion)
 
 6. Score : « Obtenir des alertes pour toutes les activités » → **Suivant.**
 
-7. Événement déclencheur : sélectionnez « Contenu à risque ou sensible dans les expériences Microsoft Copilot, les applications IA d’entreprise et les versions web d’autres applications IA » — cochez Sectionner tout dans la liste des activités → Seuils intégrés → Suivant.
+7. Événement déclencheur : sélectionnez « Contenu à risque ou sensible dans les expériences Microsoft Copilot, les applications IA d’entreprise et les versions web d’autres applications IA » → cochez Sectionner tout dans la liste des activités → Seuils intégrés → Suivant.
 
-8. Indicateurs — section « Applications d’IA générative » divisée en quatre sous-catégories avec modèles de facturation différents :
+8. Indicateurs : section « Applications d’IA générative » divisée en quatre sous-catégories avec modèles de facturation différents :
 
 **Expériences Microsoft Copilot (2/2) : Gratuit ✅** Cochez les 2 indicateurs. Détecte les invites et réponses Copilot M365 et Copilot Studio. Inclus dans Business Premium + Purview Suite.
 
@@ -186,7 +202,7 @@ Stratégie 2 : IRM-Risque-IA (optionnel en préversion)
 
 9. Options de détection : séquences : laisser Sectionner tout coché. Amplificateurs : Sectionner tout → **Suivant.**
 
-10. Seuils — Appliquer les seuils fournis par Microsoft → Suivant → **Envoyer.**
+10. Seuils : appliquer les seuils fournis par Microsoft → Suivant → **Envoyer.**
 
 Stratégie 3 : IRM-Violations-Sécurité
 
@@ -239,14 +255,14 @@ L’IRM est inclus dans Microsoft Purview Suite (disponible pour Business Premiu
 
 Concept
 
-eDiscovery (découverte électronique) permet de rechercher, collecter, analyser et exporter des données pour répondre à une obligation légale — litige civil, enquête, demande d'accès aux données par une personne (droit d'accès nLPD art. 25), ou investigation interne. La version Premium ajoute l'IA pour dépliquer les résultats et analyser les conversations.
+eDiscovery (découverte électronique) permet de rechercher, collecter, analyser et exporter des données pour répondre à une obligation légale : litige civil, enquête, demande d'accès aux données par une personne (droit d'accès nLPD art. 25), ou investigation interne. La version Premium ajoute l'IA pour dépliquer les résultats et analyser les conversations.
 
 Cas d'usage nLPD concrets
 
 | **Situation** | **Ce que eDiscovery permet** |
 | --- | --- |
 | Demande d'accès nLPD (art. 25) | Rechercher toutes les données personnelles d'un individu dans Exchange, SharePoint, Teams en quelques minutes |
-| Litige RH (départ Favre) | Collecter tous les emails et fichiers liés à Favre, appliquer un hold légal — documents non supprimables pendant le litige |
+| Litige RH (départ Favre) | Collecter tous les emails et fichiers liés à Favre, appliquer un hold légal, documents non supprimables pendant le litige |
 | Notification PFPDT (art. 24) | Identifier précisément quelles données ont été exposées, qui y avait accès, produire le rapport pour le PFPDT dès que possible (art. 24 nLPD) |
 
 Accès dans Purview : Purview > Solutions > eDiscovery > Cas Premium > + Créer un cas. Licence : inclus dans Microsoft Purview Suite (Business Premium, E3 ou E5). Aucun add-on séparé requis.
@@ -261,7 +277,7 @@ Le groupe contient deux sous-rôles à configurer séparément :
 
 **Page 2 : Gérer l’administrateur eDiscovery : **même opération → ajoutez admin@demo.ch. L’administrateur eDiscovery peut voir et modifier **tous** les cas du tenant, quelles que soient les autorisations, à réserver au compte admin principal. → Suivant → Enregistrer.
 
-⚠️ **Propagation 15–30 minutes** — après l’enregistrement, attendez avant de continuer. Sans cette attente, le bouton **Exporter** ne sera pas visible dans le menu Actions du jeu à réviser. Licence : **✅ inclus Business Premium + Purview Suite** — aucun add-on requis.
+⚠️ **Propagation 15–30 minutes** : après l’enregistrement, attendez avant de continuer. Sans cette attente, le bouton **Exporter** ne sera pas visible dans le menu Actions du jeu à réviser. Licence : **✅ inclus Business Premium + Purview Suite** : aucun add-on requis.
 
 Procédure terrain : Démonstration nLPD art. 25
 
@@ -359,7 +375,7 @@ Rôle requis : **Communication Compliance Admin** ajouter admin@demo.ch via Purv
 
 Stratégie 1 : CC-Surveillance-Données-Sensibles-nLPD
 
-Objectif : détecter les communications contenant des données personnelles sensibles (AVS, données médicales, IBAN) circulant dans Exchange, Teams et Viva Engage — entrant, sortant et interne.
+Objectif : détecter les communications contenant des données personnelles sensibles (AVS, données médicales, IBAN) circulant dans Exchange, Teams et Viva Engage : entrant, sortant et interne.
 
 1. Purview → Conformité des communications → Stratégies → + Créer une stratégie → sélectionnez le modèle : Détecter les types d’informations sensibles.
 
@@ -411,9 +427,9 @@ Le Gestionnaire de conformité contient 3 évaluations actives dans le tenant Ax
 
 | **Évaluation** | **Progression** | **Réglementation** |
 | --- | --- | --- |
-| Data Protection Baseline for Microsoft 365 | 64 % — 58 / 489 vos actions terminées, 729 / 734 actions Microsoft terminées | Ligne de base de protection des données |
-| LPD SUISSE | 33 % — 3 / 34 vos actions terminées, 12 / 12 actions Microsoft terminées | Switzerland FADP |
-| AI Baseline Assessment | 64 % — 1 / 80 vos actions terminées, 96 / 96 actions Microsoft terminées | AI Baseline |
+| Data Protection Baseline for Microsoft 365 | 64 %, 58 / 489 vos actions terminées, 729 / 734 actions Microsoft terminées | Ligne de base de protection des données |
+| LPD SUISSE | 33 %, 3 / 34 vos actions terminées, 12 / 12 actions Microsoft terminées | Switzerland FADP |
+| AI Baseline Assessment | 64 %, 1 / 80 vos actions terminées, 96 / 96 actions Microsoft terminées | AI Baseline |
 
 L’évaluation LPD SUISSE (Switzerland FADP) est la plus pertinente pour une PME suisse. Elle est incluse dans la souscription Purview Suite (1 licence réglementaire utilisée sur 3 disponibles). Son score de 33 % reflète un état de début de déploiement : les 12 actions Microsoft sont toutes terminées, mais 31 de vos 34 actions restent à compléter. Plusieurs de ces actions sont déjà couvertes par ce guide (DLP, étiquettes de sensibilité, rétention) mais le Gestionnaire de conformité peut ne pas les détecter automatiquement si elles sont en mode simulation ou non encore validées.
 
@@ -431,14 +447,14 @@ Parmi les 34 actions de l’évaluation LPD SUISSE, plusieurs sont directement c
 
 | **Action** | **État actuel** | **Couverte par ce guide** |
 | --- | --- | --- |
-| Create and deploy data loss prevention policies | 0 / 27 — Aucun | Oui — sections 4.1 à 4.5 (manuel : charger preuve) |
-| Create customized or use default DLP policies for endpoints | 0 / 27 — Aucun | Oui — section 9.1 (manuel : charger preuve) |
-| Automatically apply retention labels | 0 / 27 — Risque élevé d’échec | Oui — section 8.1 (automatique) |
-| Search audit logs | 0 / 9 — Aucun | Oui — section 0.3 Audit (manuel : charger preuve) |
-| Digitally sign secure channel data | 27 / 27 — Réussite | Déjà validée automatiquement |
-| Encrypt or sign secure channel data | 27 / 27 — Réussite | Déjà validée automatiquement |
-| Display privacy statements for end users | 0 / 27 — Aucun | Non : nécessite Intune MDM |
-| Remove TLS 1.0/1.1 and 3DES dependencies | 0 / 27 — Aucun | Non : hors périmètre Business Premium |
+| Create and deploy data loss prevention policies | 0 / 27 : Aucun | Oui : sections 4.1 à 4.5 (manuel : charger preuve) |
+| Create customized or use default DLP policies for endpoints | 0 / 27 : Aucun | Oui : section 9.1 (manuel : charger preuve) |
+| Automatically apply retention labels | 0 / 27 : Risque élevé d’échec | Oui : section 8.1 (automatique) |
+| Search audit logs | 0 / 9 : Aucun | Oui : section 0.3 Audit (manuel : charger preuve) |
+| Digitally sign secure channel data | 27 / 27 : Réussite | Déjà validée automatiquement |
+| Encrypt or sign secure channel data | 27 / 27 : Réussite | Déjà validée automatiquement |
+| Display privacy statements for end users | 0 / 27 : Aucun | Non : nécessite Intune MDM |
+| Remove TLS 1.0/1.1 and 3DES dependencies | 0 / 27 : Aucun | Non : hors périmètre Business Premium |
 
 Périmètre et recommandations pour une PME suisse
 
@@ -452,4 +468,4 @@ Le Gestionnaire de conformité se met à jour automatiquement au fur et à mesur
 
 ---
 
-[← Partie 7 — Gestion opérationnelle et démos](08-gestion-operationnelle.html) | [Partie 9 — Endpoint DLP, Edge for Business et AI Hub →](10-endpoint-dlp-aihub.html)
+[← Partie 7 : Gestion opérationnelle et démos](08-gestion-operationnelle.html) | [Partie 9 : Endpoint DLP, Edge for Business et AI Hub →](10-endpoint-dlp-aihub.html)

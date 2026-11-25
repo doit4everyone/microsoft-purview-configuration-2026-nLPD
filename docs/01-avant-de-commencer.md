@@ -1,5 +1,5 @@
 ---
-title: "Partie 0 — Avant de commencer | Configuration Microsoft Purview 2026"
+title: "Partie 0 : Avant de commencer | Configuration Microsoft Purview 2026"
 description: "Prérequis avant de configurer Microsoft Purview : accès au portail, installation et connexion PowerShell Exchange Online, attribution des rôles administrateur, vérification de la licence Purview Suite et activation des étiquettes sur les conteneurs."
 lang: fr
 ---
@@ -26,11 +26,11 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 0 — Avant de commencer
+# Partie 0 : Avant de commencer
 
 Lisez cette section entièrement avant de toucher quoi que ce soit dans Purview.
 
-> 💡 **Tenant vierge ou de test :** si vous n'avez pas encore de tenant Microsoft 365 sur lequel travailler, le guide [Préparation du tenant — POC Purview](prep-00-vue-ensemble.html) explique comment créer et préparer un environnement de preuve de concept avant de suivre cette procédure (également disponible en .docx/.pdf sur la [release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0)).
+> 💡 **Tenant vierge ou de test :** si vous n'avez pas encore de tenant Microsoft 365 sur lequel travailler, le guide [Préparation du tenant : POC Purview](prep-00-vue-ensemble.html) explique comment créer et préparer un environnement de preuve de concept avant de suivre cette procédure (également disponible en .docx/.pdf sur la [release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0)).
 
 ## 0.1 Comment accéder au portail Purview
 
@@ -245,4 +245,4 @@ Execute-AzureAdLabelSync
 
 ---
 
-[← Préface](00-preface.html) | [Partie 1 — Introduction et concepts Purview →](02-introduction-concepts.html)
+[← Préface](00-preface.html) | [Partie 1 : Introduction et concepts Purview →](02-introduction-concepts.html)

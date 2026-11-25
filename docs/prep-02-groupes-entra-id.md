@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Création des groupes Entra ID | Configuration Microsoft Purview 2026"
+title: "Préparation : Création des groupes Entra ID | Configuration Microsoft Purview 2026"
 description: "Créer les 4 groupes de sécurité standards et les 3 groupes mail-enabled pour Purview via PowerShell Exchange Online."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l'index](../)
 
-# Partie 2 — Création des groupes Entra ID
+# Partie 2 : Création des groupes Entra ID
 
 ## 2.1 Créer les 4 groupes de sécurité standards
 
@@ -57,19 +57,19 @@ Ces groupes sont techniquement différents des précédents. Ils doivent être c
 
 > **⚠️ POURQUOI POWERSHELL EST OBLIGATOIRE ICI** Les groupes de sécurité standard du portail web ne sont pas mail-enabled. Azure RMS (moteur de chiffrement de Purview) ne reconnaît que les groupes qui ont une adresse email. PowerShell est le seul moyen de créer ces groupes mail-enabled dans un tenant cloud pur. **Toutes les manipulations en PowerShell pour Exchange Online sont à faire sur un poste local en PowerShell 5.x. Le Cloud Shell supporte mal ce module**.
 
-### Étape 1 — Installer le module Exchange Online PowerShell
+### Étape 1 : Installer le module Exchange Online PowerShell
 
 Ouvrez PowerShell en administrateur (clic droit sur l'icône PowerShell > Exécuter en tant qu'administrateur).
 
 Install-Module -Name ExchangeOnlineManagement -Force -AllowClobber
 
-### Étape 2 — Se connecter à Exchange Online
+### Étape 2 : Se connecter à Exchange Online
 
 Connect-ExchangeOnline
 
 → Une fenêtre de connexion Microsoft s'ouvre. Connectez-vous avec votre compte admin.
 
-### Étape 3 — Créer les 3 groupes
+### Étape 3 : Créer les 3 groupes
 
 Remplacez demo.ch par votre domaine réel si différent.
 
@@ -79,7 +79,7 @@ New-DistributionGroup -Name "GRP-RH-Purview" -Alias "grp-rh-purview" -Type Secur
 
 New-DistributionGroup -Name "GRP-Finances-Purview" -Alias "grp-finances-purview" -Type Security -PrimarySmtpAddress "grp-finances-purview@demo.ch"
 
-### Étape 4 — Ajouter les membres
+### Étape 4 : Ajouter les membres
 
 Répétez pour chaque membre de chaque groupe. Remplacez les adresses email par les vôtres.
 
@@ -103,7 +103,7 @@ Add-DistributionGroupMember -Identity "GRP-Finances-Purview" -Member "finance1@d
 
 Add-DistributionGroupMember -Identity "GRP-Finances-Purview" -Member "finance2@demo.ch"
 
-### Étape 5 — Vérifier et se déconnecter
+### Étape 5 : Vérifier et se déconnecter
 
 Get-DistributionGroupMember "GRP-Direction-Purview"
 
@@ -117,4 +117,4 @@ Disconnect-ExchangeOnline -Confirm:$false
 
 ---
 
-[← Préparation — Création du tenant Microsoft 365](prep-01-creation-tenant.html) | [Préparation — Création des comptes utilisateurs →](prep-03-comptes-utilisateurs.html)
+[← Préparation : Création du tenant Microsoft 365](prep-01-creation-tenant.html) | [Préparation : Création des comptes utilisateurs →](prep-03-comptes-utilisateurs.html)

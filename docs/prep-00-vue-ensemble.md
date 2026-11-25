@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Vue d'ensemble et prérequis | Configuration Microsoft Purview 2026"
+title: "Préparation : Vue d'ensemble et prérequis | Configuration Microsoft Purview 2026"
 description: "Vue d'ensemble du POC Microsoft Purview : tenant cloud, 15 utilisateurs, 7 groupes de sécurité, 5 sites SharePoint, audit Microsoft 365. Comptes nécessaires et liste des utilisateurs à créer."
 lang: fr
 ---
@@ -28,7 +28,7 @@ lang: fr
 
 > **✅ À LIRE EN PREMIER** Ce document est la SEULE étape à réaliser avant de commencer le guide : Configuration Microsoft Purview (2026). Il ne couvre que la mise en place du tenant, des comptes, des groupes et des sites SharePoint. Une fois ce document terminé et toutes les cases cochées, passez directement au guide Purview.
 
-# Partie 0 — Vue d'ensemble et prérequis
+# Partie 0 : Vue d'ensemble et prérequis
 
 ## 0.1 Ce que vous allez construire
 
@@ -76,4 +76,4 @@ Préparez ce tableau. Remplacez demo.ch par votre domaine réel si vous en avez 
 
 ---
 
-[← Retour à l'index](../) | [Préparation — Création du tenant Microsoft 365 →](prep-01-creation-tenant.html)
+[← Retour à l'index](../) | [Préparation : Création du tenant Microsoft 365 →](prep-01-creation-tenant.html)

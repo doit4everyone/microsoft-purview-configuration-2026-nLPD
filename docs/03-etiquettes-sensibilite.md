@@ -1,5 +1,5 @@
 ---
-title: "Partie 2 — Les Étiquettes de sensibilité (Labels) | Configuration Microsoft Purview 2026"
+title: "Partie 2 : Les Étiquettes de sensibilité (Labels) | Configuration Microsoft Purview 2026"
 description: "Comprendre et créer les étiquettes de sensibilité Purview : groupes de sécurité mail-enabled, SIT personnalisés suisses, création des 7 étiquettes, chiffrement Azure RMS, publication, procédure Super User RMS (break-glass) et gestion du stock existant."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l’index](../)
 
-# Partie 2 — Les Étiquettes de sensibilité (Labels)
+# Partie 2 : Les Étiquettes de sensibilité (Labels)
 
 ## 2.1 Comprendre les étiquettes
 
@@ -38,7 +38,7 @@ Une étiquette de sensibilité est un marqueur qui s'attache à un document ou u
 
 ## 2.2 Prérequis : Créer les groupes de sécurité mail-enabled
 
-Deux méthodes coexistent selon votre contexte. **En environnement hybride (AD on-prem + Entra Connect) **il faut créer les groupes mail-enabled dans l’Active Directory local, puis les synchroniser vers Entra ID via Entra Connect. **En tenant cloud-only (sans AD on-prem) : **créer les groupes mail-enabled directement dans Exchange Online via PowerShell. Le guide décrit les deux cas, utilisez uniquement la méthode correspondant à votre environnement.
+Deux méthodes coexistent selon votre contexte. **En environnement hybride (AD on-prem + Entra Connect) : **il faut créer les groupes mail-enabled dans l’Active Directory local, puis les synchroniser vers Entra ID via Entra Connect. **En tenant cloud-only (sans AD on-prem) : **créer les groupes mail-enabled directement dans Exchange Online via PowerShell. Le guide décrit les deux cas, utilisez uniquement la méthode correspondant à votre environnement.
 
 Le moteur de chiffrement de Purview (Azure Rights Management) exige que les groupes assignés aux étiquettes aient une adresse email, on parle de groupes de sécurité mail-enabled. Vos groupes GRP-Direction, GRP-RH et GRP-Finances sont des groupes de sécurité simples sans email, ils ne peuvent pas être utilisés pour le chiffrement des étiquettes 3, 4 et 5. Pour les étiquettes utilisant le chiffrement avec attribution explicite des autorisations, seuls les utilisateurs et les groupes disposant d’une adresse email (groupes mail-enabled) peuvent être utilisés. Cette contrainte est liée au fonctionnement d’Azure Rights Management.
 
@@ -147,7 +147,7 @@ Add-DistributionGroupMember -Identity "GRP-RH-Purview" -Member utilisateur@demo.
 
 Get-DistributionGroupMember "GRP-RH-Purview"
 
-*→ Les membres apparaissent. Purgez la session : Disconnect-ExchangeOnline -**Confirm:$**false. Utilisez ensuite ces groupes à l’étape 6 de la section 2.4.*
+*→ Les membres apparaissent. Purgez la session : `Disconnect-ExchangeOnline -Confirm:$false`. Utilisez ensuite ces groupes à l’étape 6 de la section 2.4.*
 
 ## 2.3 Accéder à la section Étiquettes
 
@@ -204,7 +204,7 @@ Vous allez créer 7 étiquettes dans cet ordre exact, du moins sensible au plus 
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 - Public | Vert | Non | Tous | Tous |
 | 2 | 2 - Interne | Bleu | Non | Tous | Internes uniquement |
-| 3 | 6 - Transmission-Externe | Orange | Non | Tous (appliquée manuellement sur le site Transmission externe) | Destinataires externes (pas de chiffrement, impression autorisée) |
+| 3 | 6 - Transmission-Externe | Orange | Non | Tous (étiquette publiée à tous). En pratique : membres RH, Finances ou Direction, manuellement, sur le document à transmettre | Selon les permissions SharePoint et le lien nominatif du destinataire. Pas de chiffrement : aucune restriction d’accès RMS |
 | 4-5 | 3a - Direction - Site (conteneur) 3b - Direction - Documents (fichiers) | Violet | Oui | GRP-Direction-Purview + Admin | Direction + Admin |
 | 6 | 4 - RH-Confidentiel | Bordeaux | Oui | GRP-RH-Purview + GRP-Direction-Purview + Admin | RH + Direction + Admin |
 | 7 | 5 - Finances-Confidentiel | Orange | Oui | GRP-Finances-Purview + GRP-Direction-Purview + Admin | Finances + Direction + Admin |
@@ -264,7 +264,7 @@ Une fois l’étiquette 3a créée et publiée, elle doit être appliquée manue
 
 **Méthode 2 : Via le portail Microsoft Entra** (si le site est associé à un groupe Microsoft 365) : entra.microsoft.com → Groupes → Tous les groupes → cherchez le groupe lié au site Direction → Propriétés → Étiquette de confidentialité → sélectionnez : 3a - Direction - Site → Enregistrer. C’est la méthode que vous avez utilisée elle est valide et produit le même résultat.
 
-**Méthode 3 — Via PowerShell** (pour plusieurs sites simultanément) :
+**Méthode 3 : Via PowerShell** (pour plusieurs sites simultanément) :
 
 Connect-SPOService -Url https://demo-admin.sharepoint.com
 
@@ -272,7 +272,7 @@ Connect-SPOService -Url https://demo-admin.sharepoint.com
 
 Set-SPOSite -Identity https://demo.sharepoint.com/sites/direction -SensitivityLabel "GUID-de-l-etiquette-3a"
 
-**ℹ️ INFO — **Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
+**ℹ️ INFO : **Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
 
 Procédure détaillée, créer l’étiquette : 3b - Direction - Documents (fichiers)
 
@@ -286,7 +286,7 @@ Cette étiquette protège et marque visuellement les documents Direction lorsqu�
 | **4** | **Page 3 : Choisir la protection** | Sélectionnez Contrôler l’accès et Appliquer le marquage de contenu. │ cliquer sur **Suivant.** |
 | **5** | **Page 4 : Configurer le chiffrement** | Chiffrement : Configurer les paramètres de contrôle d’accès (chiffrement) │ Attribuer des autorisations maintenant │ Expiration : Jamais │ Accès hors connexion : 30 jours │ + Attribuer des autorisations → ajoutez GRP-Direction-Purview et admin@demo.ch │ Niveau : Éditeur (Co-auteur) │ Enregistrer → cliquer sur **Suivant.** |
 | **6** | **Page 5 : Marquage du contenu** | Activez Marquage du contenu. │ En-tête : « Direction - Strictement confidentiel » • Rouge • taille 11 • Centré. │ Pied de page : « Document interne - Diffusion interdite sans validation Direction » • Rouge • taille 11 • Centré. │ Filigrane : « CONFIDENTIEL – DIRECTION » • taille 40 • diagonal • Rouge. → **Suivant.** |
-| **7** | **Sous-page : Étiquetage automatique des fichiers et des courriers** | Laissez désactivé**. **Laissez le bouton désactivé. Le périmètre Direction ne contient pas de données détectables automatiquement, application manuelle uniquement (voir section 3.1). → **Suivant.** |
+| **7** | **Sous-page : Étiquetage automatique des fichiers et des courriers** | Laissez le bouton désactivé. Le périmètre Direction ne contient pas de données détectables automatiquement, application manuelle uniquement (voir section 3.1). → **Suivant.** |
 | **8** | **Page 4 : Groupes et sites** | Aucune case à cocher. L’étiquette 3b étant de type Fichiers uniquement, les paramètres Groupes et sites ne s’appliquent pas. Laissez toutes les cases décochées et le libellé réunion de canal sur Aucun. → **Suivant.** |
 | **9** | **Vérifier et créer** | Vérifiez le résumé : Nom = 3b - Direction - Documents │ Portée = Fichiers et autres ressources de données, E-mail │ Contrôle de l’accès = Activé (GRP-Direction-Purview + admin@demo.ch, Co-auteur, 30 jours hors ligne) │ Marquage = Activé (filigrane + en-tête + pied de page) │ Étiquetage automatique = Aucun. → Cliquez sur **Enregistrer l’étiquette.** |
 
@@ -297,7 +297,7 @@ Rôle : étiquette de transit sans chiffrement. Sa protection repose sur les mar
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
 | **1** | **Navigation** | Purview → Protection des données → Étiquettes de confidentialité → **+ Créer une étiquette** |
-| **2** | **Page 1 : Détails** | Nom : **6 - Transmission-Externe** │ Description utilisateurs : Document préparé pour transmission externe. En appliquant cette étiquette, vous confirmez que les données sensibles ont été vérifiées et que leur partage a été approuvé par un responsable autorisé. │ Description admin : Étiquette transit sans chiffrement, marquages visuels seuls. │ Couleur : **Orange** → **Suivant** |
+| **2** | **Page 1 : Détails** | Nom : **6 - Transmission-Externe** │ Description utilisateurs : Document préparé pour transmission externe. En appliquant cette étiquette, vous confirmez être autorisé à transmettre ce document, après avoir vérifié son contenu et son destinataire. │ Description admin : Étiquette transit sans chiffrement, marquages visuels seuls. │ Couleur : **Orange** → **Suivant** |
 | **3** | **Page 2 : Portée** | Cochez **Fichiers et autres ressources de données** et **Groupes et sites** │ Décochez Courriers et Réunions → **Suivant** |
 | **ℹ️** | **Groupes et sites : **cette portée sert uniquement à appliquer l’étiquette au site Transmission externe comme repère visuel (encadré « Marquer le site » ci-dessous). Sans elle, l’étiquette n’apparaît pas dans le Centre d’administration SharePoint. Elle n’a aucun effet sur les fichiers. |
 | **4** | **Page 3 : Paramètres de protection** | Cochez uniquement **Appliquer le marquage de contenu** │ Ne cochez pas Contrôler l’accès (pas de chiffrement) → **Suivant** |
@@ -310,7 +310,11 @@ Rôle : étiquette de transit sans chiffrement. Sa protection repose sur les mar
 
 Application de l’étiquette 6 : une décision manuelle de l’utilisateur
 
-L’étiquette 6 n’est pas appliquée automatiquement. L’utilisateur RH, Finances ou Direction qui prépare un document pour l’extérieur l’applique lui-même dans Word, Excel ou PowerPoint (bouton Confidentialité), avant ou après le dépôt dans sa bibliothèque du site Transmission externe. Ce geste matérialise sa décision : le document a été vérifié et son partage externe est approuvé. L’auto-labelling Purview, basé sur le contenu (AVS, IBAN), ne convient pas à cet usage, puisque c’est la décision de transmettre qui compte et non le contenu.
+L’étiquette 6 n’est pas appliquée automatiquement. L’utilisateur RH, Finances ou Direction qui prépare un document pour l’extérieur l’applique lui-même dans Word, Excel ou PowerPoint (bouton Sensibilité), avant ou après le dépôt dans sa bibliothèque du site Transmission externe. Ce geste matérialise sa décision : il a vérifié le document et son destinataire, et se déclare autorisé à le transmettre. L’étiquette n’est pas un circuit d’approbation : si la Direction doit valider chaque transmission, cette validation se documente dans la procédure interne de l’entreprise. L’auto-labelling Purview, basé sur le contenu (AVS, IBAN), ne convient pas à cet usage, puisque c’est la décision de transmettre qui compte et non le contenu.
+
+**ℹ️ Justification au remplacement d’une étiquette chiffrée : **la copie d’un document RH ou Finances porte encore l’étiquette 4 ou 5. L’étiquette 6 ayant une priorité inférieure (ordre 3), son application est un déclassement : Word affiche la fenêtre « Justification requise » (politique de publication, section 2.5). L’utilisateur choisit un motif, par exemple « Autre » avec une explication courte. Cette justification est enregistrée dans l’audit, mais elle ne remplace pas l’autorisation interne de transmettre le document.
+
+> ✅ **VALIDÉ TERRAIN (25.11.2026, Word pour le web) : **un membre de GRP-RH-Purview, avec le niveau Co-auteur de l’étiquette 4 et sans être propriétaire du document, a copié un fichier étiqueté 4 - RH-Confidentiel vers la bibliothèque RH du site Transmission externe, puis l’a passé en 6 - Transmission-Externe. La fenêtre « Justification requise » s’est affichée, puis l’étiquette 6 a remplacé l’étiquette 4 : marquages de l’étiquette 6, document non chiffré. Le niveau Co-auteur suffit pour ce parcours. Non testé dans Word installé sur le poste.
 
 **⚠️ Si l’utilisateur oublie l’étiquette : **le document part sans filigrane, en-tête ni pied de page. La politique DLP-Protection-Transmission-Externe détecte encore les données sensibles grâce aux SIT et alerte l’administrateur, mais elle ne remplace pas l’étape de classification manuelle. Rappelez-la dans la procédure interne de transmission.
 
@@ -406,7 +410,7 @@ Purview → Protection des données → Explorateurs → Explorateur de contenu.
 
 4. Attendez **15 à 30 minutes** avant de retourner dans Content Explorer, les rôles ne sont pas actifs immédiatement. Rafraîchissez la page après ce délai.
 
-**ℹ️ INFO — **Les deux rôles sont cumulatifs et indépendants : le premier donne accès à la liste, le second au contenu. Pour un auditeur externe qui doit vérifier les étiquettes sans voir le contenu des fichiers, assignez uniquement le premier rôle, c’est le principe de moindre privilège nLPD.
+**ℹ️ INFO : **Les deux rôles sont cumulatifs et indépendants : le premier donne accès à la liste, le second au contenu. Pour un auditeur externe qui doit vérifier les étiquettes sans voir le contenu des fichiers, assignez uniquement le premier rôle, c’est le principe de moindre privilège nLPD.
 
 **Procédure d’audit recommandée :**
 
@@ -435,4 +439,4 @@ Microsoft propose des classifieurs entraînables capables de reconnaître des ty
 
 ---
 
-[← Partie 1 — Introduction et concepts Purview](02-introduction-concepts.html) | [Partie 3 — Auto-labelling (étiquetage automatique) →](04-auto-labelling.html)
+[← Partie 1 : Introduction et concepts Purview](02-introduction-concepts.html) | [Partie 3 : Auto-labelling (étiquetage automatique) →](04-auto-labelling.html)

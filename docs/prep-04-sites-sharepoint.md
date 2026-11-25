@@ -1,5 +1,5 @@
 ---
-title: "Préparation — Création des sites SharePoint | Configuration Microsoft Purview 2026"
+title: "Préparation : Création des sites SharePoint | Configuration Microsoft Purview 2026"
 description: "Créer les sites SharePoint Intranet, Communication, Direction, RH, Finances et Transmission externe avec leurs permissions, y compris la configuration du partage externe sécurisé."
 lang: fr
 ---
@@ -26,7 +26,7 @@ lang: fr
 
 [← Retour à l'index](../)
 
-# Partie 4 — Création des sites SharePoint
+# Partie 4 : Création des sites SharePoint
 
 Les sites SharePoint sont utilisés par le guide Purview pour tester les permissions, les étiquettes de sensibilité et la gouvernance des accès. Vous allez créer 5 sites avec des permissions précises.
 
@@ -188,10 +188,10 @@ Contrairement aux autres sites, le partage externe y est autorisé, mais de faç
 >
 > **Le parcours d’un document :**
 > 1. Le collaborateur copie le document depuis son site d’origine (RH, Finances ou Direction) vers la bibliothèque de son département sur le site Transmission externe. L’original reste dans le site source, avec son étiquette et sa durée de conservation.
-> 2. Il applique manuellement l’étiquette 6 - Transmission-Externe, qui remplace l’étiquette d’origine de la copie : sans chiffrement, avec marquages visuels. Ce geste matérialise sa décision : le document a été vérifié et sa transmission est approuvée.
+> 2. Il applique manuellement l’étiquette 6 - Transmission-Externe, qui remplace l’étiquette d’origine de la copie : sans chiffrement, avec marquages visuels. Le remplacement d’une étiquette chiffrée est un déclassement : Word demande une justification, enregistrée dans l’audit. Ce geste matérialise sa décision : il a vérifié le document et son destinataire, et se déclare autorisé à le transmettre.
 > 3. Il le partage avec un lien nominatif : le destinataire externe doit s’authentifier.
-> 4. La politique DLP dédiée enregistre le partage et alerte l’administrateur si des données sensibles sont détectées. Elle ne bloque pas le partage.
-> 5. Après 2 jours, la copie est supprimée automatiquement du site. Une copie déjà téléchargée par le destinataire ne peut pas être rappelée.
+> 4. La politique DLP dédiée alerte l’administrateur si des données sensibles sont détectées dans le document partagé. Elle ne bloque pas le partage. Le journal d’audit Microsoft 365 trace tous les partages, avec ou sans données sensibles.
+> 5. Une rétention de 2 jours supprime ensuite la copie du site. La suppression par SharePoint est différée et peut intervenir plusieurs jours après l’échéance : dès la réception confirmée, l’utilisateur supprime lui-même la copie ou le partage. Une copie déjà téléchargée par le destinataire ne peut pas être rappelée.
 >
 > Ce site est le canal normal de tout envoi prévu de documents sensibles. Pour un cas ponctuel et imprévu (un e-mail urgent contenant un numéro AVS, par exemple), la règle DLP AVS permet un remplacement avec justification, enregistré et examiné ensuite par l’administrateur. L’IBAN reste bloqué sans exception hors de ce site.
 >
@@ -201,7 +201,7 @@ Contrairement aux autres sites, le partage externe y est autorisé, mais de faç
 
 > **RISQUE OPÉRATIONNEL IDENTIFIÉ** La sécurité du site Transmission externe repose sur : • le respect strict de la procédure, • l’absence de modification manuelle des groupes et autorisations. Une erreur de manipulation administrateur peut réouvrir l’accès croisé entre départements. Ce risque est accepté dans le cadre du POC.
 
-### Étape 1 — Activer le partage externe au niveau du tenant
+### Étape 1 : Activer le partage externe au niveau du tenant
 
 Avant de créer le site, vous devez autoriser le partage externe dans les paramètres généraux de SharePoint. Sans cette étape, il est impossible de partager un document avec quelqu’un hors de votre organisation.
 
@@ -251,7 +251,7 @@ Cette zone définit le type de lien proposé PAR DÉFAUT quand un utilisateur cl
 
 1. Une fois les trois zones configurées, cliquez sur Enregistrer en bas de la page.
 
-### Étape 2 — Créer le site
+### Étape 2 : Créer le site
 
 1. Dans le Centre d’administration SharePoint, cliquez sur Sites actifs > + Créer.
 
@@ -267,7 +267,7 @@ Cette zone définit le type de lien proposé PAR DÉFAUT quand un utilisateur cl
 
 > **✅ POURQUOI NE PAS ASSOCIER AU HUB ?** Les sites associés au Hub Intranet héritent de sa navigation et apparaissent dans les recherches internes. Le site Transmission externe est destiné aux échanges avec l’extérieur, le garder hors du Hub limite son exposition aux utilisateurs internes.
 
-### Étape 3 — Rendre la racine du site non modifiable
+### Étape 3 : Rendre la racine du site non modifiable
 
 La racine du site ne doit servir qu’à accueillir les bibliothèques. Personne ne doit pouvoir y déposer de documents directement.
 
@@ -309,7 +309,7 @@ Quand SharePoint crée un nouveau site, il génère automatiquement 3 groupes vi
 
 > **⚠️ RÉSULTAT ATTENDU À CE STADE** Si un membre RH ouvre le site, il voit la page d’accueil mais ne peut PAS y glisser-déposer un fichier. Le bouton « + Nouveau » et le bouton « Télécharger » sont grisés ou absents à la racine. C’est le comportement voulu, les dépôts se font uniquement dans les bibliothèques (par département).
 
-### Étape 4 — Créer les 3 bibliothèques par département
+### Étape 4 : Créer les 3 bibliothèques par département
 
 Dans SharePoint, une bibliothèque est un espace de stockage avec ses propres permissions, c’est différent d’un simple dossier. Chaque département aura sa propre bibliothèque, invisible pour les autres.
 
@@ -327,7 +327,7 @@ Créez les 3 bibliothèques suivantes (répétez la procédure pour chacune) :
 
 5. Répétez : Direction - Transmission externe.
 
-### Étape 5 — Sécuriser chaque bibliothèque
+### Étape 5 : Sécuriser chaque bibliothèque
 
 C’est l’étape la plus importante. Chaque bibliothèque doit avoir ses propres permissions indépendantes pour qu’un membre RH ne puisse pas voir la bibliothèque Finance, et inversement.
 
@@ -391,7 +391,7 @@ Dans le ruban de la bibliothèque, cliquez sur Accorder des autorisations. Un di
 
 > **✅ VÉRIFICATION RAPIDE** Connectez-vous avec rh1@demo.ch et ouvrez le site Transmission externe > Contenu du site. Vous devez voir UNIQUEMENT la bibliothèque RH - Transmission externe, pas les deux autres. Si les 3 bibliothèques sont visibles : l’héritage n’a pas été correctement arrêté, reprenez depuis l’étape 5 (Arrêter l’héritage). Si les autorisations semblent correctes mais la visibilité croisée persiste : vérifiez qu’il ne reste pas de trace de Transmission externe - Membres dans la liste des permissions de la bibliothèque.
 
-### Étape 6 — Configurer le partage externe sécurisé sur ce site
+### Étape 6 : Configurer le partage externe sécurisé sur ce site
 
 Maintenant que le site est sécurisé, configurez le niveau de partage externe autorisé pour ce site uniquement. Ce réglage est indépendant des autres sites - RH, Finances et Direction restent fermés à l’externe.
 
@@ -416,8 +416,8 @@ Maintenant que le site est sécurisé, configurez le niveau de partage externe a
 
 > **ℹ️ CE RÉGLAGE EST UN PLAFOND POUR CE SITE** Le niveau choisi ici ne peut pas dépasser le niveau défini au niveau du tenant (Zone 1 de l’Étape 1). Si le tenant est réglé sur « Invités nouveaux et existants », ce site peut aussi utiliser ce niveau ou être plus restrictif. Ce réglage ne modifie pas les autres sites. Vérifiez que RH, Finances, Direction, Intranet et Communication sont bien sur « Uniquement les personnes de votre organisation » : ce n’est pas garanti par défaut.
 
-> **🔐 COMMENT FONCTIONNE LE PARTAGE EXTERNE SÉCURISÉ - POUR LE DÉBUTANT** 1. Un membre RH dépose le document dans la bibliothèque RH - Transmission externe et lui applique manuellement l’étiquette 6 - Transmission-Externe, qui matérialise sa décision de le transmettre. 2. Il clique sur Partager et entre l’adresse email du partenaire externe. 3. Le partenaire reçoit un email avec un lien sécurisé. En cliquant, il est invité à s’authentifier avec son compte Microsoft ou Entra ID (ou à créer un compte invité s’il n’en a pas). 4. Il saisit le code et peut accéder au document pendant la durée configurée (30 jours selon Zone 2 de l’étape 1). Sans le code, le lien est inutilisable. 5. La politique DLP dédiée surveille les partages externes, détecte les données sensibles correspondant aux SIT configurés et génère une alerte pour l’administrateur. Elle ne bloque pas le partage : celui-ci repose sur la décision de l’utilisateur, le processus de validation interne et les permissions spécifiques du site. → La configuration DLP et la rétention de ce site sont dans le guide Microsoft Purview (pas ici).
+> **🔐 COMMENT FONCTIONNE LE PARTAGE EXTERNE SÉCURISÉ - POUR LE DÉBUTANT** 1. Un membre RH dépose le document dans la bibliothèque RH - Transmission externe et lui applique manuellement l’étiquette 6 - Transmission-Externe, qui matérialise sa décision de le transmettre. 2. Il clique sur Partager et entre l’adresse email du partenaire externe. 3. Le partenaire reçoit un email avec un lien sécurisé. En cliquant, il est invité à s’authentifier avec son compte Microsoft ou Entra ID (ou à créer un compte invité s’il n’en a pas). 4. Une fois authentifié, il accède au document. S’il utilise un code de vérification reçu par e-mail, il devra se réauthentifier après 30 jours (Zone 2 de l’étape 1). Ce délai n’est pas une date d’expiration du lien : l’accès dépend des autorisations de partage et de la présence du fichier sur le site, donc de la suppression de la copie. 5. La politique DLP dédiée surveille les partages externes, détecte les données sensibles correspondant aux SIT configurés et génère une alerte pour l’administrateur. Elle ne bloque pas le partage : celui-ci repose sur la décision de l’utilisateur, le processus de validation interne et les permissions spécifiques du site. → La configuration DLP et la rétention de ce site sont dans le guide Microsoft Purview (pas ici).
 
 ---
 
-[← Préparation — Création des comptes utilisateurs](prep-03-comptes-utilisateurs.html) | [Préparation — Activer l'audit Microsoft 365 →](prep-05-audit.html)
+[← Préparation : Création des comptes utilisateurs](prep-03-comptes-utilisateurs.html) | [Préparation : Activer l'audit Microsoft 365 →](prep-05-audit.html)

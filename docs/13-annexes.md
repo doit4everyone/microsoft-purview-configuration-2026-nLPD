@@ -178,9 +178,9 @@ Sans organisation associée aux mesures techniques, Purview devient une boîte n
 
 | **Tâche** | **Responsable** | **Fréquence** | **Action si problème** |
 | --- | --- | --- | --- |
-| Vérifier Activity Explorer — alertes DLP non traitées | Admin IT (personne nommée) | Hebdomadaire | Traiter dans les 48h, escalade Direction si violation nLPD |
-| Vérifier Content Explorer — documents non étiquetés | Admin IT | Mensuel | Campagne d’étiquetage manuel (section 2.7) |
-| Vérifier simulation auto-labelling — dérives détectées | Admin IT | Mensuel | Corriger la règle concernée dans Purview |
+| Vérifier Activity Explorer : alertes DLP non traitées | Admin IT (personne nommée) | Hebdomadaire | Traiter dans les 48h, escalade Direction si violation nLPD |
+| Vérifier Content Explorer : documents non étiquetés | Admin IT | Mensuel | Campagne d’étiquetage manuel (section 2.7) |
+| Vérifier simulation auto-labelling : dérives détectées | Admin IT | Mensuel | Corriger la règle concernée dans Purview |
 | Auditer les accès Super User RMS : utilisation Break-glass | Direction + Admin IT | Chaque activation | Tracer dans le registre interne des incidents |
 | Revoir configuration après changement (nouveau site SP, agent Copilot, flux PP) | Admin IT + responsable concerné | Systématique | Vérifier impact sur auto-labelling et DLP (section 7.3) |
 
@@ -206,11 +206,11 @@ Processus de traitement d’une alerte IRM
 
 | **Étape** | **Action** | **Responsable** | **Trace requise** |
 | --- | --- | --- | --- |
-| **1** | Détection automatique — Purview génère une alerte anonymisée | Automatique (Purview) | Alerte enregistrée dans Activity Explorer |
-| **2** | Analyse anonymisée — Admin IT ou Responsable Sécurité évalue la gravité sans lever l’anonymat | Admin IT / Resp. Sécurité | Note d’analyse datée et signée |
-| **3** | Qualification — l’alerte est-elle un faux positif ? un incident mineur ? un incident grave ? | Admin IT + Direction | Décision documentée avec justification |
-| **4** | Décision de levée d’anonymat — uniquement si l’incident est qualifié grave et que la levée est **réellement nécessaire** pour l’investigation | Direction + Conseil juridique | Autorisation écrite signée Direction + date |
-| **5** | Levée d’anonymat dans Purview — Gestion des risques internes → Alertes → sélectionner l’alerte → action Afficher l’identité | Admin IRM (rôle Insider Risk Analyst) | Action loggée automatiquement dans Audit Log Purview |
+| **1** | Détection automatique : Purview génère une alerte anonymisée | Automatique (Purview) | Alerte enregistrée dans Activity Explorer |
+| **2** | Analyse anonymisée : Admin IT ou Responsable Sécurité évalue la gravité sans lever l’anonymat | Admin IT / Resp. Sécurité | Note d’analyse datée et signée |
+| **3** | Qualification : l’alerte est-elle un faux positif ? un incident mineur ? un incident grave ? | Admin IT + Direction | Décision documentée avec justification |
+| **4** | Décision de levée d’anonymat : uniquement si l’incident est qualifié grave et que la levée est **réellement nécessaire** pour l’investigation | Direction + Conseil juridique | Autorisation écrite signée Direction + date |
+| **5** | Levée d’anonymat dans Purview : Gestion des risques internes → Alertes → sélectionner l’alerte → action Afficher l’identité | Admin IRM (rôle Insider Risk Analyst) | Action loggée automatiquement dans Audit Log Purview |
 | **6** | Clôture : archivage du dossier complet (alerte, analyse, décision, levée d’anonymat si effectuée) | Admin IT + Direction | Dossier archivé pendant une durée définie et documentée (par exemple 5 ans), proportionnée à sa finalité, puis détruit (art. 6 al. 4 nLPD) |
 
 Principe fondamental
@@ -298,7 +298,7 @@ Les champs « Destinataires » et « Transfert hors Suisse » ci-dessous dépend
 
 Activité 1 : Gestion des ressources humaines et de la paie
 
-| **Champ** | **Valeur — Axonix SA** |
+| **Champ** | **Valeur : Axonix SA** |
 | --- | --- |
 | **Désignation de l’activité** | Gestion des ressources humaines et de la paie |
 | **Finalité du traitement (art. 6 nLPD)** | Administrer les contrats de travail, calculer et verser les salaires, gérer les absences, les congés et les évaluations. |
@@ -306,13 +306,13 @@ Activité 1 : Gestion des ressources humaines et de la paie
 | **Catégories de données traitées** | Numéro AVS, coordonnées personnelles, salaire, évaluations, données médicales (certificats médicaux, arrêts maladie), données bancaires (IBAN). |
 | **Destinataires des données** | Service RH interne, fiduciaire / comptabilité externe, caisse AVS, assureur accident LAA, assureur maladie collective, Microsoft (sous-traitant, infrastructure M365, localisation des données selon la vérification I.0). |
 | **Transfert hors Suisse (art. 16 nLPD)** | À compléter selon la vérification I.0. Si les données sont hébergées dans un État de l’UE ou de l’EEE, ces États figurent sur la liste des États assurant un niveau de protection adéquat (annexe 1 OPDo). Documenter également les accès possibles depuis d’autres pays et les garanties contractuelles Microsoft (DPA). |
-| **Durée de conservation** | À définir par catégorie de document, sans durée unique pour tout le dossier. Exemples : pièces comptables salariales 10 ans à compter de la fin de l’exercice (art. 958f CO), créances de salaire prescrites par 5 ans (art. 128 ch. 3 CO), droit au certificat de travail prescrit par 10 ans après la fin des rapports de travail (art. 127 CO), dossiers de candidature non retenue supprimés rapidement. POC : politique Retention-RH-10ans, comptée à partir de la dernière modification du fichier (voir les limites en section 8.1). |
+| **Durée de conservation** | À définir par catégorie de document, sans durée unique pour tout le dossier. Exemples : pièces comptables salariales 10 ans à compter de la fin de l’exercice (art. 958f CO), créances de salaire prescrites par 5 ans (art. 128 ch. 3 CO), droit au certificat de travail prescrit par 10 ans après la fin des rapports de travail (art. 127 CO), dossiers de candidature non retenue supprimés rapidement. POC : politique Retention-RH-10ans, comptée à partir de la dernière modification du fichier. Les fichiers supprimés avant l’échéance restent conservés dans la bibliothèque de conservation du site jusqu’au terme (voir les limites en section 8.1). |
 | **Base légale (art. 31 nLPD)** | Exécution du contrat de travail (art. 31 al. 2 let. a nLPD). Art. 328b CO : l’employeur ne peut traiter des données concernant le travailleur que dans la mesure où elles portent sur ses aptitudes à remplir son emploi ou sont nécessaires à l’exécution du contrat de travail. Pour les données de santé (données sensibles) : limiter le traitement à ce qui est nécessaire à la gestion du contrat, par exemple la durée d’une incapacité de travail figurant sur un certificat médical, sans conserver de détails médicaux superflus. |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 4 - RH-Confidentiel (chiffrement AES-256, Azure RMS). Accès restreint : GRP-RH-Purview + GRP-Direction-Purview. Politique DLP-Protection-nLPD-demo (blocage partage externe AVS/IBAN). Rétention automatique 10 ans. MFA administrateurs actif. |
 
 Activité 2 : Comptabilité et gestion financière
 
-| **Champ** | **Valeur — Axonix SA** |
+| **Champ** | **Valeur : Axonix SA** |
 | --- | --- |
 | **Désignation de l’activité** | Comptabilité générale, gestion des paiements fournisseurs et des encaissements clients. |
 | **Finalité du traitement (art. 6 nLPD)** | Tenir la comptabilité légale, établir les états financiers, gérer les flux de trésorerie et satisfaire aux obligations fiscales. |
@@ -326,7 +326,7 @@ Activité 2 : Comptabilité et gestion financière
 
 Activité 3 : Gestion de la relation client
 
-| **Champ** | **Valeur — Axonix SA** |
+| **Champ** | **Valeur : Axonix SA** |
 | --- | --- |
 | **Désignation de l’activité** | Gestion des contrats clients, suivi commercial et facturation. |
 | **Finalité du traitement (art. 6 nLPD)** | Exécuter les contrats de prestation, assurer le suivi commercial, établir la facturation et répondre aux demandes clients. |
@@ -334,13 +334,13 @@ Activité 3 : Gestion de la relation client
 | **Catégories de données traitées** | Nom, prénom, coordonnées professionnelles (email, téléphone, adresse), historique des commandes et contrats. |
 | **Destinataires des données** | Aucun destinataire externe sauf instruction explicite du client ou obligation légale. Microsoft Corporation (sous-traitant). |
 | **Transfert hors Suisse (art. 16 nLPD)** | À compléter selon la vérification I.0. Si les données sont hébergées dans un État de l’UE ou de l’EEE, ces États figurent sur la liste des États assurant un niveau de protection adéquat (annexe 1 OPDo). Documenter également les accès possibles depuis d’autres pays et les garanties contractuelles Microsoft (DPA). |
-| **Durée de conservation** | Durée du contrat + 5 ans après échéance (délai de prescription ordinaire, CO art. 127). |
+| **Durée de conservation** | Durée du contrat + 10 ans : prescription générale des créances (CO art. 127) et conservation des pièces comptables comme les factures (CO art. 958f). Certaines créances se prescrivent par 5 ans (CO art. 128 : redevances périodiques, travail des artisans, ventes au détail, soins médicaux, services d’avocats et de notaires) : adaptez si l’activité en relève. Ne conservez au-delà du contrat que ce qui est nécessaire à ces fins (art. 6 al. 4 nLPD). |
 | **Base légale (art. 31 nLPD)** | Exécution du contrat (art. 31 al. 2 let. a nLPD). |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 2 - Interne. Accès restreint par site SharePoint (permissions spécifiques). Politique DLP-Protection-nLPD-demo (surveillance partages externes). |
 
 Activité 4 : Surveillance IT et journaux d’audit (Purview / IRM)
 
-| **Champ** | **Valeur — Axonix SA** |
+| **Champ** | **Valeur : Axonix SA** |
 | --- | --- |
 | **Désignation de l’activité** | Surveillance des comportements à risque, traçabilité des accès aux données sensibles, constitution de preuves en cas d’incident nLPD. |
 | **Finalité du traitement (art. 6 nLPD)** | Détecter les tentatives d’exfiltration de données, surveiller les violations des politiques de sécurité et constituer des traces utiles à l’analyse des incidents et, le cas échéant, à l’évaluation de l’obligation d’annonce prévue à l’art. 24 nLPD. Lorsque les conditions de l’art. 4 OPDo sont réunies (traitement automatisé de données sensibles à grande échelle ou profilage à risque élevé, mesures préventives insuffisantes), la journalisation devient une obligation légale, avec une conservation des journaux d’au moins un an. Ces traitements ne sont pas utilisés à des fins de surveillance systématique du rendement ou du comportement individuel. |
@@ -354,17 +354,17 @@ Activité 4 : Surveillance IT et journaux d’audit (Purview / IRM)
 
 Activité 5 : Transmission externe de documents
 
-| **Champ** | **Valeur — Axonix SA** |
+| **Champ** | **Valeur : Axonix SA** |
 | --- | --- |
 | **Désignation de l’activité** | Transmission de documents à des partenaires externes autorisés via le site SharePoint Transmission externe. |
 | **Finalité du traitement (art. 6 nLPD)** | Permettre le partage ponctuel et contrôlé de documents avec des destinataires externes dans le cadre d’une relation contractuelle ou d’une obligation légale. |
-| **Personnes concernées** | Destinataires externes désignés au cas par cas par la Direction ou le service RH. |
+| **Personnes concernées** | Selon le document : employés, anciens employés, clients, contacts professionnels, fournisseurs ou autres personnes physiques dont les données figurent dans le fichier transmis. |
 | **Catégories de données traitées** | Variable selon le document transmis. Peut inclure des données personnelles (contrats, avenants, correspondances RH) ou des données financières. |
 | **Destinataires des données** | Partenaires externes identifiés au cas par cas (avocats, experts, clients, fournisseurs). Microsoft Corporation (sous-traitant). |
 | **Transfert hors Suisse (art. 16 nLPD)** | Possible selon l’identité du destinataire externe, à vérifier au cas par cas. Infrastructure Microsoft : selon la vérification I.0. |
-| **Durée de conservation** | 2 jours sur le site Transmission externe (suppression automatique, politique Retention-TransmissionExterne-2jours). Conservation originale maintenue dans le site source (RH : 10 ans, Finances : 10 ans) conformément à l’activité concernée. |
-| **Base légale (art. 31 nLPD)** | Exécution du contrat (art. 31 al. 2 let. a nLPD) lorsque la transmission découle d’une obligation contractuelle ou légale. Le consentement de la personne concernée (art. 31 al. 1 nLPD) n’est invoqué que subsidiairement, lorsqu’aucune base contractuelle ou légale ne couvre la transmission. |
-| **Mesures de sécurité (art. 8 nLPD)** | Étiquette 6 - Transmission-Externe (marquages visuels, impression autorisée pour le destinataire). Politique DLP-Protection-Transmission-Externe (traçabilité nLPD art. 6, alerte admin). Application manuelle de l’étiquette 6 par l’utilisateur, qui matérialise la décision de transmettre. Permissions propres à chaque bibliothèque. Suppression automatique 48 heures. |
+| **Durée de conservation** | Rétention configurée de 2 jours sur le site Transmission externe (politique Retention-TransmissionExterne-2jours, suppression différée par SharePoint, voir section 8.1). Original conservé dans le site source, selon la politique de rétention applicable et les durées documentaires retenues par l’organisation (activités 1 et 2). |
+| **Base légale (art. 31 nLPD)** | À déterminer selon les personnes concernées, la nature des données et la finalité de la transmission. L’art. 31 al. 2 let. a nLPD peut être invoqué lorsque les données concernent le cocontractant et que le traitement est directement lié à la conclusion ou à l’exécution du contrat. Une transmission imposée par la loi (fiduciaire pour les assurances sociales, autorité fiscale) repose sur l’obligation légale correspondante. Les autres situations s’examinent au regard du motif justificatif applicable (art. 31 al. 1 nLPD), le consentement n’étant invoqué que subsidiairement. |
+| **Mesures de sécurité (art. 8 nLPD)** | Étiquette 6 - Transmission-Externe (marquages visuels, impression autorisée pour le destinataire). Politique DLP-Protection-Transmission-Externe (détection des données sensibles partagées, alerte admin). Application manuelle de l’étiquette 6 par l’utilisateur, qui matérialise la décision de transmettre. Permissions propres à chaque bibliothèque. Rétention de 2 jours avec suppression différée, complétée par la suppression manuelle de la copie dès la réception confirmée. Journal d’audit Microsoft 365 pour la traçabilité de tous les partages. |
 
 **Note pratique : **ce registre doit être tenu à jour à chaque modification significative des traitements (nouvel outil, nouveau prestataire, nouvelle catégorie de données). Il n’existe pas de formulaire officiel PFPDT, ce modèle est conforme aux exigences minimales de l’art. 12 nLPD. Conservez-le dans un emplacement contrôlé (ex. : site SharePoint Direction, accès restreint à Direction + DPO).
 
@@ -396,4 +396,4 @@ via la plateforme Kofi :
 
 ---
 
-[← Partie 11 — Gouvernance des accès SharePoint](12-sharepoint.html) | [Retour à l'index →](../)
+[← Partie 11 : Gouvernance des accès SharePoint](12-sharepoint.html) | [Retour à l'index →](../)
