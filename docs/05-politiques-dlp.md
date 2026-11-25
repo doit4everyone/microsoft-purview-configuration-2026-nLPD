@@ -63,7 +63,7 @@ La protection Copilot nécessite une **politique DLP distincte** car c’est le 
 | ✅ Comptes OneDrive | Tous les comptes |
 | ✅ Messages de conversation et de canal Teams | Tous les utilisateurs |
 
-⚠️ **Appareils, Instances, Référentiels locaux : **ces emplacements apparaissent dans la liste mais ne doivent pas être activés pour ce POC. Appareils nécessite Endpoint DLP + onboarding Intune (section 9). Instances nécessite une licence supplémentaire. Référentiels locaux nécessite un scanner Purview on-premise.
+⚠️ **Appareils, Instances, Référentiels locaux :** ces emplacements apparaissent dans la liste mais ne doivent pas être activés pour ce POC. Appareils nécessite Endpoint DLP + onboarding Intune (section 9). Instances nécessite une licence supplémentaire. Référentiels locaux nécessite un scanner Purview on-premise.
 
 7. Cliquez sur **Suivant.**
 
@@ -106,7 +106,7 @@ La nLPD n’interdit pas la communication de données personnelles à des tiers 
 
 Le blocage reste la règle : le remplacement avec justification est une exception volontaire, enregistrée avec sa justification. Dans ce POC, il est ouvert à tous les utilisateurs, et cela vaut pour les quatre emplacements de la politique (Exchange, SharePoint, OneDrive, Teams). Ce choix garde les utilisateurs dans l’environnement Microsoft 365 surveillé plutôt que de les pousser vers des services personnels. Pour les fichiers du site RH, les permissions SharePoint limitent en pratique le remplacement aux membres RH et Direction, seuls à pouvoir partager ces fichiers. Pour Exchange, OneDrive et Teams, en revanche, tout utilisateur bloqué peut l’utiliser. En production : examinez régulièrement les justifications dans l’Explorateur d’activités ; orientez les partages externes de données sensibles vers le site Transmission externe (section 4.3) ; et, si votre licence le permet, réservez le remplacement à un **groupe de sécurité DLP-Exceptions** (Direction + RH uniquement). Lors de la rédaction, la condition par groupe n’était pas disponible avec Business Premium : vérifiez sa disponibilité dans votre tenant. Voir Annexe E pour le détail.
 
-> 📌 **RÈGLE D’USAGE ENTRE LES DEUX CANAUX DE SORTIE : **le guide prévoit deux chemins pour faire sortir une donnée sensible, à ne pas confondre. **Le site Transmission externe** (section 4.3) est le canal normal pour tout envoi prévu de documents sensibles à un partenaire (fiduciaire, réviseur, avocat, client) : copie du document, étiquette 6 appliquée manuellement, lien nominatif, rétention de 2 jours. **Le remplacement avec justification** de la règle AVS est réservé aux cas ponctuels et imprévus, par exemple un e-mail urgent contenant un numéro AVS. Chaque justification est enregistrée et doit être examinée ensuite par l’administrateur (Explorateur d’activités, filtre Remplacement de la stratégie DLP par l’utilisateur). Un recours répété au remplacement pour le même type d’échange signale un besoin qui doit passer par le site Transmission externe. Inscrivez cette règle dans la procédure interne ou la charte informatique.
+> 📌 **RÈGLE D’USAGE ENTRE LES DEUX CANAUX DE SORTIE :** le guide prévoit deux chemins pour faire sortir une donnée sensible, à ne pas confondre. **Le site Transmission externe** (section 4.3) est le canal normal pour tout envoi prévu de documents sensibles à un partenaire (fiduciaire, réviseur, avocat, client) : copie du document, étiquette 6 appliquée manuellement, lien nominatif, rétention de 2 jours. **Le remplacement avec justification** de la règle AVS est réservé aux cas ponctuels et imprévus, par exemple un e-mail urgent contenant un numéro AVS. Chaque justification est enregistrée et doit être examinée ensuite par l’administrateur (Explorateur d’activités, filtre Remplacement de la stratégie DLP par l’utilisateur). Un recours répété au remplacement pour le même type d’échange signale un besoin qui doit passer par le site Transmission externe. Inscrivez cette règle dans la procédure interne ou la charte informatique.
 
 Cliquez sur **Enregistrer.**
 
@@ -128,7 +128,7 @@ Cliquez sur **Enregistrer.**
 
 12. Page 8 : Vérifiez et cliquez sur **Soumettre.**
 
-> ⚠️ **ATTENTION : **Testez toujours en simulation 1 semaine avant d'activer. Regardez les résultats dans Activity Explorer, si trop de faux positifs, augmentez le niveau de confiance dans les règles.
+> ⚠️ **ATTENTION :** Testez toujours en simulation 1 semaine avant d'activer. Regardez les résultats dans Activity Explorer, si trop de faux positifs, augmentez le niveau de confiance dans les règles.
 
 ## 4.3 DLP-Protection-Transmission-Externe
 
@@ -142,7 +142,7 @@ Politique dédiée au site Transmission externe, séparée de la politique princ
 
 4. Page Emplacements → activez **uniquement** l’emplacement suivant :
 
-**Sites SharePoint : **Modifier → Inclure → saisir **https://demo.sharepoint.com/sites/Transmissionexterne** → + → Terminé. **Ce site uniquement** ne pas activer Exchange ni OneDrive (déjà couverts par la politique principale DLP-Protection-nLPD-demo, doublon évité). → **Suivant.**
+**Sites SharePoint :** Modifier → Inclure → saisir **https://demo.sharepoint.com/sites/Transmissionexterne** → + → Terminé. **Ce site uniquement** ne pas activer Exchange ni OneDrive (déjà couverts par la politique principale DLP-Protection-nLPD-demo, doublon évité). → **Suivant.**
 
 6. Page Règles de DLP avancées → créez les 2 règles suivantes une par une en cliquant **+ Créer une règle** après chaque règle enregistrée.
 
@@ -159,7 +159,7 @@ Règle 1 : Surveiller les partages externes (traçabilité nLPD)
 
 *Objectif : détecter et signaler les partages externes de contenus sensibles reconnus par les SIT. Un document sans correspondance SIT peut être partagé sans alerte DLP : la traçabilité de tous les partages, y compris ceux-là, repose sur le journal d’audit Microsoft 365 (activités de partage). Une alerte DLP ne démontre pas à elle seule la conformité juridique de la transmission. L’étiquette 6 appliquée manuellement matérialise la décision de transmettre. Cliquez sur **Enregistrer**.*
 
-**⚠️ Si l’étiquette 6 n’est pas appliquée : **la condition « étiquette n’est pas appliquée » n’existe pas dans les politiques DLP SharePoint. Les garde-fous sont : (1) les permissions SharePoint (seuls les membres des groupes RH, Finances et Direction peuvent déposer, chacun dans sa bibliothèque) ; (2) la détection des SIT par cette politique, qui alerte l’administrateur en cas de partage externe de données sensibles ; (3) la procédure interne qui impose l’application manuelle de l’étiquette 6 avant tout partage. Un document partagé sans étiquette part sans marquage visuel.
+**⚠️ Si l’étiquette 6 n’est pas appliquée :** la condition « étiquette n’est pas appliquée » n’existe pas dans les politiques DLP SharePoint. Les garde-fous sont : (1) les permissions SharePoint (seuls les membres des groupes RH, Finances et Direction peuvent déposer, chacun dans sa bibliothèque) ; (2) la détection des SIT par cette politique, qui alerte l’administrateur en cas de partage externe de données sensibles ; (3) la procédure interne qui impose l’application manuelle de l’étiquette 6 avant tout partage. Un document partagé sans étiquette part sans marquage visuel.
 
 Règle 2 : Avertir pour données sensibles en interne
 
@@ -181,13 +181,13 @@ Cliquez sur Enregistrer.
 
 La politique **DLP-Protection-Transmission-Externe** contient **2 règles** couvrant l'ensemble des vecteurs de risque du site : surveillance traçabilité partages externes (Règle 1), avertissement interne données sensibles (Règle 2).
 
-> ⚠️ **ATTENTION : **Testez toujours en simulation 1 semaine avant d'activer. Regardez les résultats dans Activity Explorer. Si trop de faux positifs, augmentez le niveau de confiance dans les règles. Si après 1 semaine le résultat est correct activez la stratégie.
+> ⚠️ **ATTENTION :** Testez toujours en simulation 1 semaine avant d'activer. Regardez les résultats dans Activity Explorer. Si trop de faux positifs, augmentez le niveau de confiance dans les règles. Si après 1 semaine le résultat est correct activez la stratégie.
 
 ## 4.4 DLP-Protection-Copilot
 
 Politique distincte : Protéger les documents étiquetés dans Copilot
 
-**ℹ️ INFO : **La protection Copilot via DLP ne peut pas être ajoutée comme simple règle à la politique DLP-Protection-nLPD-demo. L’emplacement **Copilot (expériences Microsoft Copilot)** doit être configuré dans une **politique DLP dédiée**. C’est uniquement dans cette politique qu’apparaissent la condition *Étiquettes de sensibilité* et l’action *Restreindre l’accès dans Copilot*. 
+**ℹ️ INFO :** La protection Copilot via DLP ne peut pas être ajoutée comme simple règle à la politique DLP-Protection-nLPD-demo. L’emplacement **Copilot (expériences Microsoft Copilot)** doit être configuré dans une **politique DLP dédiée**. C’est uniquement dans cette politique qu’apparaissent la condition *Étiquettes de sensibilité* et l’action *Restreindre l’accès dans Copilot*. 
 
 Créez une nouvelle politique distincte en suivant ces étapes :
 

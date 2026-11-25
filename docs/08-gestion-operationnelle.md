@@ -82,7 +82,7 @@ Le chiffrement Purview ne nécessite pas que vous transmettiez un mot de passe a
 
 Dans un tenant Microsoft 365 actif depuis plusieurs années et sans gouvernance initiale des données, il est normal qu’une dette de labellisation existe : documents historiques, fichiers métier, contenus transférés ou hérités. L’objectif de cette section est de décrire la méthode pour identifier et piloter cette dette, en tenant compte des limitations connues de Purview.
 
-**Rappel de la limitation Purview : **l’Explorateur de données (Content Explorer) n’offre pas de filtre 
+**Rappel de la limitation Purview :** l’Explorateur de données (Content Explorer) n’offre pas de filtre 
 « étiquette de sensibilité = aucune ». L’identification des fichiers non étiquetés repose donc sur une approche combinée, décrite ci-dessous en 4 méthodes.
 
 Méthode 1 : Analyse des contenus déjà étiquetés (vue positive)

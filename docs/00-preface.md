@@ -38,27 +38,27 @@ Pour toute organisation souhaitant déployer Microsoft Purview, vous trouverez i
 
 ## Chronologie de déploiement
 
-**Semaine 1 : **Socle tenant : groupes de rôles, licences Purview Suite, audit, SITs personnalisés (AVS-Suisse, Medical-RH-Suisse).
+**Semaine 1 :** Socle tenant : groupes de rôles, licences Purview Suite, audit, SITs personnalisés (AVS-Suisse, Medical-RH-Suisse).
 
-**Semaine 2 : **Étiquettes de sensibilité (7 étiquettes, publication) - Auto-labellisation (simulation + activation) - Politiques de rétention (5 politiques).
+**Semaine 2 :** Étiquettes de sensibilité (7 étiquettes, publication) - Auto-labellisation (simulation + activation) - Politiques de rétention (5 politiques).
 
-**Semaine 3 : **Politiques DLP (Exchange, SharePoint, Copilot, Transmission externe) - Endpoint DLP + Edge for Business.
+**Semaine 3 :** Politiques DLP (Exchange, SharePoint, Copilot, Transmission externe) - Endpoint DLP + Edge for Business.
 
-**Semaine 4 : **DSPM for AI - Insider Risk Management (3 stratégies) - eDiscovery Premium - Communication Compliance - Étiquette 6 « Transmission-Externe ».
+**Semaine 4 :** DSPM for AI - Insider Risk Management (3 stratégies) - eDiscovery Premium - Communication Compliance - Étiquette 6 « Transmission-Externe ».
 
 ## Positionnement de Microsoft Purview
 
 Microsoft Purview est un outil de gouvernance et de protection des données, pas un outil de sécurité périmétrique. Il est fondamental de comprendre ce qu’il fait et ce qu’il ne remplace pas. Purview suppose des fondations saines.
 
-**Antivirus / EDR : **Purview ne détecte pas les logiciels malveillants ni les menaces sur les postes. Microsoft Defender ou un équivalent reste un prérequis indépendant.
+**Antivirus / EDR :** Purview ne détecte pas les logiciels malveillants ni les menaces sur les postes. Microsoft Defender ou un équivalent reste un prérequis indépendant.
 
-**SIEM : **La corrélation des événements de sécurité et la détection des attaques relèvent d’une couche distincte (Microsoft Sentinel ou équivalent).
+**SIEM :** La corrélation des événements de sécurité et la détection des attaques relèvent d’une couche distincte (Microsoft Sentinel ou équivalent).
 
-**Structure de permissions : **Si un utilisateur a accès à un fichier qu’il ne devrait pas voir, Purview ne corrige pas cette erreur de gouvernance. Il peut alerter, mais il ne bloque pas un accès considéré comme légitime selon les permissions SharePoint en place. Une structure de droits cohérente sur les sites, bibliothèques et dossiers est un préalable indispensable.
+**Structure de permissions :** Si un utilisateur a accès à un fichier qu’il ne devrait pas voir, Purview ne corrige pas cette erreur de gouvernance. Il peut alerter, mais il ne bloque pas un accès considéré comme légitime selon les permissions SharePoint en place. Une structure de droits cohérente sur les sites, bibliothèques et dossiers est un préalable indispensable.
 
-**Pare-feu et proxy réseau : **Le contrôle du trafic sortant vers des sites non autorisés relève d’une couche réseau dédiée. Purview complète cette protection au niveau des données, il ne la remplace pas.
+**Pare-feu et proxy réseau :** Le contrôle du trafic sortant vers des sites non autorisés relève d’une couche réseau dédiée. Purview complète cette protection au niveau des données, il ne la remplace pas.
 
-**Sauvegarde et continuité : **La rétention Purview n’est pas une solution de backup. Elle garantit la conservation légale des données, pas leur restauration en cas de sinistre.
+**Sauvegarde et continuité :** La rétention Purview n’est pas une solution de backup. Elle garantit la conservation légale des données, pas leur restauration en cas de sinistre.
 
 Ce que Purview apporte c’est une couche de protection centrée sur la donnée elle-même. Les étiquettes et les contrôles voyagent avec le document, quel que soit l’endroit où il se trouve. C’est une protection complémentaire, pas de substitution. Déployé sur des fondations fragiles, Purview donnera une fausse impression de sécurité. Déployé correctement, il constitue une défense en profondeur efficace et démontrable face au PFPDT.
 

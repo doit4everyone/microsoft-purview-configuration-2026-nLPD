@@ -42,7 +42,7 @@ Lisez cette section entièrement avant de toucher quoi que ce soit dans Purview.
 
 4. **Ce que vous devez voir** Le tableau de bord Purview avec le menu à gauche. Si vous voyez une page blanche ou une erreur d'accès → la section 0.2 explique comment résoudre.
 
-> ⚠️ **ATTENTION : **Si vous voyez 'Vous n'avez pas accès', ne paniquez pas. C'est un problème de rôles. Allez directement à la section 0.3 qui explique comment s'attribuer les bons rôles.
+> ⚠️ **ATTENTION :** Si vous voyez 'Vous n'avez pas accès', ne paniquez pas. C'est un problème de rôles. Allez directement à la section 0.3 qui explique comment s'attribuer les bons rôles.
 
 ## 0.2 Comment ouvrir PowerShell correctement
 
@@ -54,7 +54,7 @@ Plusieurs étapes de cette procédure nécessitent PowerShell. Voici comment l'o
 
 3. **Vérifier la stratégie d'exécution (si nécessaire)** Tapez : Get-ExecutionPolicy -List et appuyez sur Entrée. Sur un poste Windows client, la valeur par défaut est Restricted : elle empêche l'exécution des scripts, y compris le chargement des modules PowerShell utilisés dans ce guide. Si la valeur effective est Restricted, tapez : Set-ExecutionPolicy RemoteSigned -Scope CurrentUser puis O et Entrée pour confirmer. Si la valeur est déjà RemoteSigned ou plus permissive, ne changez rien.
 
-> ℹ️ **INFO : **Le périmètre CurrentUser ne concerne que votre compte et ne nécessite pas d'élévation administrateur (seul le périmètre LocalMachine l'exige). Si un message indique que le paramètre est remplacé par une stratégie définie à un niveau plus spécifique, une stratégie de groupe (lignes MachinePolicy ou UserPolicy dans Get-ExecutionPolicy -List) impose la valeur : adressez-vous à l'administrateur du poste plutôt que de chercher à la contourner. RemoteSigned exige que les scripts téléchargés depuis Internet soient signés : ne l'assouplissez pas davantage.
+> ℹ️ **INFO :** Le périmètre CurrentUser ne concerne que votre compte et ne nécessite pas d'élévation administrateur (seul le périmètre LocalMachine l'exige). Si un message indique que le paramètre est remplacé par une stratégie définie à un niveau plus spécifique, une stratégie de groupe (lignes MachinePolicy ou UserPolicy dans Get-ExecutionPolicy -List) impose la valeur : adressez-vous à l'administrateur du poste plutôt que de chercher à la contourner. RemoteSigned exige que les scripts téléchargés depuis Internet soient signés : ne l'assouplissez pas davantage.
 >
 > Le mode administrateur de l'étape 1 reste utile pour les commandes Install-Module de ce guide qui n'indiquent pas -Scope CurrentUser : sous Windows PowerShell 5.1, elles installent le module pour tous les utilisateurs du poste.
 
@@ -92,7 +92,7 @@ Rôles Entra ID : via le portail Azure
 | Administrateur de mise en conformité | Accéder aux rapports de conformité et politiques Purview |
 | Administrateur d'IA | Voir les données Copilot et agents IA dans DSPM |
 
-> ⚠️ **ATTENTION : **Après avoir ajouté un rôle Entra ID, déconnectez-vous du portail et reconnectez-vous. Les rôles ne prennent pas effet immédiatement dans la session en cours.
+> ⚠️ **ATTENTION :** Après avoir ajouté un rôle Entra ID, déconnectez-vous du portail et reconnectez-vous. Les rôles ne prennent pas effet immédiatement dans la session en cours.
 
 Rôle Exchange Online via le Centre d'administration Exchange
 
@@ -106,7 +106,7 @@ Rôle Exchange Online via le Centre d'administration Exchange
 
 5. Attendez 5 à 10 minutes que le rôle se propage avant de continuer.
 
-> 🚨 **IMPORTANT : **L'activation de l'audit via PowerShell exige le rôle Exchange 'Audit Logs'. Selon la documentation Microsoft, ce rôle est attribué par défaut aux groupes Compliance Management et Organization Management. Compliance Management suffit pour ce guide et respecte le principe du moindre privilège : Organization Management donne un accès administratif très large à Exchange Online et ne doit pas être attribué à un compte d'exploitation pour ce seul besoin. Sans le rôle Audit Logs, la commande d'activation de l'audit peut s'exécuter sans erreur apparente sans produire d'effet.
+> 🚨 **IMPORTANT :** L'activation de l'audit via PowerShell exige le rôle Exchange 'Audit Logs'. Selon la documentation Microsoft, ce rôle est attribué par défaut aux groupes Compliance Management et Organization Management. Compliance Management suffit pour ce guide et respecte le principe du moindre privilège : Organization Management donne un accès administratif très large à Exchange Online et ne doit pas être attribué à un compte d'exploitation pour ce seul besoin. Sans le rôle Audit Logs, la commande d'activation de l'audit peut s'exécuter sans erreur apparente sans produire d'effet.
 
 Rôles Purview RBAC via le portail Purview
 
@@ -122,11 +122,11 @@ Rôles Purview RBAC via le portail Purview
 | Content Explorer Content Viewer | Voir le contenu des fichiers dans Content Explorer |
 | Content Explorer List Viewer | Voir la liste des fichiers dans Content Explorer |
 
-> ⚠️ **ATTENTION : **Si vous ne trouvez pas ‘Data Security AI Admins’ dans la liste, c’est que Purview Suite n’est pas encore activé. Vérifiez dans admin.microsoft.com → Licences que Microsoft Purview Suite apparaît bien dans votre tenant.
+> ⚠️ **ATTENTION :** Si vous ne trouvez pas ‘Data Security AI Admins’ dans la liste, c’est que Purview Suite n’est pas encore activé. Vérifiez dans admin.microsoft.com → Licences que Microsoft Purview Suite apparaît bien dans votre tenant.
 
 ## 0.4 Vérifier que Purview Suite est bien activé
 
-> ℹ️ **NOM COMMERCIAL : **dans ce guide, « Purview Suite » désigne l’offre **Microsoft Purview Suite for Microsoft 365 Business Premium**. Cette extension exige un abonnement Microsoft 365 Business Premium et est limitée à 300 licences par client. Elle ne doit pas être confondue avec l’extension Purview destinée aux environnements Microsoft 365 E3. Chaque utilisateur qui bénéficie des fonctionnalités Purview (administrateurs Purview et utilisateurs couverts par les politiques) doit disposer de cette licence.
+> ℹ️ **NOM COMMERCIAL :** dans ce guide, « Purview Suite » désigne l’offre **Microsoft Purview Suite for Microsoft 365 Business Premium**. Cette extension exige un abonnement Microsoft 365 Business Premium et est limitée à 300 licences par client. Elle ne doit pas être confondue avec l’extension Purview destinée aux environnements Microsoft 365 E3. Chaque utilisateur qui bénéficie des fonctionnalités Purview (administrateurs Purview et utilisateurs couverts par les politiques) doit disposer de cette licence.
 
 Avant de continuer, confirmez que la licence est active sur votre compte :
 
@@ -140,15 +140,15 @@ Avant de continuer, confirmez que la licence est active sur votre compte :
 
 5. Si ce n'est pas coché → cochez-le et cliquez sur Enregistrer les modifications.
 
-> ℹ️ **INFO : **La licence Purview Suite doit être attribuée à l’utilisateur qui va utiliser Purview, pas seulement achetée sur le tenant. Si vous ne la voyez pas dans la liste, elle n’a peut-être pas encore été achetée. Vérifiez dans Facturation → Vos produits.
+> ℹ️ **INFO :** La licence Purview Suite doit être attribuée à l’utilisateur qui va utiliser Purview, pas seulement achetée sur le tenant. Si vous ne la voyez pas dans la liste, elle n’a peut-être pas encore été achetée. Vérifiez dans Facturation → Vos produits.
 
-> 💡 **NOTE DE MÉTHODOLOGIE - PREUVE DE CONCEPT (POC). **Ce document est conçu comme une preuve de concept pour un environnement de test. L’ajout explicite du compte Super-Admin (admin@demo.ch) aux autorisations de chiffrement (étiquettes 3, 4 et 5) est un choix pragmatique pour trois raisons : (1) Azure RMS n’accordant aucun droit implicite à l’administrateur, son ajout explicite garantit la visibilité technique lors des tests de validation du chiffrement, (2) la centralisation des tests sur un compte unique évite les changements de session constants lors des tests Copilot et DLP, (3) cela prévient tout verrouillage définitif des données de test en cas d’erreur de manipulation. En production, l’accès administrateur aux documents chiffrés doit être géré via le rôle "Super User" de RMS conformément au principe de séparation des tâches. ⚠️ IMPORTANT : Voir Annexe E (Différences POC VS Production), avant tout déploiement en environnement réel, supprimez le compte admin des autorisations de chiffrement et gérez l’accès via la procédure Break-glass (section 2.6) uniquement.
+> 💡 **NOTE DE MÉTHODOLOGIE - PREUVE DE CONCEPT (POC).** Ce document est conçu comme une preuve de concept pour un environnement de test. L’ajout explicite du compte Super-Admin (admin@demo.ch) aux autorisations de chiffrement (étiquettes 3, 4 et 5) est un choix pragmatique pour trois raisons : (1) Azure RMS n’accordant aucun droit implicite à l’administrateur, son ajout explicite garantit la visibilité technique lors des tests de validation du chiffrement, (2) la centralisation des tests sur un compte unique évite les changements de session constants lors des tests Copilot et DLP, (3) cela prévient tout verrouillage définitif des données de test en cas d’erreur de manipulation. En production, l’accès administrateur aux documents chiffrés doit être géré via le rôle "Super User" de RMS conformément au principe de séparation des tâches. ⚠️ IMPORTANT : Voir Annexe E (Différences POC VS Production), avant tout déploiement en environnement réel, supprimez le compte admin des autorisations de chiffrement et gérez l’accès via la procédure Break-glass (section 2.6) uniquement.
 
 ## 0.5 Activer les étiquettes sur les conteneurs (obligatoire)
 
 Par défaut, Microsoft 365 n’active pas la fonctionnalité permettant d’appliquer des étiquettes de sensibilité aux conteneurs (sites SharePoint, équipes Teams, groupes Microsoft 365). Cette activation est globale au tenant et doit être effectuée une seule fois via PowerShell Microsoft Graph, avant toute création d’étiquette de type Groupes et sites.
 
-> 🚨 **PRÉREQUIS GLOBAL : **Sans cette activation, les étiquettes de type Groupes et sites n’apparaissent pas dans l’interface lors de la création d’un site SharePoint ou d’une équipe Teams. Cette activation est globale au tenant et s’effectue normalement une seule fois. Elle est techniquement réversible (EnableMIPLabels remis à False), mais Microsoft précise qu’une désactivation a des conséquences : les paramètres des étiquettes ne sont plus appliqués aux sites et groupes, les étiquettes ne s’y affichent plus, et les conteneurs reviennent à l’ancienne propriété Classification d’Entra ID. Ne désactivez pas cette fonction une fois les étiquettes de conteneurs déployées.
+> 🚨 **PRÉREQUIS GLOBAL :** Sans cette activation, les étiquettes de type Groupes et sites n’apparaissent pas dans l’interface lors de la création d’un site SharePoint ou d’une équipe Teams. Cette activation est globale au tenant et s’effectue normalement une seule fois. Elle est techniquement réversible (EnableMIPLabels remis à False), mais Microsoft précise qu’une désactivation a des conséquences : les paramètres des étiquettes ne sont plus appliqués aux sites et groupes, les étiquettes ne s’y affichent plus, et les conteneurs reviennent à l’ancienne propriété Classification d’Entra ID. Ne désactivez pas cette fonction une fois les étiquettes de conteneurs déployées.
 
 Il faut distinguer deux objets : le **modèle** Group.Unified, fourni par Microsoft et toujours présent, et le **paramètre** Group.Unified, créé dans votre tenant à partir de ce modèle. Le paramètre peut ne pas exister, ou exister avec EnableMIPLabels à False. Le script ci-dessous traite les deux cas.
 
@@ -162,7 +162,7 @@ Install-Module Microsoft.Graph.Beta.Identity.DirectoryManagement -Scope CurrentU
 Connect-MgGraph -Scopes "Directory.ReadWrite.All"
 ```
 
-> ⚠️ **SI LA FENÊTRE POWERSHELL SE FERME : **sous Windows PowerShell 5.1, Connect-MgGraph peut fermer brutalement la fenêtre au moment de l’authentification. Ce comportement a été constaté sur un poste où plusieurs versions des modules Microsoft Graph coexistaient (vérification : Get-Module -ListAvailable Microsoft.Graph* | Select-Object Name, Version). Rouvrez PowerShell et connectez-vous par code d’appareil, méthode validée sur le terrain : Connect-MgGraph -Scopes "Directory.ReadWrite.All" -UseDeviceCode. PowerShell affiche un code à saisir sur https://microsoft.com/devicelogin.
+> ⚠️ **SI LA FENÊTRE POWERSHELL SE FERME :** sous Windows PowerShell 5.1, Connect-MgGraph peut fermer brutalement la fenêtre au moment de l’authentification. Ce comportement a été constaté sur un poste où plusieurs versions des modules Microsoft Graph coexistaient (vérification : Get-Module -ListAvailable Microsoft.Graph* | Select-Object Name, Version). Rouvrez PowerShell et connectez-vous par code d’appareil, méthode validée sur le terrain : Connect-MgGraph -Scopes "Directory.ReadWrite.All" -UseDeviceCode. PowerShell affiche un code à saisir sur https://microsoft.com/devicelogin.
 >
 > Le mélange de versions peut aussi produire l’erreur « Impossible de charger le fichier ou l’assembly 'Microsoft.Graph.Authentication, Version=…' » : une commande issue d’un module installé dans une version plus ancienne exige une autre version du module Authentication que celle déjà chargée. Les modules Microsoft.Graph.Authentication et Microsoft.Graph.Beta.Identity.DirectoryManagement utilisés dans cette section doivent avoir la même version.
 >

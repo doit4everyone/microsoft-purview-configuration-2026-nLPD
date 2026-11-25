@@ -40,9 +40,9 @@ Périmètre de DSPM en Business Premium + Purview Suite
 
 DSPM est avant tout un **tableau de bord de reporting et de surveillance** dans le cadre de la licence Business Premium + Purview Suite. La majorité des fonctionnalités d’action visibles dans l’interface nécessitent des licences supplémentaires non incluses dans ce périmètre. Connaître ce périmètre évite de se perdre dans une interface conçue pour montrer ce qui manque.
 
-**Inclus et opérationnel dans ce guide : **Rapports (Exfiltration, DLP, Étiquettes, IA), Observabilité IA, Activity Explorer Copilot, Métriques de posture, Data Risk Assessments au niveau site.
+**Inclus et opérationnel dans ce guide :** Rapports (Exfiltration, DLP, Étiquettes, IA), Observabilité IA, Activity Explorer Copilot, Métriques de posture, Data Risk Assessments au niveau site.
 
-**Nécessite des licences supplémentaires : **Politiques one-click (extension navigateur + Endpoint DLP requis), Analyse item-level des Data Risk Assessments (Fabric / Azure AKS), Capture des interactions Copilot (M365 Copilot par utilisateur). Ne pas chercher à activer ces fonctionnalités ici, elles sont documentées dans l’Annexe E.
+**Nécessite des licences supplémentaires :** Politiques one-click (extension navigateur + Endpoint DLP requis), Analyse item-level des Data Risk Assessments (Fabric / Azure AKS), Capture des interactions Copilot (M365 Copilot par utilisateur). Ne pas chercher à activer ces fonctionnalités ici, elles sont documentées dans l’Annexe E.
 
 Accès et navigation :
 
@@ -71,24 +71,24 @@ Tâches de configuration : État pour Business Premium + Purview Suite
 
 Purview → DSPM → Tâches et actions → Tâches de configuration. Après configuration complète de ce guide : 2 terminées, 8 non démarrées.
 
-**Terminées (incluses dans ce guide) : **Activer Microsoft Purview Audit (section 1.5) ; Protéger vos données avec étiquettes de sensibilité (Partie 2).
+**Terminées (incluses dans ce guide) :** Activer Microsoft Purview Audit (section 1.5) ; Protéger vos données avec étiquettes de sensibilité (Partie 2).
 
-**Nécessitent Azure Pay-as-you-go (hors scope Business Premium + Purview Suite) : **Configurer la facturation à l’utilisation. Interactions sécurisées dans les expériences Microsoft Copilot. Étendre les insights données sensibles apps IA (détection réseau via SASE/SSE). Sécuriser les interactions apps IA d’entreprise.
+**Nécessitent Azure Pay-as-you-go (hors scope Business Premium + Purview Suite) :** Configurer la facturation à l’utilisation. Interactions sécurisées dans les expériences Microsoft Copilot. Étendre les insights données sensibles apps IA (détection réseau via SASE/SSE). Sécuriser les interactions apps IA d’entreprise.
 
-**Optionnel : nécessite extension navigateur Purview : **Étendre vos insights de découverte de données. Configure 3 stratégies Edge for Business (détection invites IA, visites sites IA, contenus collés sur sites IA), mode audit uniquement, zéro impact utilisateur.
+**Optionnel : nécessite extension navigateur Purview :** Étendre vos insights de découverte de données. Configure 3 stratégies Edge for Business (détection invites IA, visites sites IA, contenus collés sur sites IA), mode audit uniquement, zéro impact utilisateur.
 
-**Disponibles mais non prioritaires PME : **Intégrer des appareils à Microsoft Purview (partie 9).
+**Disponibles mais non prioritaires PME :** Intégrer des appareils à Microsoft Purview (partie 9).
 Intégrez les solutions partenaires (Varonis, Cyera, BigID, hors scope PME).
 
 Extension navigateur Microsoft Purview : Valeur ajoutée et prérequis
 
 Deux mécanismes distincts sont à ne pas confondre. **DSPM for AI** donne de la visibilité sur l’usage des applications d’IA (invites, sites visités, données partagées). **Endpoint DLP** (partie 9) contrôle et bloque les activités sur les postes intégrés, y compris dans le navigateur. Pour le navigateur, Edge est pris en charge nativement sur un poste intégré, sans extension (validé sur le terrain, section 9.2) ; Chrome et Firefox nécessitent l’extension Microsoft Purview. Sans poste intégré, ou avec Chrome ou Firefox sans extension, un utilisateur peut contourner le dispositif en ouvrant Gmail ou WeTransfer et en y attachant directement un fichier RH depuis son poste.
 
-**Ce que l’extension détecte et contrôle : **upload d’un fichier sensible vers un site externe (WeTransfer, Dropbox perso, Gmail web), copier-coller de contenu sensible dans un formulaire web ou une IA grand public (ChatGPT, Gemini), impression vers PDF depuis le navigateur, visite de sites IA non autorisés avec des données sensibles en mémoire.
+**Ce que l’extension détecte et contrôle :** upload d’un fichier sensible vers un site externe (WeTransfer, Dropbox perso, Gmail web), copier-coller de contenu sensible dans un formulaire web ou une IA grand public (ChatGPT, Gemini), impression vers PDF depuis le navigateur, visite de sites IA non autorisés avec des données sensibles en mémoire.
 
-**⚠️ Prérequis obligatoires avant installation : **(1) Endpoint DLP activé sur le poste (On le fera en section 9.1), sans Endpoint DLP, l’extension ne fait rien. (2) Déploiement via Intune ou GPO, l’installation manuelle poste par poste n’est pas viable en entreprise. (3) Phase audit obligatoire, activer en mode audit 2 à 4 semaines avant tout blocage pour identifier les usages légitimes à exclure (ex. : envoi de fichiers publics vers des partenaires via WeTransfer).
+**⚠️ Prérequis obligatoires avant installation :** (1) Endpoint DLP activé sur le poste (On le fera en section 9.1), sans Endpoint DLP, l’extension ne fait rien. (2) Déploiement via Intune ou GPO, l’installation manuelle poste par poste n’est pas viable en entreprise. (3) Phase audit obligatoire, activer en mode audit 2 à 4 semaines avant tout blocage pour identifier les usages légitimes à exclure (ex. : envoi de fichiers publics vers des partenaires via WeTransfer).
 
-**Positionnement dans la roadmap PME : **étape de maturité avancée, à déployer après consolidation de la couche de base (classification + DLP Exchange/SharePoint + protection Copilot). Comptez 2 à 4 semaines de projet dédié incluant la configuration Intune, le déploiement de l’extension et la phase d’audit.
+**Positionnement dans la roadmap PME :** étape de maturité avancée, à déployer après consolidation de la couche de base (classification + DLP Exchange/SharePoint + protection Copilot). Comptez 2 à 4 semaines de projet dédié incluant la configuration Intune, le déploiement de l’extension et la phase d’audit.
 
 Action de correction : 12 recommandations
 
@@ -144,7 +144,7 @@ Pour rechercher qui a accédé à un fichier précis (ex : le contrat de Valéri
 
 7. Cliquez sur un résultat pour voir le détail complet de l'événement.
 
-**Limitation Purview, fichiers sans étiquette : **Microsoft Purview ne propose pas de filtre natif « étiquette de sensibilité = aucune » dans l’Explorateur de données (Content Explorer). La vue est toujours positive , elle affiche ce qui est étiqueté, pas ce qui ne l’est pas. C’est un comportement attendu du produit, non un défaut de configuration ou de licence. La démarche pour identifier et piloter cette dette de labellisation est documentée en section 7.5.
+**Limitation Purview, fichiers sans étiquette :** Microsoft Purview ne propose pas de filtre natif « étiquette de sensibilité = aucune » dans l’Explorateur de données (Content Explorer). La vue est toujours positive , elle affiche ce qui est étiqueté, pas ce qui ne l’est pas. C’est un comportement attendu du produit, non un défaut de configuration ou de licence. La démarche pour identifier et piloter cette dette de labellisation est documentée en section 7.5.
 
 ---
 

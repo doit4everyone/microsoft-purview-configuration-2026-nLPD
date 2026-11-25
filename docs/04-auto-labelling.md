@@ -42,7 +42,7 @@ L’auto-labelling analyse les contenus de manière asynchrone en arrière-plan 
 Vous allez créer deux stratégies distinctes, une par étiquette cible car l’interface Purview associe un label unique à chaque stratégie.
 Accès : Purview → Protection des données → Stratégies → Stratégies d’étiquetage automatique → + Créer une stratégie d’étiquetage automatique.
 
-**⚠️ Séquence recommandée : **les SITs personnalisés **AVS-Suisse** et **Medical-RH-Suisse** créés en section 2.3bis sont utilisés directement ci-dessous. Attendez la propagation (15–30 min) avant de continuer.
+**⚠️ Séquence recommandée :** les SITs personnalisés **AVS-Suisse** et **Medical-RH-Suisse** créés en section 2.3bis sont utilisés directement ci-dessous. Attendez la propagation (15–30 min) avant de continuer.
 
 Stratégie 1 : Détection AVS et données médicales → 4 - RH-Confidentiel
 
@@ -64,7 +64,7 @@ Activez les trois emplacements : Courrier Exchange (Tous utilisateurs et groupes
 
 Sélectionnez Règles communes → **Suivant. Étape 7 : Définir des règles (+ Nouvelle règle) *Règle 1 : AVS suisse :*** Nom : Règle-AVS-Suisse | Le contenu contient → Nom du groupe : Règle-AVS-Suisse → +Ajouter → Types d’infos confidentielles → tapez AVS-Suisse → sélectionnez AVS-Suisse | Confiance moyenne | Nombre d’instances min : 1 → **Enregistrer. *Règle 2 : Médical :*** Nom : **Règle-Medical** → Le contenu contient → Nom du groupe : Règle-Medical | Opérateur du groupe : N’importe lequel de ces éléments (OU).
 
-**Condition unique : **+ Ajouter → Types d’infos confidentielles → tapez et sélectionnez : **Medical-RH-Suisse** | Confiance : Moyenne | min : 2. → **Enregistrer**.
+**Condition unique :** + Ajouter → Types d’infos confidentielles → tapez et sélectionnez : **Medical-RH-Suisse** | Confiance : Moyenne | min : 2. → **Enregistrer**.
 
 → Logique globale : la Règle 1 détecte les documents contenant un numéro AVS (min 1). La Règle 2 détecte les documents contenant des termes médicaux RH (min 2), même sans numéro AVS. Les deux règles fonctionnent indépendamment : un document déclenchant l’une ou l’autre reçoit l’étiquette 4 - RH-Confidentiel.
 
@@ -86,13 +86,13 @@ Stratégie 2 : Détection IBAN → 5 - Finances-Confidentiel
 
 Répétez exactement les étapes 1 à 10 avec les adaptations suivantes :
 
-**Étape 2 : **Nom : Auto-Label-Finances-IBAN | Description : Détecte automatiquement les IBAN dans SharePoint, OneDrive et Exchange.
+**Étape 2 :** Nom : Auto-Label-Finances-IBAN | Description : Détecte automatiquement les IBAN dans SharePoint, OneDrive et Exchange.
 
-**Étape 3 : **Étiquette : 5 - Finances-Confidentiel.
+**Étape 3 :** Étiquette : 5 - Finances-Confidentiel.
 
-**Étape 7 : **Une seule règle : Nom : Règle-IBAN | Nom du groupe : Règle-IBAN | Type sensible : IBAN (International Banking Account Number) | Confiance élevée | min 1 | Enregistrer.
+**Étape 7 :** Une seule règle : Nom : Règle-IBAN | Nom du groupe : Règle-IBAN | Type sensible : IBAN (International Banking Account Number) | Confiance élevée | min 1 | Enregistrer.
 
-> 🚨 **IMPORTANT : **Démarrez toujours en mode simulation. Vérifiez les résultats dans l’onglet Éléments correspondants de chaque stratégie avant d’activer. Les délais d’analyse varient de quelques heures à plusieurs jours selon la taille du tenant.
+> 🚨 **IMPORTANT :** Démarrez toujours en mode simulation. Vérifiez les résultats dans l’onglet Éléments correspondants de chaque stratégie avant d’activer. Les délais d’analyse varient de quelques heures à plusieurs jours selon la taille du tenant.
 
 ## 3.3 Vérifier les résultats de simulation
 
@@ -112,7 +112,7 @@ Une fois la simulation terminée (délai variable selon le tenant), voici commen
 
 7. Une fois satisfait → cliquez sur Activer la stratégie.
 
-> ✅ **CONSEIL : **Pour votre lab : les fichiers 11_Contrat_Travail, 13_Fiches_Salaire, 14_Registre_Personnel, 17_Grand_Livre doivent obligatoirement apparaître dans les résultats. S'ils manquent, ils ne sont probablement pas encore uploadés dans SharePoint.
+> ✅ **CONSEIL :** Pour votre lab : les fichiers 11_Contrat_Travail, 13_Fiches_Salaire, 14_Registre_Personnel, 17_Grand_Livre doivent obligatoirement apparaître dans les résultats. S'ils manquent, ils ne sont probablement pas encore uploadés dans SharePoint.
 
 ---
 

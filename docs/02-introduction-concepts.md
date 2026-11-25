@@ -32,7 +32,7 @@ lang: fr
 
 Microsoft Purview est la suite de conformité et de protection des données de Microsoft, accessible via le portail https://purview.microsoft.com. Elle regroupe tous les outils nécessaires pour classifier, protéger, surveiller et gouverner vos données dans Microsoft 365, emails, fichiers SharePoint, OneDrive, Teams, et les applications IA comme Copilot.
 
-> ℹ️ **INFO : **Purview ne crée pas de nouvelles données, il protège celles qui existent déjà. C'est une couche de gouvernance qui s'applique par-dessus vos services existants.
+> ℹ️ **INFO :** Purview ne crée pas de nouvelles données, il protège celles qui existent déjà. C'est une couche de gouvernance qui s'applique par-dessus vos services existants.
 
 ## 1.2 Pourquoi Purview est indispensable avec Copilot M365
 
@@ -81,7 +81,7 @@ Les Parties 6 à 11 (scénarios de test, gestion opérationnelle, fonctionnalit�
 
 ## 1.5 Activer l'audit : À faire EN PREMIER
 
-> 🚨 **IMPORTANT : **L’audit Microsoft 365 (Unified Audit Log) n’est pas systématiquement activé selon les environnements notamment sur les tenants de test ou récents. La méthode la plus fiable pour garantir son activation reste l’utilisation de PowerShell via Exchange Online. L’audit doit être activé AVANT toute autre configuration sans audit actif, vous ne pouvez pas vérifier que vos politiques fonctionnent et vous n’avez aucune trace en cas d’incident nLPD.
+> 🚨 **IMPORTANT :** L’audit Microsoft 365 (Unified Audit Log) n’est pas systématiquement activé selon les environnements notamment sur les tenants de test ou récents. La méthode la plus fiable pour garantir son activation reste l’utilisation de PowerShell via Exchange Online. L’audit doit être activé AVANT toute autre configuration sans audit actif, vous ne pouvez pas vérifier que vos politiques fonctionnent et vous n’avez aucune trace en cas d’incident nLPD.
 
 ### 1.5.1 Installer et connecter le module Exchange Online
 
@@ -105,7 +105,7 @@ Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
 
 *→ Aucune réponse = succès. Si PowerShell affiche l’avertissement « L’exécution de la commande est terminée mais aucun paramètre de « Admin Audit Log Settings » n’a été modifié », l’audit était déjà actif : c’est normal. Si vous voyez une erreur rouge (commande non reconnue ou accès refusé), vérifiez que vous disposez du rôle Audit Logs, via le groupe Compliance Management Exchange (section 0.3).*
 
-**Étape 4 : Vérifier que l'audit est actif **
+**Étape 4 : Vérifier que l'audit est actif** 
 
 Get-AdminAuditLogConfig | FL UnifiedAuditLogIngestionEnabled
 
@@ -113,11 +113,11 @@ Get-AdminAuditLogConfig | FL UnifiedAuditLogIngestionEnabled
 
 *→ Si vous voyez False : déconnectez-vous, reconnectez-vous et réessayez l'étape 3.*
 
-**Étape 5 : Se déconnecter proprement **
+**Étape 5 : Se déconnecter proprement** 
 
 Disconnect-ExchangeOnline -Confirm:$false
 
-> ✅ **CONSEIL : **Si la valeur est True → vous pouvez continuer. Si elle est encore False après 3 tentatives → vérifiez que vous êtes bien membre du groupe Compliance Management dans le Centre d'administration Exchange (section 0.3).
+> ✅ **CONSEIL :** Si la valeur est True → vous pouvez continuer. Si elle est encore False après 3 tentatives → vérifiez que vous êtes bien membre du groupe Compliance Management dans le Centre d'administration Exchange (section 0.3).
 
 ### 1.5.2 Vérifier l'audit dans le portail Purview
 
@@ -134,7 +134,7 @@ Disconnect-ExchangeOnline -Confirm:$false
 | Exchange (boîtes aux lettres) | 1 an |
 | Autres activités (par exemple interactions Copilot, selon la charge de travail qui les enregistre) | 180 jours, prolongeable par une politique de rétention d’audit |
 
-> ℹ️ **INFO : **selon la documentation Microsoft, Audit (Premium) conserve par défaut pendant un an les enregistrements dont la charge de travail est Entra ID, Exchange, OneDrive ou SharePoint, et pendant 180 jours ceux des autres activités. Sans Audit (Premium), Audit (Standard) conserve les enregistrements 180 jours. Chaque utilisateur dont l’activité doit bénéficier de la conservation d’un an doit disposer de la licence correspondante. Pour vérifier la durée appliquée à un type d’événement, contrôlez la charge de travail (champ Workload) d’un enregistrement dans Audit → Rechercher.
+> ℹ️ **INFO :** selon la documentation Microsoft, Audit (Premium) conserve par défaut pendant un an les enregistrements dont la charge de travail est Entra ID, Exchange, OneDrive ou SharePoint, et pendant 180 jours ceux des autres activités. Sans Audit (Premium), Audit (Standard) conserve les enregistrements 180 jours. Chaque utilisateur dont l’activité doit bénéficier de la conservation d’un an doit disposer de la licence correspondante. Pour vérifier la durée appliquée à un type d’événement, contrôlez la charge de travail (champ Workload) d’un enregistrement dans Audit → Rechercher.
 
 Les journaux d’audit sont conservés pendant une durée maximale pouvant aller jusqu’à 12 mois selon la licence, la charge de travail et la configuration du tenant. Cette durée est définie conformément au principe de proportionnalité de la nLPD et permet la détection d’incidents de sécurité, l’analyse des accès et la constitution de preuves en cas de violation avant suppression ou anonymisation automatique des données.
 

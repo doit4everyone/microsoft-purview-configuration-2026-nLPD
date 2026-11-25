@@ -52,7 +52,7 @@ Durées utilisées dans ce POC et références
 | Docs Finances (factures, comptabilité) | 10 ans puis suppression | Art. 958f CO : 10 ans à compter de la fin de l’exercice |
 | Logs d’audit Purview | 1 an ou 180 jours selon la source | Audit (Premium) : 1 an par défaut pour Entra ID, Exchange, OneDrive et SharePoint, 180 jours pour les autres activités sauf politique de rétention d’audit. Utiles pour analyser un incident et évaluer l’obligation d’annonce au PFPDT (art. 24 nLPD) |
 
-> ⚠️ **DURÉES DE DÉMONSTRATION, PAS UNE MATRICE LÉGALE : **les durées ci-dessus permettent de tester le mécanisme dans le POC. Elles ne constituent pas un calendrier de conservation applicable tel quel en production. Trois limites à connaître :
+> ⚠️ **DURÉES DE DÉMONSTRATION, PAS UNE MATRICE LÉGALE :** les durées ci-dessus permettent de tester le mécanisme dans le POC. Elles ne constituent pas un calendrier de conservation applicable tel quel en production. Trois limites à connaître :
 >
 > 1. **Le point de départ.** Les politiques de ce guide comptent la durée depuis la dernière modification du fichier, alors que la loi part d’autres événements (fin de l’exercice, fin des rapports de travail). Pour démarrer la durée sur un événement, Purview propose la rétention basée sur un événement, via des **étiquettes de rétention**.
 > 2. **L’emplacement ne dit pas la nature du document.** Un contrat peut se trouver dans un OneDrive soumis à 3 ans. En cas de chevauchement, Purview applique la conservation la plus longue : chaque catégorie de document doit donc être couverte par le bon paramètre.
@@ -73,7 +73,7 @@ Procédure de configuration
 Cliquez sur **Modifier** → saisir l’URL du site dans le champ de recherche 
 (ex : *https://demo.sharepoint.com/sites/RH*) → cliquer sur le **+** à côté de l’URL pour l’ajouter → **Terminé.** Désactivez Comptes OneDrive, Boîtes aux lettres Exchange, Teams et tous les autres emplacements. → **Suivant.**
 
-6. Page Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → 10 ans → Démarrer la période fondée sur : **Lorsque les éléments ont été modifiés en dernier lieu** → À la fin de la période : **Supprimer automatiquement les éléments** → **Suivant **→ **Soumettre.**
+6. Page Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → 10 ans → Démarrer la période fondée sur : **Lorsque les éléments ont été modifiés en dernier lieu** → À la fin de la période : **Supprimer automatiquement les éléments** → **Suivant** → **Soumettre.**
 
 > ⚠️ **RH : LA LOI NE FIXE PAS UNE DURÉE UNIQUE POUR LE DOSSIER DU PERSONNEL.** La politique Retention-RH-10ans couvre la durée la plus longue qui peut se justifier pour un document RH. Elle ne dispense pas de trier le dossier par catégorie :
 >
@@ -105,7 +105,7 @@ Cliquez sur **Modifier** → saisir l’URL du site dans le champ de recherche
 
 **Retention-TransmissionExterne-2jours :** même procédure, emplacement Sites SharePoint classiques et de communication → Modifier → saisir *https://demo.sharepoint.com/sites/Transmissionexterne* → cliquer **+** → Paramètres de rétention : **Conserver les éléments pendant une période spécifique** → **2 jours** → Démarrer la période fondée sur : **Lorsque les éléments ont été créés** → À la fin : **Supprimer automatiquement les éléments**. La durée de rétention configurée est de 2 jours à compter de la création du fichier, qu’il ait été consulté ou non. Le traitement de la suppression par SharePoint est asynchrone : il peut intervenir plusieurs jours après l’échéance, et le fichier passe ensuite par les corbeilles du site avant sa suppression définitive. Cette politique ne garantit donc pas une fin d’accès exactement 48 heures après le dépôt.
 
-⚠️ **ATTENTION : **la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent s’assurer que le destinataire a reçu le document dans les 2 jours. Dès la réception confirmée, l’utilisateur supprime lui-même la copie ou le partage, sans attendre la rétention : c’est le seul moyen de garantir une fin d’accès rapide. Cette suppression ne concerne que la copie présente dans le tenant : elle n’efface pas un document que le destinataire externe a déjà téléchargé, copié ou imprimé.
+⚠️ **ATTENTION :** la rétention de 2 jours est volontairement courte, le site Transmission externe est un sas de transit, pas un lieu de stockage. Informez les utilisateurs qu’ils doivent s’assurer que le destinataire a reçu le document dans les 2 jours. Dès la réception confirmée, l’utilisateur supprime lui-même la copie ou le partage, sans attendre la rétention : c’est le seul moyen de garantir une fin d’accès rapide. Cette suppression ne concerne que la copie présente dans le tenant : elle n’efface pas un document que le destinataire externe a déjà téléchargé, copié ou imprimé.
 
 Cliquez sur Soumettre. Les politiques s’appliquent dans un délai variable (quelques minutes à plusieurs jours selon le tenant).
 
@@ -132,9 +132,9 @@ Stratégies IRM recommandées pour une PME suisse
 
 Prérequis : Affecter les rôles IRM obligatoires
 
-Sans affectation de rôle IRM, les stratégies fonctionnent et génèrent des alertes, mais celles-ci sont invisibles dans l’interface c’est un piège classique lors de la première configuration. Chemin : Purview → Gestion des risques internes → Paramètres → Groupes de rôles → sélectionnez le rôle → Modifier → Ajouter des membres → ajoutez votre compte admin → **Enregistrer. Insider Risk Management Analysts **: consulte et trie les alertes anonymisées. Ne peut pas lever l’anonymat. Rôle recommandé pour 95 % des cas. Conforme Annexe G.
+Sans affectation de rôle IRM, les stratégies fonctionnent et génèrent des alertes, mais celles-ci sont invisibles dans l’interface c’est un piège classique lors de la première configuration. Chemin : Purview → Gestion des risques internes → Paramètres → Groupes de rôles → sélectionnez le rôle → Modifier → Ajouter des membres → ajoutez votre compte admin → **Enregistrer. Insider Risk Management Analysts** : consulte et trie les alertes anonymisées. Ne peut pas lever l’anonymat. Rôle recommandé pour 95 % des cas. Conforme Annexe G.
 
-**Insider Risk Management Investigators **: accès complet incluant la levée d’anonymat. À restreindre strictement. voir Annexe G.
+**Insider Risk Management Investigators** : accès complet incluant la levée d’anonymat. À restreindre strictement. voir Annexe G.
 
 Procédure d’affectation, à faire immédiatement après activation IRM :
 
@@ -178,7 +178,7 @@ Stratégie 2 : IRM-Risque-IA (optionnel en préversion)
 
 1. Modèle : Utilisation à risque de l’IA → **Suivant.**
 
-2. Nom : **IRM-Risque-IA **→ Description : Détection des usages à risque de l’IA générative, Copilot et IA externes, nLPD art. 8 → **Suivant.**
+2. Nom : **IRM-Risque-IA** → Description : Détection des usages à risque de l’IA générative, Copilot et IA externes, nLPD art. 8 → **Suivant.**
 
 3. Utilisateurs et groupes : mêmes 3 groupes que Stratégie 1 : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview → **Suivant.**
 
@@ -196,7 +196,7 @@ Stratégie 2 : IRM-Risque-IA (optionnel en préversion)
 
 **Applications IA d’entreprise (0/2) : Facturation Azure requise ⚠️** Ne pas activer pour le POC.
 
-**Autres applications IA (0/1) : Facturation Azure requise ⚠️ **Ne pas activer. Détecte les IA externes (ChatGPT, Gemini) via Defender for Cloud Apps, hors périmètre POC.
+**Autres applications IA (0/1) : Facturation Azure requise ⚠️** Ne pas activer. Détecte les IA externes (ChatGPT, Gemini) via Defender for Cloud Apps, hors périmètre POC.
 
 **Indicateurs Azure AI Content Safety (0/2) : Nécessite Communication Compliance ⚠️** Activables désormais : les stratégies Communication Compliance sont configurées (section 8.4). Cependant, ces indicateurs nécessitent une facturation Azure supplémentaire, non inclus dans Business Premium + Purview Suite. Ne pas activer sans validation budget.
 
@@ -216,7 +216,7 @@ Activation du partage des alertes MDE vers Purview : security.microsoft.com → 
 2. Nom : IRM-Violations-Sécurité : Description : Détection des violations de sécurité techniques MDE,
 nLPD art. 8 → **Suivant.**
 
-3. Utilisateurs et groupes : mêmes 3 groupes : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview → Exclusions : vide → **Suivant. 4. Contenu à prioriser : spécificité de ce modèle : **Purview affiche le message « Il n’est pas utile de spécifier le contenu à définir pour la hiérarchisation pour le modèle que vous avez sélectionné ». La hiérarchisation est désactivée automatiquement. Ce modèle est basé sur les alertes MDE, pas sur le contenu des fichiers → **Suivant. 5. Événement déclencheur : automatique : **la stratégie commence à attribuer des scores uniquement lorsqu’une alerte MDE de gravité faible, moyenne ou élevée existe pour l’utilisateur. Les alertes d’information ne déclenchent pas. Aucune configuration manuelle → **Suivant.**
+3. Utilisateurs et groupes : mêmes 3 groupes : GRP-Direction-Purview, GRP-Finances-Purview, GRP-RH-Purview → Exclusions : vide → **Suivant. 4. Contenu à prioriser : spécificité de ce modèle :** Purview affiche le message « Il n’est pas utile de spécifier le contenu à définir pour la hiérarchisation pour le modèle que vous avez sélectionné ». La hiérarchisation est désactivée automatiquement. Ce modèle est basé sur les alertes MDE, pas sur le contenu des fichiers → **Suivant. 5. Événement déclencheur : automatique :** la stratégie commence à attribuer des scores uniquement lorsqu’une alerte MDE de gravité faible, moyenne ou élevée existe pour l’utilisateur. Les alertes d’information ne déclenchent pas. Aucune configuration manuelle → **Suivant.**
 
 6. Indicateurs : activez uniquement :
 **Indicateurs Microsoft Defender for Endpoint (2/2)** Fraude à la défense (contournement des contrôles de sécurité) + Logiciels indésirables (logiciels non approuvés ou malveillants). Ces deux indicateurs couvrent exactement la désactivation RTP/BM.
@@ -225,7 +225,7 @@ nLPD art. 8 → **Suivant.**
 
 **Defender for Cloud Apps (0/11) ne pas activer :** nécessitent des connecteurs MDCA non configurés dans ce POC.
 
-7. Seuils : Appliquer les seuils fournis par Microsoft → Suivant → Envoyer. Cochez les 3 notifications email avant **Terminé. Validation terrain : **IRM-Violations-Sécurité créée et opérationnelle dans le tenant Axonix SA. Déclencheur automatique lié aux alertes MDE, la désactivation de RTP/BM testée en section 9.1 devrait générer une alerte sur cette stratégie.
+7. Seuils : Appliquer les seuils fournis par Microsoft → Suivant → Envoyer. Cochez les 3 notifications email avant **Terminé. Validation terrain :** IRM-Violations-Sécurité créée et opérationnelle dans le tenant Axonix SA. Déclencheur automatique lié aux alertes MDE, la désactivation de RTP/BM testée en section 9.1 devrait générer une alerte sur cette stratégie.
 
 Lien nLPD : articles concernés
 
@@ -273,9 +273,9 @@ Avant de commencer, affectez votre compte au groupe de rôles **eDiscovery Manag
 
 Le groupe contient deux sous-rôles à configurer séparément :
 
-**Page 1 : Gérer le gestionnaire de découverte électronique : **cliquez **Choisir des utilisateurs** → sélectionnez admin@demo.ch → Sélectionner. Le gestionnaire voit et modifie uniquement les cas auxquels il a accès. → Suivant.
+**Page 1 : Gérer le gestionnaire de découverte électronique :** cliquez **Choisir des utilisateurs** → sélectionnez admin@demo.ch → Sélectionner. Le gestionnaire voit et modifie uniquement les cas auxquels il a accès. → Suivant.
 
-**Page 2 : Gérer l’administrateur eDiscovery : **même opération → ajoutez admin@demo.ch. L’administrateur eDiscovery peut voir et modifier **tous** les cas du tenant, quelles que soient les autorisations, à réserver au compte admin principal. → Suivant → Enregistrer.
+**Page 2 : Gérer l’administrateur eDiscovery :** même opération → ajoutez admin@demo.ch. L’administrateur eDiscovery peut voir et modifier **tous** les cas du tenant, quelles que soient les autorisations, à réserver au compte admin principal. → Suivant → Enregistrer.
 
 ⚠️ **Propagation 15–30 minutes** : après l’enregistrement, attendez avant de continuer. Sans cette attente, le bouton **Exporter** ne sera pas visible dans le menu Actions du jeu à réviser. Licence : **✅ inclus Business Premium + Purview Suite** : aucun add-on requis.
 
@@ -293,11 +293,11 @@ Contexte POC : simulation d’une réponse à une demande d’accès nLPD (art. 
 
 Résultat : bannière verte « *Ajout réussi de 2 sources de données* », Type de source : Contacts (boîte aux lettres) + Groupe (site).
 
-**Étape 3 Créer et exécuter la recherche **
+**Étape 3 Créer et exécuter la recherche** 
 
 4. Onglet Recherches → Créer une recherche → dans la fenêtre qui s’ouvre : Nom : **Recherche-Beraz-art25** | Description : *Recherche données personnelles Valérie Beraz, demande accès art. 25 nLPD* → **Créer**.
 
-5. L’écran de la recherche s’ouvre. Panneau gauche, Sources de données : cliquez **+ → **Tous les utilisateurs et groupes (section « Recherche à l’échelle du locataire ») cela couvre **toutes** les boîtes aux lettres et tous les sites SharePoint du tenant en une seule opération.
+5. L’écran de la recherche s’ouvre. Panneau gauche, Sources de données : cliquez **+ →** Tous les utilisateurs et groupes (section « Recherche à l’échelle du locataire ») cela couvre **toutes** les boîtes aux lettres et tous les sites SharePoint du tenant en une seule opération.
 
 6. Panneau droit → Générateur de conditions : dans le champ Entrez des mots clés, saisissez **Beraz** → cliquez Exécuter la requête (bouton bleu en haut à droite) → dans la fenêtre « Choisissez les résultats de la recherche », laissez Statistiques sélectionné par défaut → **Exécuter la requête**.
 
@@ -305,7 +305,7 @@ Résultat : bannière verte « *Ajout réussi de 2 sources de données* », Type
 
 **Étape 4 Ajouter au jeu à réviser**
 
-8. Revenez à l’onglet Requête → bouton Ajouter au jeu à réviser (en haut à droite) → **+ **Nouvel ensemble de révision → Nom : **Révision-Beraz** → laissez toutes les options par défaut → **Ajouter**. La collecte s’exécute en arrière-plan.
+8. Revenez à l’onglet Requête → bouton Ajouter au jeu à réviser (en haut à droite) → **+** Nouvel ensemble de révision → Nom : **Révision-Beraz** → laissez toutes les options par défaut → **Ajouter**. La collecte s’exécute en arrière-plan.
 
 9. Onglet Vérifier les ensembles → ouvrez Révision-Beraz → 359 éléments collectés (49,57 Mo) : emails Exchange, fichiers SharePoint/OneDrive, alertes DLP, et interactions Copilot M365. L’onglet **Tableau de bord (aperçu)** affiche la répartition par source, extension de fichier et étiquette de confidentialité.
 
@@ -327,9 +327,9 @@ Livrable nLPD : ce que vous transmettez et à qui
 
 Le package export est un **outil interne d’inventaire.** Vous ne le transmettez pas tel quel, Il sert à garantir que votre réponse est complète et vérifiable (aucun fichier, email ou interaction Copilot oublié). Le livrable final dépend du contexte :
 
-**Demande d’accès nLPD art. 25 (à la personne concernée) : **rédigez une **lettre de réponse** résumant : quelles données sont détenues, où, depuis quand et dans quel but. Joignez les documents pertinents sous forme lisible (contrat, fiches, etc.). Le CSV Items vous sert à vérifier l’exhaustivité avant envoi.
+**Demande d’accès nLPD art. 25 (à la personne concernée) :** rédigez une **lettre de réponse** résumant : quelles données sont détenues, où, depuis quand et dans quel but. Joignez les documents pertinents sous forme lisible (contrat, fiches, etc.). Le CSV Items vous sert à vérifier l’exhaustivité avant envoi.
 
-**Notification PFPDT art. 24 (violation de données) : **remplissez le **formulaire officiel du PFPDT** sur pfpdt.admin.ch. Le package export vous fournit les données nécessaires pour renseigner ce formulaire (nombre de personnes concernées, types de données, période). Vous ne joignez pas le CSV brut.
+**Notification PFPDT art. 24 (violation de données) :** remplissez le **formulaire officiel du PFPDT** sur pfpdt.admin.ch. Le package export vous fournit les données nécessaires pour renseigner ce formulaire (nombre de personnes concernées, types de données, période). Vous ne joignez pas le CSV brut.
 
 ⚠️ En cas de litige ou d’enquête formelle, utilisez l’onglet **Stratégies de conservation** du cas pour placer un **hold légal** sur les sources concernées : les documents et emails deviennent non supprimables pour toute la durée du litige, indépendamment des politiques de rétention. Bonne pratique interne : activer la conservation dès qu’un incident mérite une investigation, pour sécuriser la chaîne de preuves. Cette mesure relève de la politique interne de l’entreprise : l’art. 24 nLPD impose l’annonce au PFPDT des violations de la sécurité des données entraînant vraisemblablement un risque élevé, mais ne prescrit pas de conservation des preuves à chaque signalement interne.
 
@@ -369,7 +369,7 @@ Licence : inclus dans Microsoft Purview Suite pour Business Premium
 
 Prérequis :
 
-**⚠️ Avant activation : **le cadre décrit en section 8.2 (art. 26 OLT 3, information préalable, proportionnalité, participation des travailleurs) s’applique aussi à Communication Compliance. Les communications professionnelles ne sont pas en elles-mêmes des données sensibles (art. 5 let. c nLPD), mais les contenus analysés peuvent en contenir. Dans ce POC, les stratégies couvrent tous les utilisateurs pour la démonstration : en production, limitez ce périmètre au strict nécessaire.
+**⚠️ Avant activation :** le cadre décrit en section 8.2 (art. 26 OLT 3, information préalable, proportionnalité, participation des travailleurs) s’applique aussi à Communication Compliance. Les communications professionnelles ne sont pas en elles-mêmes des données sensibles (art. 5 let. c nLPD), mais les contenus analysés peuvent en contenir. Dans ce POC, les stratégies couvrent tous les utilisateurs pour la démonstration : en production, limitez ce périmètre au strict nécessaire.
 
 Rôle requis : **Communication Compliance Admin** ajouter admin@demo.ch via Purview → Paramètres → Rôles et étendues → Groupes de rôles → Communication Compliance.
 
@@ -419,7 +419,7 @@ Score global et répartition
 
 Le score global affiché dans le tenant Axonix SA est de 63 % (14 136,67 / 22 416 points). Il se compose de deux parties distinctes : vos points gagnés (1 728,67 / 9 915) correspondent aux actions que vous avez configurées vous-même ; les points gérés par Microsoft (12 408 / 12 501) correspondent aux protections que Microsoft applique nativement dans sa plateforme (chiffrement en transit, redondance des datacenters, contrôles d’accès infrastructure). Ces deux composantes sont indépendantes : vous ne pouvez pas agir sur les points Microsoft, uniquement sur vos propres points.
 
-📊 **Score et mise en page du tenant : **le score de 63 % est spécifique au tenant Axonix SA au moment du POC. Il progressera automatiquement à mesure que les configurations de ce guide sont déployées, sans aucune action manuelle dans le Gestionnaire de conformité.
+📊 **Score et mise en page du tenant :** le score de 63 % est spécifique au tenant Axonix SA au moment du POC. Il progressera automatiquement à mesure que les configurations de ce guide sont déployées, sans aucune action manuelle dans le Gestionnaire de conformité.
 
 Évaluations actives
 
@@ -439,7 +439,7 @@ Chaque action d’amélioration contient trois onglets : Détails (procédure d�
 
 Exemple : l’action Search audit logs dans l’évaluation LPD SUISSE est liée à l’art. 21 FADP (Offering documents to the Federal Archives) et à trois contrôles AI Baseline (Transparency, Logging and Traceability, AI System Logging). Pour la marquer comme implémentée, chargez une preuve (export du journal d’audit, capture d’écran) dans l’onglet Preuve, puis passez l’état d’implémentation à Implémenté.
 
-ℹ️ **Bouton Launch Now : **certaines actions d’amélioration contiennent un bouton Launch Now dans l’onglet Détails. Il redirige vers l’outil Microsoft approprié pour implémenter l’action : portail Defender (security.microsoft.com) pour les actions liées à la sécurité des appareils, portail Intune pour la gestion des appareils mobiles, etc. Ces redirections sont normales et attendues. Elles ne nécessitent pas d’action supplémentaire dans Purview.
+ℹ️ **Bouton Launch Now :** certaines actions d’amélioration contiennent un bouton Launch Now dans l’onglet Détails. Il redirige vers l’outil Microsoft approprié pour implémenter l’action : portail Defender (security.microsoft.com) pour les actions liées à la sécurité des appareils, portail Intune pour la gestion des appareils mobiles, etc. Ces redirections sont normales et attendues. Elles ne nécessitent pas d’action supplémentaire dans Purview.
 
 Actions LPD SUISSE pertinentes pour ce POC
 
@@ -460,7 +460,7 @@ Périmètre et recommandations pour une PME suisse
 
 La majorité des 537 actions d’amélioration visibles dans le Gestionnaire de conformité concernent Microsoft Defender for Endpoint complet, Intune MDM, Microsoft Entra ID Governance ou des licences E3/E5. Ces actions sont hors périmètre d’une configuration Business Premium + Purview Suite. Ne pas chercher à tout implémenter : le score n’est pas une course. L’objectif est de couvrir les actions pertinentes pour la nLPD, pas d’atteindre 100 %.
 
-⚠️ **Jauge verte ≠ objectif : **un score de 63 % sur un tenant Business Premium bien configuré est un bon résultat. Les points manquants correspondent majoritairement à des fonctionnalités nécessitant des licences supplémentaires. Se concentrer sur l’évaluation LPD SUISSE et viser la complétion des actions couvertes par ce guide.
+⚠️ **Jauge verte ≠ objectif :** un score de 63 % sur un tenant Business Premium bien configuré est un bon résultat. Les points manquants correspondent majoritairement à des fonctionnalités nécessitant des licences supplémentaires. Se concentrer sur l’évaluation LPD SUISSE et viser la complétion des actions couvertes par ce guide.
 
 Suivi et routine de maintenance
 

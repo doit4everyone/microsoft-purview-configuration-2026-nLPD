@@ -46,7 +46,7 @@ SharePoint fonctionne avec trois niveaux qui héritent l’un de l’autre. Le n
 
 ## 11.2 Auditer le sur-partage existant dans votre tenant
 
-> ⚠️ **AVERTISSEMENT nLPD (Art. 8) : **Le nettoyage manuel des permissions est une étape initiale indispensable, mais insuffisante sur le long terme. La sécurité des accès n’est pas un état statique, c’est un processus continu. Sans surveillance récurrente, le sur-partage réapparaîtra naturellement par les actions des utilisateurs. Consultez la section 11.6 pour la mise en place d’une routine de gouvernance pérenne.
+> ⚠️ **AVERTISSEMENT nLPD (Art. 8) :** Le nettoyage manuel des permissions est une étape initiale indispensable, mais insuffisante sur le long terme. La sécurité des accès n’est pas un état statique, c’est un processus continu. Sans surveillance récurrente, le sur-partage réapparaîtra naturellement par les actions des utilisateurs. Consultez la section 11.6 pour la mise en place d’une routine de gouvernance pérenne.
 
 Procédure : Rapport de partage dans le Centre d’administration SharePoint
 
@@ -78,13 +78,13 @@ Procédure ; Restreindre le partage externe d’un site
 
 3. Champ Restreindre le contenu Microsoft 365 Copilot (Restricted Content Discovery) : sélectionnez Activé pour les sites contenant des données sensibles (RH, Finances). Cette option limite la découverte des contenus du site dans les recherches à l’échelle de l’organisation et dans les expériences Microsoft Copilot, et retire certains points d’entrée IA du site. Elle ne modifie pas les autorisations SharePoint : les utilisateurs qui disposent déjà d’un accès peuvent toujours ouvrir directement les contenus, et Copilot peut toujours résumer un document déjà ouvert. Pour empêcher réellement l’accès, corrigez les permissions du site (procédure ci-dessous).
 
-> ℹ️ **PRÉREQUIS LICENCE : **selon Microsoft, Restricted Content Discovery suppose que l’organisation dispose d’une licence Microsoft Copilot et de SharePoint Advanced Management. Business Premium avec Purview Suite ne suffit pas à lui seul. Sans licence Copilot dans le tenant, ignorez ce champ.
+> ℹ️ **PRÉREQUIS LICENCE :** selon Microsoft, Restricted Content Discovery suppose que l’organisation dispose d’une licence Microsoft Copilot et de SharePoint Advanced Management. Business Premium avec Purview Suite ne suffit pas à lui seul. Sans licence Copilot dans le tenant, ignorez ce champ.
 
 4. Cliquez sur Enregistrer. Le partage externe est immédiatement restreint.
 
-ℹ️ **Étiquette de confidentialité sur les sites : **seules les étiquettes dont la portée inclut Groupes et sites peuvent être appliquées à un site SharePoint. Dans ce POC, uniquement 3a - Direction - Site et 6 - Transmission-Externe ont cette portée. Les étiquettes 4 - RH-Confidentiel et 5 - Finances-Confidentiel s’appliquent aux fichiers, pas aux sites : le menu déroulant Étiquette de confidentialité affichera None pour ces sites, ce qui est correct.
+ℹ️ **Étiquette de confidentialité sur les sites :** seules les étiquettes dont la portée inclut Groupes et sites peuvent être appliquées à un site SharePoint. Dans ce POC, uniquement 3a - Direction - Site et 6 - Transmission-Externe ont cette portée. Les étiquettes 4 - RH-Confidentiel et 5 - Finances-Confidentiel s’appliquent aux fichiers, pas aux sites : le menu déroulant Étiquette de confidentialité affichera None pour ces sites, ce qui est correct.
 
-ℹ️ **Héritage du niveau de partage tenant : **Microsoft configure par défaut le tenant sur Invités nouveaux et existants. Tous les nouveaux sites en héritent automatiquement. Pour changer le niveau par défaut : demo-admin.sharepoint.com → Stratégies → Partage → curseur SharePoint → Uniquement les personnes de votre organisation → Enregistrer. Les sites déjà créés conservent leur niveau individuel.
+ℹ️ **Héritage du niveau de partage tenant :** Microsoft configure par défaut le tenant sur Invités nouveaux et existants. Tous les nouveaux sites en héritent automatiquement. Pour changer le niveau par défaut : demo-admin.sharepoint.com → Stratégies → Partage → curseur SharePoint → Uniquement les personnes de votre organisation → Enregistrer. Les sites déjà créés conservent leur niveau individuel.
 
 **Configuration pour le tenant Axonix SA :**
 
@@ -155,7 +155,7 @@ Automatisation PowerShell (tenants > 20 sites)
 
 Pour les tenants dépassant 20 sites actifs, l’utilisation de scripts PowerShell (module PnP.PowerShell) est recommandée pour lister automatiquement les sites avec permissions larges et envoyer un rapport hebdomadaire par email à l’administrateur. Ce niveau d’automatisation transforme la correction ponctuelle en cycle de gouvernance continu et contribue à la sécurité des données exigée par l’art. 8 nLPD.
 
-> 💡 **LIEN nLPD ART. 8 DEUX PILIERS INDISSOCIABLES. **La protection des données repose sur deux piliers complémentaires. (1) L’étiquette (le Label) : protège le contenu si le fichier sort du périmètre grâce au chiffrement Azure RMS. (2) La permission (l’Accès) : sécurise le vecteur d’exposition en empêchant les utilisateurs non autorisés d’accéder au fichier dans SharePoint ou via Copilot. L’absence de l’un rend l’autre vulnérable : un fichier chiffré sur un site ouvert à tous reste protégé en contenu (les utilisateurs qui ne disposent pas des droits RMS VIEW et EXTRACT ne peuvent pas en obtenir le contenu via Copilot), mais son existence, son nom et son emplacement restent visibles ; à l’inverse, un fichier non chiffré sur un site restreint n’est plus protégé dès qu’il en sort. Une conformité nLPD robuste nécessite les deux piliers activés simultanément.
+> 💡 **LIEN nLPD ART. 8 DEUX PILIERS INDISSOCIABLES.** La protection des données repose sur deux piliers complémentaires. (1) L’étiquette (le Label) : protège le contenu si le fichier sort du périmètre grâce au chiffrement Azure RMS. (2) La permission (l’Accès) : sécurise le vecteur d’exposition en empêchant les utilisateurs non autorisés d’accéder au fichier dans SharePoint ou via Copilot. L’absence de l’un rend l’autre vulnérable : un fichier chiffré sur un site ouvert à tous reste protégé en contenu (les utilisateurs qui ne disposent pas des droits RMS VIEW et EXTRACT ne peuvent pas en obtenir le contenu via Copilot), mais son existence, son nom et son emplacement restent visibles ; à l’inverse, un fichier non chiffré sur un site restreint n’est plus protégé dès qu’il en sort. Une conformité nLPD robuste nécessite les deux piliers activés simultanément.
 
 ## 11.7 Focus OneDrive : Gouvernance du SharePoint personnel
 
@@ -169,7 +169,7 @@ Audit mensuel des partages OneDrive
 
 Dans Purview → Audit (menu gauche) → Rechercher : champ Activités : noms conviviaux → tapez Fichier partagé avec un utilisateur externe (SharePoint), plage de dates sur les 30 derniers jours, tous les utilisateurs. Champ ObjectId (fichier, dossier ou site) : laissez vide pour couvrir tous les OneDrive. Exportez les résultats en CSV. Tout partage externe sur un OneDrive contenant des fichiers étiquetés RH-Confidentiel, Finances-Confidentiel ou Direction-Confidentiel doit être examiné et justifié.
 
-> ℹ️ **LIEN nLPD (Art. 8) : **L’art. 8 nLPD exige une sécurité adaptée au risque pour l’ensemble des systèmes traitant des données personnelles, y compris les espaces de stockage personnels. L’audit mensuel des partages OneDrive contribue à cette sécurité ; sa fréquence est une recommandation opérationnelle, la loi n’en fixe aucune. Un partage non justifié de données sensibles via OneDrive expose l’organisation à la même responsabilité qu’un partage sur un site d’équipe.
+> ℹ️ **LIEN nLPD (Art. 8) :** L’art. 8 nLPD exige une sécurité adaptée au risque pour l’ensemble des systèmes traitant des données personnelles, y compris les espaces de stockage personnels. L’audit mensuel des partages OneDrive contribue à cette sécurité ; sa fréquence est une recommandation opérationnelle, la loi n’en fixe aucune. Un partage non justifié de données sensibles via OneDrive expose l’organisation à la même responsabilité qu’un partage sur un site d’équipe.
 
 Checklist de validation section 11
 

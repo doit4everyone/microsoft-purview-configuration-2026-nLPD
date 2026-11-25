@@ -30,15 +30,15 @@ lang: fr
 
 ## 2.1 Comprendre les étiquettes
 
-> 💡 **PÉRIMÈTRE DIRECTION : Pas d’auto-labelling. **Les espaces Direction ne contiennent pas de types de données détectables de manière fiable (AVS, IBAN, données médicales). La sensibilité repose sur le contexte organisationnel (Direction / Board) et la nature stratégique des contenus. Aucune stratégie d’étiquetage automatique n’est créée pour ce périmètre. L’étiquette « 3a Direction Site » est appliquée manuellement lors de la création du site ; l’étiquette « 3b Direction Documents » est appliquée manuellement par les membres de la Direction.
+> 💡 **PÉRIMÈTRE DIRECTION : Pas d’auto-labelling.** Les espaces Direction ne contiennent pas de types de données détectables de manière fiable (AVS, IBAN, données médicales). La sensibilité repose sur le contexte organisationnel (Direction / Board) et la nature stratégique des contenus. Aucune stratégie d’étiquetage automatique n’est créée pour ce périmètre. L’étiquette « 3a Direction Site » est appliquée manuellement lors de la création du site ; l’étiquette « 3b Direction Documents » est appliquée manuellement par les membres de la Direction.
 
 Une étiquette de sensibilité est un marqueur qui s'attache à un document ou un email et lui applique des règles de protection. Une fois appliquée, l'étiquette suit le document partout, même si l'utilisateur l'envoie par email ou le télécharge sur son PC.
 
-> ✅ **CONSEIL : **Les étiquettes de sensibilité permettent de définir des règles de protection. Lorsque le chiffrement est activé, il est assuré par Azure Rights Management (RMS). Un document ainsi protégé est illisible même si quelqu’un le vole physiquement. Les étiquettes configurent les politiques de protection, mais le chiffrement est réalisé par le service RMS sous-jacent.
+> ✅ **CONSEIL :** Les étiquettes de sensibilité permettent de définir des règles de protection. Lorsque le chiffrement est activé, il est assuré par Azure Rights Management (RMS). Un document ainsi protégé est illisible même si quelqu’un le vole physiquement. Les étiquettes configurent les politiques de protection, mais le chiffrement est réalisé par le service RMS sous-jacent.
 
 ## 2.2 Prérequis : Créer les groupes de sécurité mail-enabled
 
-Deux méthodes coexistent selon votre contexte. **En environnement hybride (AD on-prem + Entra Connect) : **il faut créer les groupes mail-enabled dans l’Active Directory local, puis les synchroniser vers Entra ID via Entra Connect. **En tenant cloud-only (sans AD on-prem) : **créer les groupes mail-enabled directement dans Exchange Online via PowerShell. Le guide décrit les deux cas, utilisez uniquement la méthode correspondant à votre environnement.
+Deux méthodes coexistent selon votre contexte. **En environnement hybride (AD on-prem + Entra Connect) :** il faut créer les groupes mail-enabled dans l’Active Directory local, puis les synchroniser vers Entra ID via Entra Connect. **En tenant cloud-only (sans AD on-prem) :** créer les groupes mail-enabled directement dans Exchange Online via PowerShell. Le guide décrit les deux cas, utilisez uniquement la méthode correspondant à votre environnement.
 
 Le moteur de chiffrement de Purview (Azure Rights Management) exige que les groupes assignés aux étiquettes aient une adresse email, on parle de groupes de sécurité mail-enabled. Vos groupes GRP-Direction, GRP-RH et GRP-Finances sont des groupes de sécurité simples sans email, ils ne peuvent pas être utilisés pour le chiffrement des étiquettes 3, 4 et 5. Pour les étiquettes utilisant le chiffrement avec attribution explicite des autorisations, seuls les utilisateurs et les groupes disposant d’une adresse email (groupes mail-enabled) peuvent être utilisés. Cette contrainte est liée au fonctionnement d’Azure Rights Management.
 
@@ -101,7 +101,7 @@ Enable-DistributionGroup -Identity "GRP-Finances-Purview" -Alias "grp-finances-p
 
 La gestion des membres doit se faire exclusivement dans l’Active Directory local. Tout ajout ou retrait effectué dans l’AD sera synchronisé automatiquement vers Entra ID par Entra Connect au prochain cycle. Modifier les membres dans Exchange Online ou Entra ID provoquerait une erreur d’écriture ou une désynchronisation au prochain cycle de synchronisation.
 
-> ℹ️ **PRÉREQUIS UTILISATEURS : **Chaque employé devant accéder aux documents chiffrés (étiquettes 3, 4, 5) doit posséder l’attribut mail renseigné dans l’AD local : Set-ADUser -Identity "prenom.nom" -EmailAddress "prenom.nom@demo.ch". Azure RMS identifie les utilisateurs via leur adresse email, sans cet attribut, l’utilisateur est invisible pour le moteur de chiffrement et ne pourra pas ouvrir les documents protégés, même s’il est membre du groupe de sécurité. Dans un tenant purement Microsoft 365 (sans AD on-prem), ce prérequis est automatiquement satisfait car chaque compte M365 possède nativement une adresse email.
+> ℹ️ **PRÉREQUIS UTILISATEURS :** Chaque employé devant accéder aux documents chiffrés (étiquettes 3, 4, 5) doit posséder l’attribut mail renseigné dans l’AD local : Set-ADUser -Identity "prenom.nom" -EmailAddress "prenom.nom@demo.ch". Azure RMS identifie les utilisateurs via leur adresse email, sans cet attribut, l’utilisateur est invisible pour le moteur de chiffrement et ne pourra pas ouvrir les documents protégés, même s’il est membre du groupe de sécurité. Dans un tenant purement Microsoft 365 (sans AD on-prem), ce prérequis est automatiquement satisfait car chaque compte M365 possède nativement une adresse email.
 
 Add-ADGroupMember -Identity "GRP-Direction-Purview" -Members utilisateur
 
@@ -115,7 +115,7 @@ Get-ADGroupMember -Identity "GRP-Direction-Purview" | Select Name
 
 *→ Résultat attendu : liste des membres avec leur nom. Vérifiez aussi dans le portail Entra ID → Groupes → GRP-Direction-Purview → Membres que la synchronisation est effective (délai : 15 à 30 minutes après un cycle Entra Connect).*
 
-> ✅ **CONSEIL : **Ces 3 groupes (GRP-Direction-Purview, GRP-RH-Purview, GRP-Finances-Purview), créés dans l’AD local et synchronisés via Entra Connect sont ceux à utiliser à l’étape 6 de la section 2.4 lors de la configuration du chiffrement des étiquettes 3, 4 et 5. Les étiquettes 1 (Public), 2 (Interne) et 6 (Transmission-Externe) ne nécessitent pas de groupes mail-enabled car elles n’ont pas de chiffrement.
+> ✅ **CONSEIL :** Ces 3 groupes (GRP-Direction-Purview, GRP-RH-Purview, GRP-Finances-Purview), créés dans l’AD local et synchronisés via Entra Connect sont ceux à utiliser à l’étape 6 de la section 2.4 lors de la configuration du chiffrement des étiquettes 3, 4 et 5. Les étiquettes 1 (Public), 2 (Interne) et 6 (Transmission-Externe) ne nécessitent pas de groupes mail-enabled car elles n’ont pas de chiffrement.
 
 ### 2.2.3 Alternative tenant cloud pur : Créer les groupes via Entra ID / Exchange Online
 
@@ -159,13 +159,13 @@ Get-DistributionGroupMember "GRP-RH-Purview"
 
 4. Vous voyez la liste vide des étiquettes (normal au départ).
 
-> ⚠️ **ATTENTION : **Si vous ne voyez pas 'Protection des données' dans le menu gauche, votre rôle Compliance Administrator Purview n'est pas encore actif. Déconnectez-vous, reconnectez-vous, puis réessayez.
+> ⚠️ **ATTENTION :** Si vous ne voyez pas 'Protection des données' dans le menu gauche, votre rôle Compliance Administrator Purview n'est pas encore actif. Déconnectez-vous, reconnectez-vous, puis réessayez.
 
 2.3bis : Créer les SIT personnalisés (à faire avant les étiquettes)
 
 Les SIT (Sensitive Information Types) personnalisés définissent les motifs de détection utilisés par les étiquettes, les règles DLP et l’auto-labelling. Ils doivent être créés avant la configuration des étiquettes et des politiques, afin que les procédures suivantes puissent les référencer directement. La propagation après création peut prendre 15 à 30 minutes, attendez avant de configurer les règles qui les utilisent.
 
-ℹ️ **Terminologie SIT : **dans ce guide, SIT (Sensitive Information Type) désigne ce que l’interface Purview appelle « Types d’infos confidentielles ». Le menu latéral affiche « Sensitive info types (classic) » en anglais. Quand le guide dit « sélectionnez AVS-Suisse dans les SITs », cherchez + Ajouter → Types d’infos confidentielles dans l’interface.
+ℹ️ **Terminologie SIT :** dans ce guide, SIT (Sensitive Information Type) désigne ce que l’interface Purview appelle « Types d’infos confidentielles ». Le menu latéral affiche « Sensitive info types (classic) » en anglais. Quand le guide dit « sélectionnez AVS-Suisse dans les SITs », cherchez + Ajouter → Types d’infos confidentielles dans l’interface.
 
 > ℹ️ **Migration des classifieurs en cours (2026) :** Microsoft unifie progressivement les classifieurs dans une nouvelle interface. Les sous-menus actuels portent le suffixe « (classic) » : Trainable classifiers (classic), Sensitive info types (classic), EDM classifiers (classic). Un bandeau dans le portail propose « Go to Classifiers (preview) ». Les procédures de ce guide restent fonctionnelles avec l’interface classique. Lorsque la migration sera achevée, les chemins de navigation pourront évoluer.
 
@@ -180,7 +180,7 @@ Détecte les numéros AVS suisses au format exact 756.XXXX.XXXX.XX en 4 langues 
 | **3** | **Page 2 : Définir les modèles** | + Ajouter un modèle → Niveau de confiance : **Moyen** → + Ajouter un élément principal → Expression régulière → ID : **regex-AVS-Suisse** → collez : **756\\.\\d{4}\\.\\d{4}\\.\\d{2}** → Correspondance de chaîne → **Terminé** |
 | **4** | **Page 2 : Ajouter les mots-clés** | + Ajouter des éléments de soutien → Liste de mots-clés → ID : **recherche-AVS-Suisse** → saisissez un mot-clé par ligne (voir Annexe C pour la liste complète en 4 langues) → **Terminé** |
 | **5** | **Page 3 : Tester et créer** | Suivant → testez avec un numéro format 756.XXXX.XXXX.XX → vérifiez la détection → Suivant → **Créer** |
-| **⚠️** | **Propagation 15 à 30 minutes : **attendez avant de configurer les règles qui utilisent ce SIT. AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires : conservez-les en configuration OU pendant la période de propagation. |
+| **⚠️** | **Propagation 15 à 30 minutes :** attendez avant de configurer les règles qui utilisent ce SIT. AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires : conservez-les en configuration OU pendant la période de propagation. |
 
 SIT 2 : Medical-RH-Suisse
 
@@ -192,7 +192,7 @@ Détecte les données médicales RH (arrêts maladie, certificats, incapacité d
 | **2** | **Page 1 : Nommer** | Nom : **Medical-RH-Suisse** │ Description : Détection données médicales RH, 4 langues nationales + anglais. → **Suivant** |
 | **3** | **Page 2 : Définir les modèles** | + Ajouter un modèle → Niveau de confiance : **Moyen** → + Ajouter un élément principal → Liste de mots-clés → ID : **medical-rh-suisse** → saisissez un mot-clé par ligne (voir Annexe C.5.1 pour la liste complète) → **Terminé** |
 | **4** | **Page 3 : Tester et créer** | Suivant → testez avec « arrêt maladie » → vérifiez la détection → Suivant → **Créer** │ Attendez 15 à 30 minutes avant de configurer les règles des sections suivantes. |
-| **ℹ️** | **Medical-RH-Suisse vs SIT natif : **Medical-RH-Suisse est ciblé sur le contexte RH suisse (arrêts maladie, certificats, incapacité de travail) en 4 langues nationales. Le SIT natif All Medical Terms And Conditions génère des faux positifs sur des termes médicaux génériques sans contexte RH. Ne pas substituer l’un à l’autre. |
+| **ℹ️** | **Medical-RH-Suisse vs SIT natif :** Medical-RH-Suisse est ciblé sur le contexte RH suisse (arrêts maladie, certificats, incapacité de travail) en 4 langues nationales. Le SIT natif All Medical Terms And Conditions génère des faux positifs sur des termes médicaux génériques sans contexte RH. Ne pas substituer l’un à l’autre. |
 
 ## 2.4 Créer les 7 étiquettes de sensibilité
 
@@ -220,8 +220,8 @@ Suivez ces étapes exactement. L’annexe visuelle illustre chaque étape par ca
 | **3** | **Page 2 : Définir l’étendue** | Cochez les 3 cases : **Fichiers et autres ressources de données**, **Emails**, **Réunions** → **Suivant** |
 | **4** | **Page 3 : Choisir la protection** | Sélectionnez **Contrôler l’accès** et **Appliquer le marquage de contenu** → **Suivant** |
 | **5** | **Sous-page : Contrôle de l’accès** | Chiffrement : **Configurer les paramètres de contrôle d’accès** │ Attribuer : **Attribuer des autorisations maintenant** │ Expiration : **Jamais** │ Hors connexion : **Uniquement pendant un nombre de jours défini** → **7** │ Cliquez sur **+ Attribuer des autorisations** |
-| **ℹ️** | **Pourquoi 7 jours hors connexion : **ce paramètre fixe la durée de la licence d’utilisation qu’un utilisateur reçoit en ouvrant le document. Pendant cette durée, il peut l’ouvrir sans connexion, et il n’est ni réauthentifié ni réautorisé : un retrait de groupe, une révocation ou une modification de l’étiquette ne s’appliquent à lui qu’à l’expiration de cette licence. Microsoft recommande 7 jours pour les données métier sensibles (contrats, prévisions, données de comptes clients), qu’il présente comme un compromis entre souplesse et sécurité, et « Jamais » pour les données très sensibles comme les informations sur les employés ou les résultats financiers non publiés. Ce guide retient 7 jours pour les étiquettes 3b, 4 et 5 : « Jamais » empêche d’ouvrir un document sans connexion (déplacement, panne réseau), ce qui est rarement tenable dans une PME. La valeur par défaut de 30 jours n’est pas une recommandation. Si votre organisation peut garantir un accès réseau permanent aux personnes concernées, choisissez « Jamais » pour l’étiquette 4. |
-| **⚠️** | **RAPPEL POC : **l’ajout du compte admin aux autorisations est un choix de test (voir section 0.3). En production, limitez l’accès au rôle Super User de RMS, activé uniquement pour les urgences. |
+| **ℹ️** | **Pourquoi 7 jours hors connexion :** ce paramètre fixe la durée de la licence d’utilisation qu’un utilisateur reçoit en ouvrant le document. Pendant cette durée, il peut l’ouvrir sans connexion, et il n’est ni réauthentifié ni réautorisé : un retrait de groupe, une révocation ou une modification de l’étiquette ne s’appliquent à lui qu’à l’expiration de cette licence. Microsoft recommande 7 jours pour les données métier sensibles (contrats, prévisions, données de comptes clients), qu’il présente comme un compromis entre souplesse et sécurité, et « Jamais » pour les données très sensibles comme les informations sur les employés ou les résultats financiers non publiés. Ce guide retient 7 jours pour les étiquettes 3b, 4 et 5 : « Jamais » empêche d’ouvrir un document sans connexion (déplacement, panne réseau), ce qui est rarement tenable dans une PME. La valeur par défaut de 30 jours n’est pas une recommandation. Si votre organisation peut garantir un accès réseau permanent aux personnes concernées, choisissez « Jamais » pour l’étiquette 4. |
+| **⚠️** | **RAPPEL POC :** l’ajout du compte admin aux autorisations est un choix de test (voir section 0.3). En production, limitez l’accès au rôle Super User de RMS, activé uniquement pour les urgences. |
 | **6** | **Sous-page : Attribuer des autorisations** | Dans le panneau, cliquez **+ Ajouter des utilisateurs et des groupes** → sélectionnez : **GRP-RH-Purview**, **GRP-Direction-Purview**, **admin@demo.ch** (Azure RMS ne donne aucun accès implicite à l’admin, sans cette étape l’admin ne peut pas ouvrir les documents chiffrés). |
 | **7** | **Sous-page : Niveau et enregistrement** | Niveau d’autorisation : **Éditeur** (Co-auteur : lecture et modification, pas suppression). Cliquez sur **Enregistrer** |
 | **8** | **Sous-page : Vérifier le contrôle d’accès** | Le résumé affiche : **GRP-RH-Purview + GRP-Direction-Purview + admin@demo.ch**, niveau Co-auteur, 7 jours hors ligne. → **Suivant** |
@@ -231,15 +231,15 @@ Suivez ces étapes exactement. L’annexe visuelle illustre chaque étape par ca
 | **12** | **Page 6 : Auto-labelling, activer** | Activez le toggle **Étiquetage automatique pour les fichiers et les e-mails** │ Cliquez sur **+ Ajouter une condition** |
 | **13** | **Auto-labelling : créer le groupe** | Choisissez **Le contenu contient** │ Nom du groupe : **RH-Donnees-Sensibles** │ Opérateur : **N’importe lequel de ces éléments (OU)** : les deux conditions déclenchent indépendamment l’étiquette. |
 | **14** | **Auto-labelling : Condition 1 (AVS)** | Cliquez **+ Ajouter → Types d’infos confidentielles** → tapez et sélectionnez **AVS-Suisse** → Confiance : Moyenne → min : 1. |
-| **⚠️** | **SITs personnalisés : **AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires, conservez-les en configuration OU pendant la période de propagation. Ne pas ajouter IBAN ici : l’IBAN déclenche l’étiquette 5 - Finances-Confidentiel (section 3.2). |
+| **⚠️** | **SITs personnalisés :** AVS-Suisse ne valide pas le checksum EAN-13 et détecte les numéros AVS par format uniquement. Le SIT natif Swiss Social Security Number AHV valide le checksum et rate les numéros dont le checksum est incorrect. Les deux sont complémentaires, conservez-les en configuration OU pendant la période de propagation. Ne pas ajouter IBAN ici : l’IBAN déclenche l’étiquette 5 - Finances-Confidentiel (section 3.2). |
 | **15** | **Auto-labelling : Condition 2 (Médical)** | Cliquez **+ Créer un groupe** → opérateur : OU │ Cliquez **+ Ajouter → Types d’infos confidentielles** → tapez et sélectionnez **Medical-RH-Suisse** → Confiance : Moyenne → min : 2. |
 | **16** | **Auto-labelling : valider** | Vérifiez : **RH-Donnees-Sensibles** avec **AVS-Suisse (min 1) OU Medical-RH-Suisse (min 2)**, Confiance Moyenne. Cliquez sur **Ajouter**, puis **Suivant** |
 | **17** | **Page 7 : Groupes et sites** | **Laissez telle quelle.** → **Suivant** |
 | **18** | **Page 8 : Ressources** | **Laissez telle quelle.** → **Suivant** |
 | **19** | **Page 9 : Créer et terminer** | Vérifiez le résumé : Chiffrement = Activé, Marquage = Activé. Cliquez sur **Créer une étiquette** │ Sélectionnez **Ne créez pas encore de stratégie** → **Terminer** |
-| **ℹ️** | **INFO : **Répétez les étapes 1 à 19 pour les étiquettes 1, 2 et 5. Étiquettes 1 et 2 : étape 4 choisissez Aucune protection, désactivez le marquage à l’étape 9. Étiquette 5 - Finances-Confidentiel : chiffrement identique (étiquette 4) avec GRP-Finances-Purview + GRP-Direction-Purview + admin@demo.ch, Co-auteur, 7 jours hors connexion. Marquages : En-tête = « Finances - CONFIDENTIEL » │ Pied de page = « Document protégé nLPD, Ne pas diffuser » │ Filigrane = « CONFIDENTIEL FINANCES » (taille 40, diagonal, rouge). Limitation Excel : les marquages visuels ne s’affichent pas dans .xlsx, le chiffrement RMS et la détection DLP restent actifs. |
+| **ℹ️** | **INFO :** Répétez les étapes 1 à 19 pour les étiquettes 1, 2 et 5. Étiquettes 1 et 2 : étape 4 choisissez Aucune protection, désactivez le marquage à l’étape 9. Étiquette 5 - Finances-Confidentiel : chiffrement identique (étiquette 4) avec GRP-Finances-Purview + GRP-Direction-Purview + admin@demo.ch, Co-auteur, 7 jours hors connexion. Marquages : En-tête = « Finances - CONFIDENTIEL » │ Pied de page = « Document protégé nLPD, Ne pas diffuser » │ Filigrane = « CONFIDENTIEL FINANCES » (taille 40, diagonal, rouge). Limitation Excel : les marquages visuels ne s’affichent pas dans .xlsx, le chiffrement RMS et la détection DLP restent actifs. |
 
-💡 **Logique de création des règles de conditions : **vous venez de configurer votre premier groupe de conditions avec l’opérateur OU et des SITs. Cette logique (groupe, opérateur, SIT, confiance, seuil minimum) est identique dans toutes les configurations suivantes de ce guide : stratégies d’auto-labelling (section 3.2), règles DLP (sections 4.2, 4.3, 4.4), Insider Risk Management (section 8.2) et Communication Compliance (section 8.4). Maîtrisez cette logique ici elle sera votre référence pour tout le reste du guide.
+💡 **Logique de création des règles de conditions :** vous venez de configurer votre premier groupe de conditions avec l’opérateur OU et des SITs. Cette logique (groupe, opérateur, SIT, confiance, seuil minimum) est identique dans toutes les configurations suivantes de ce guide : stratégies d’auto-labelling (section 3.2), règles DLP (sections 4.2, 4.3, 4.4), Insider Risk Management (section 8.2) et Communication Compliance (section 8.4). Maîtrisez cette logique ici elle sera votre référence pour tout le reste du guide.
 
 Procédure détaillée, créer l’étiquette : 3a - Direction - Site (conteneur)
 
@@ -249,9 +249,9 @@ Cette étiquette gouverne les conteneurs Direction (site SharePoint, équipe Tea
 | --- | --- | --- |
 | **1** | **Lancer l’assistant** | Purview → Protection des données → Étiquettes de confidentialité → + Créer une étiquette |
 | **2** | **Page 1 : Nommer** | Nom : 3a - Direction - Site │ Description utilisateur : Espace collaboratif strictement confidentiel réservé à la Direction (site SharePoint, Teams, groupe Microsoft 365). │ Description admin : Étiquette conteneur Direction - gouvernance accès et confidentialité. Aucun chiffrement fichier. → cliquer sur **Suivant.** |
-| **3** | **Page 2 : Définir l’étendue** | **Cochez UNIQUEMENT : Groupes et sites. **Décochez : Fichiers et autres ressources de données, Courriers électroniques, Réunions. → cliquer sur **Suivant.** |
-| **4** | **Page 3 : Éléments** | **Aucune action requise : **Les options Contrôler l’accès et Appliquer le marquage de contenu sont grisées et non disponibles pour l’étendue Groupes et sites. Cliquez simplement sur **Suivant.** |
-| **5** | **Page 4 : Groupes et sites** | **Cochez les 3 cases : **Confidentialité et accès des utilisateurs externes │ Partage externe et accès conditionnel │ Découvrabilité des équipes privées et paramètres des canaux partagés. │ Appliquer un libellé aux réunions de canal : Aucun. → cliquer sur **Suivant.** |
+| **3** | **Page 2 : Définir l’étendue** | **Cochez UNIQUEMENT : Groupes et sites.** Décochez : Fichiers et autres ressources de données, Courriers électroniques, Réunions. → cliquer sur **Suivant.** |
+| **4** | **Page 3 : Éléments** | **Aucune action requise :** Les options Contrôler l’accès et Appliquer le marquage de contenu sont grisées et non disponibles pour l’étendue Groupes et sites. Cliquez simplement sur **Suivant.** |
+| **5** | **Page 4 : Groupes et sites** | **Cochez les 3 cases :** Confidentialité et accès des utilisateurs externes │ Partage externe et accès conditionnel │ Découvrabilité des équipes privées et paramètres des canaux partagés. │ Appliquer un libellé aux réunions de canal : Aucun. → cliquer sur **Suivant.** |
 | **6** | **Sous-page : Confidentialité et accès** | Confidentialité : sélectionnez Privé (seuls les propriétaires et membres peuvent accéder, les propriétaires peuvent ajouter des membres). │ Accès utilisateur externe : décochez Autoriser les propriétaires de groupes Microsoft 365 à ajouter des personnes externes en tant qu’invités. → cliquer sur **Suivant.** |
 | **7** | **Sous-page : Partage externe et accès conditionnel** | Contrôler le partage externe : cochez │ Contenu partagé avec : sélectionnez Uniquement les membres de votre organisation, aucun partage externe autorisé. │ Utiliser Accès conditionnel Microsoft Entra : cochez │ Option : Déterminer si les utilisateurs peuvent accéder depuis des appareils non gérés │ Accès : sélectionnez Autoriser un accès limité au web uniquement. → cliquer sur **Suivant.** |
 | **8** | **Sous-page : Équipes privées et canaux partagés** | Détectabilité : décochez Autoriser les utilisateurs à découvrir les équipes privées, la Direction ne doit pas être découvrable dans les recherches. │ Canaux partagés Teams : cochez les 3 options : Interne uniquement + Même étiquette uniquement + Équipes privées uniquement. → cliquer sur **Suivant.** |
@@ -273,7 +273,7 @@ Connect-SPOService -Url https://demo-admin.sharepoint.com
 
 Set-SPOSite -Identity https://demo.sharepoint.com/sites/direction -SensitivityLabel "GUID-de-l-etiquette-3a"
 
-**ℹ️ INFO : **Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
+**ℹ️ INFO :** Le GUID de l’étiquette se trouve dans Purview → Protection des données → Étiquettes de confidentialité → cliquez sur : « 3a - Direction – Site » → onglet Propriétés → copiez l’ID de l’étiquette. Répétez la commande Set-SPOSite pour chaque site à étiqueter (RH, Finances, Équipe IT).
 
 Procédure détaillée, créer l’étiquette : 3b - Direction - Documents (fichiers)
 
@@ -300,7 +300,7 @@ Rôle : étiquette de transit sans chiffrement. Sa protection repose sur les mar
 | **1** | **Navigation** | Purview → Protection des données → Étiquettes de confidentialité → **+ Créer une étiquette** |
 | **2** | **Page 1 : Détails** | Nom : **6 - Transmission-Externe** │ Description utilisateurs : Document préparé pour transmission externe. En appliquant cette étiquette, vous confirmez être autorisé à transmettre ce document, après avoir vérifié son contenu et son destinataire. │ Description admin : Étiquette transit sans chiffrement, marquages visuels seuls. │ Couleur : **Orange** → **Suivant** |
 | **3** | **Page 2 : Portée** | Cochez **Fichiers et autres ressources de données** et **Groupes et sites** │ Décochez Courriers et Réunions → **Suivant** |
-| **ℹ️** | **Groupes et sites : **cette portée sert uniquement à appliquer l’étiquette au site Transmission externe comme repère visuel (encadré « Marquer le site » ci-dessous). Sans elle, l’étiquette n’apparaît pas dans le Centre d’administration SharePoint. Elle n’a aucun effet sur les fichiers. |
+| **ℹ️** | **Groupes et sites :** cette portée sert uniquement à appliquer l’étiquette au site Transmission externe comme repère visuel (encadré « Marquer le site » ci-dessous). Sans elle, l’étiquette n’apparaît pas dans le Centre d’administration SharePoint. Elle n’a aucun effet sur les fichiers. |
 | **4** | **Page 3 : Paramètres de protection** | Cochez uniquement **Appliquer le marquage de contenu** │ Ne cochez pas Contrôler l’accès (pas de chiffrement) → **Suivant** |
 | **5** | **Sous-page : Marquage, filigrane** | Activez le bouton **Marquage du contenu** │ Cochez **Ajouter un filigrane** → texte : « TRANSMISSION EXTERNE » → taille : 40 → diagonal → couleur : Rouge. |
 | **6** | **Sous-page : Marquage, en-tête** | Cochez **Ajouter un en-tête** → texte : « Axonix SA - Document transmis à titre confidentiel » → taille : 11 → couleur : Rouge → Centré. |
@@ -313,19 +313,19 @@ Application de l’étiquette 6 : une décision manuelle de l’utilisateur
 
 L’étiquette 6 n’est pas appliquée automatiquement. L’utilisateur RH, Finances ou Direction qui prépare un document pour l’extérieur l’applique lui-même dans Word, Excel ou PowerPoint (bouton Sensibilité), avant ou après le dépôt dans sa bibliothèque du site Transmission externe. Ce geste matérialise sa décision : il a vérifié le document et son destinataire, et se déclare autorisé à le transmettre. L’étiquette n’est pas un circuit d’approbation : si la Direction doit valider chaque transmission, cette validation se documente dans la procédure interne de l’entreprise. L’auto-labelling Purview, basé sur le contenu (AVS, IBAN), ne convient pas à cet usage, puisque c’est la décision de transmettre qui compte et non le contenu.
 
-**ℹ️ Justification au remplacement d’une étiquette chiffrée : **la copie d’un document RH ou Finances porte encore l’étiquette 4 ou 5. L’étiquette 6 ayant une priorité inférieure (ordre 3), son application est un déclassement : Word affiche la fenêtre « Justification requise » (politique de publication, section 2.5). L’utilisateur choisit un motif, par exemple « Autre » avec une explication courte. Cette justification est enregistrée dans l’audit, mais elle ne remplace pas l’autorisation interne de transmettre le document.
+**ℹ️ Justification au remplacement d’une étiquette chiffrée :** la copie d’un document RH ou Finances porte encore l’étiquette 4 ou 5. L’étiquette 6 ayant une priorité inférieure (ordre 3), son application est un déclassement : Word affiche la fenêtre « Justification requise » (politique de publication, section 2.5). L’utilisateur choisit un motif, par exemple « Autre » avec une explication courte. Cette justification est enregistrée dans l’audit, mais elle ne remplace pas l’autorisation interne de transmettre le document.
 
-> ✅ **TESTÉ SUR LE TERRAIN (25.11.2026, Word pour le web) : **un membre de GRP-RH-Purview, non propriétaire du document, a copié un fichier étiqueté 4 - RH-Confidentiel vers la bibliothèque RH du site Transmission externe, puis l’a passé en 6 - Transmission-Externe. La fenêtre « Justification requise » s’est affichée, puis l’étiquette 6 a remplacé l’étiquette 4 : marquages de l’étiquette 6, document non chiffré. Sur le tenant de test, l’étiquette 4 accordait alors le niveau Copropriétaire aux groupes, et non le niveau Co-auteur prévu à l’étape 7. Le déclassement par un membre non propriétaire est donc validé avec le niveau Copropriétaire. Avec le niveau Co-auteur, qui ne comprend pas le droit de retirer la protection, il n’est pas encore testé. Non testé dans Word installé sur le poste.
+> ✅ **TESTÉ SUR LE TERRAIN (25.11.2026, Word pour le web) :** un membre de GRP-RH-Purview, non propriétaire du document, a copié un fichier étiqueté 4 - RH-Confidentiel vers la bibliothèque RH du site Transmission externe, puis l’a passé en 6 - Transmission-Externe. La fenêtre « Justification requise » s’est affichée, puis l’étiquette 6 a remplacé l’étiquette 4 : marquages de l’étiquette 6, document non chiffré. Sur le tenant de test, l’étiquette 4 accordait alors le niveau Copropriétaire aux groupes, et non le niveau Co-auteur prévu à l’étape 7. Le déclassement par un membre non propriétaire est donc validé avec le niveau Copropriétaire. Avec le niveau Co-auteur, qui ne comprend pas le droit de retirer la protection, il n’est pas encore testé. Non testé dans Word installé sur le poste.
 
-**⚠️ Si l’utilisateur oublie l’étiquette : **le document part sans filigrane, en-tête ni pied de page. La politique DLP-Protection-Transmission-Externe détecte encore les données sensibles grâce aux SIT et alerte l’administrateur, mais elle ne remplace pas l’étape de classification manuelle. Rappelez-la dans la procédure interne de transmission.
+**⚠️ Si l’utilisateur oublie l’étiquette :** le document part sans filigrane, en-tête ni pied de page. La politique DLP-Protection-Transmission-Externe détecte encore les données sensibles grâce aux SIT et alerte l’administrateur, mais elle ne remplace pas l’étape de classification manuelle. Rappelez-la dans la procédure interne de transmission.
 
-> ℹ️ **ALTERNATIVE NON UTILISÉE DANS CE GUIDE : **SharePoint permet de définir une étiquette par défaut sur une bibliothèque de documents (paramètres de la bibliothèque), appliquée automatiquement aux nouveaux fichiers sans étiquette. Ce guide ne l’utilise pas : l’application manuelle conserve le caractère volontaire de la décision de transmettre.
+> ℹ️ **ALTERNATIVE NON UTILISÉE DANS CE GUIDE :** SharePoint permet de définir une étiquette par défaut sur une bibliothèque de documents (paramètres de la bibliothèque), appliquée automatiquement aux nouveaux fichiers sans étiquette. Ce guide ne l’utilise pas : l’application manuelle conserve le caractère volontaire de la décision de transmettre.
 
 Marquer le site Transmission externe (facultatif)
 
 Appliquer l’étiquette 6 au site lui-même sert de repère visuel dans le Centre d’administration SharePoint. L’étiquette n’ayant aucun paramètre de groupe ni de site, cette opération ne modifie ni le partage ni les permissions, et **ne se propage pas aux fichiers** du site.
 
-**⚠️ Propagation pouvant atteindre 24 heures : **si l’étiquette n’apparaît pas dans le menu SharePoint Admin Center après 2 heures, vérifiez que la portée inclut bien Groupes et sites.
+**⚠️ Propagation pouvant atteindre 24 heures :** si l’étiquette n’apparaît pas dans le menu SharePoint Admin Center après 2 heures, vérifiez que la portée inclut bien Groupes et sites.
 
 | **N°** | **Étape** | **Action** |
 | --- | --- | --- |
@@ -350,7 +350,7 @@ Créer les étiquettes ne suffit pas. Il faut les publier pour qu’elles appara
 | **10** | **Page 9 : Structure et Power BI** | Étiquette par défaut : Aucune. → **Suivant** |
 | **11** | **Page 10 : Nom de la stratégie** | Nom : **Politique-Labels-demo** │ Description : optionnelle. → **Suivant** |
 | **12** | **Page 11 : Examiner et finaliser** | Vérifiez le résumé : 7 étiquettes publiées, paramètres obligatoires actifs, étiquette par défaut documents et e-mails = 2 - Interne. Cliquez sur **Envoyer** |
-| **⚠️** | **POINT DE VÉRIFICATION CRITIQUE : **après publication, le résumé peut afficher « Courrier Exchange : Tous comptes » dans la section Publier pour des utilisateurs et groupes. Il ne s’agit pas d’une restriction à Exchange uniquement, c’est la présentation de l’étendue de déploiement. Vérifiez immédiatement que les étiquettes apparaissent dans Word et SharePoint (délai de propagation jusqu’à 24 heures). Si après 24 heures les étiquettes sont absentes des applications Office, revenez à l’étape 4 et vérifiez la configuration Utilisateurs et groupes. |
+| **⚠️** | **POINT DE VÉRIFICATION CRITIQUE :** après publication, le résumé peut afficher « Courrier Exchange : Tous comptes » dans la section Publier pour des utilisateurs et groupes. Il ne s’agit pas d’une restriction à Exchange uniquement, c’est la présentation de l’étendue de déploiement. Vérifiez immédiatement que les étiquettes apparaissent dans Word et SharePoint (délai de propagation jusqu’à 24 heures). Si après 24 heures les étiquettes sont absentes des applications Office, revenez à l’étape 4 et vérifiez la configuration Utilisateurs et groupes. |
 
 ## 2.6 Procédure de secours, Super User RMS (Break-glass)
 
@@ -385,7 +385,7 @@ Get-AipServiceSuperUser
 *→ Résultat attendu : le compte admin-secours@demo.ch apparaît dans la liste. La fonctionnalité est désactivée dès que l’urgence est résolue via *: Disable-AipServiceSuperUserFeature*.*
 Disable-AipServiceSuperUserFeature
 
-> ℹ️ **LIEN nLPD (Art. 8) : **L’Art. 8 nLPD impose des mesures techniques garantissant la disponibilité des données. Chiffrer sans procédure de récupération expose l’organisation à une perte d’intégrité définitive en cas de corruption du tenant ou de départ d’un administrateur clé. La procédure Break-glass garantit que l’entreprise reste propriétaire et maîtresse de ses données dans les situations les plus critiques. **Toute utilisation du rôle Super User doit faire l’objet d’une trace dans le registre des incidents.**
+> ℹ️ **LIEN nLPD (Art. 8) :** L’Art. 8 nLPD impose des mesures techniques garantissant la disponibilité des données. Chiffrer sans procédure de récupération expose l’organisation à une perte d’intégrité définitive en cas de corruption du tenant ou de départ d’un administrateur clé. La procédure Break-glass garantit que l’entreprise reste propriétaire et maîtresse de ses données dans les situations les plus critiques. **Toute utilisation du rôle Super User doit faire l’objet d’une trace dans le registre des incidents.**
 
 ## 2.7 Gérer le stock de documents existants
 
@@ -399,7 +399,7 @@ Votre politique « Politique-Labels-demo » force chaque utilisateur à choisir 
 
 Purview → Protection des données → Explorateurs → Explorateur de contenu. Affiche les contenus étiquetés et/ou détectés par les classifieurs Purview. Il permet d’analyser la couverture d’étiquetage et de cibler des campagnes de rattrapage. Pour identifier et piloter la dette de labellisation (fichiers sans étiquette de sensibilité), utilisez l’approche combinée décrite en section 7.5, simulation auto-labellisation, inventaires SharePoint/OneDrive et gouvernance par emplacement.
 
-**⚠️ PRÉREQUIS : Accès à Content Explorer bloqué par défaut. **Même un Global Admin ne peut pas voir le contenu de Content Explorer sans les deux rôles spécifiques ci-dessous. Sans ces rôles, un message "Autorisation requise" s’affiche et bloque tout accès. Ajoutez-les avant de continuer.
+**⚠️ PRÉREQUIS : Accès à Content Explorer bloqué par défaut.** Même un Global Admin ne peut pas voir le contenu de Content Explorer sans les deux rôles spécifiques ci-dessous. Sans ces rôles, un message "Autorisation requise" s’affiche et bloque tout accès. Ajoutez-les avant de continuer.
 
 **Procédure : Ajouter les rôles Content Explorer :**
 
@@ -411,7 +411,7 @@ Purview → Protection des données → Explorateurs → Explorateur de contenu.
 
 4. Attendez **15 à 30 minutes** avant de retourner dans Content Explorer, les rôles ne sont pas actifs immédiatement. Rafraîchissez la page après ce délai.
 
-**ℹ️ INFO : **Les deux rôles sont cumulatifs et indépendants : le premier donne accès à la liste, le second au contenu. Pour un auditeur externe qui doit vérifier les étiquettes sans voir le contenu des fichiers, assignez uniquement le premier rôle, c’est le principe de moindre privilège nLPD.
+**ℹ️ INFO :** Les deux rôles sont cumulatifs et indépendants : le premier donne accès à la liste, le second au contenu. Pour un auditeur externe qui doit vérifier les étiquettes sans voir le contenu des fichiers, assignez uniquement le premier rôle, c’est le principe de moindre privilège nLPD.
 
 **Procédure d’audit recommandée :**
 
@@ -421,7 +421,7 @@ Purview → Protection des données → Explorateurs → Explorateur de contenu.
 
 3. Exportez la liste → transmettez au responsable de chaque département pour étiquetage manuel ciblé.
 
-**⚠️ ATTENTION nLPD : **Tout document contenant des données personnelles identifiables (nom + coordonnées + fonction) est soumis à la nLPD art. 5, même sans AVS ni IBAN. Les contrats de prestation avec personnes physiques nominatives, les listes de clients, les correspondances juridiques entrent dans cette catégorie et doivent être étiquetés manuellement avec l'étiquette « 2 – Interne » au minimum. Si le document est à usage exclusif de la Direction, appliquez « 3b - Direction – Documents ».
+**⚠️ ATTENTION nLPD :** Tout document contenant des données personnelles identifiables (nom + coordonnées + fonction) est soumis à la nLPD art. 5, même sans AVS ni IBAN. Les contrats de prestation avec personnes physiques nominatives, les listes de clients, les correspondances juridiques entrent dans cette catégorie et doivent être étiquetés manuellement avec l'étiquette « 2 – Interne » au minimum. Si le document est à usage exclusif de la Direction, appliquez « 3b - Direction – Documents ».
 
 **Niveau 3, Trainable Classifiers :** (M365 E5 uniquement, non disponible avec Business Premium + Purview Suite)
 
@@ -436,7 +436,7 @@ Microsoft propose des classifieurs entraînables capables de reconnaître des ty
 | Semaines 2-4 | Campagne manuelle ciblée par département sur le stock critique | 2-3 jours |
 | Phase 2 | Trainable Classifiers si volume > 5 000 documents (M365 E5 requis, non disponible avec Business Premium) | 2-4 semaines |
 
-**ℹ️ INFO : **Pour le POC, concentrez-vous sur les sites Direction, RH et Finances. Un document mal placé dans SharePoint (ex : contrat commercial dans le site Finances) ne sera jamais auto-étiqueté correctement. Le bon emplacement SharePoint est le premier niveau de gouvernance documentaire. Le bon site avant la bonne étiquette.
+**ℹ️ INFO :** Pour le POC, concentrez-vous sur les sites Direction, RH et Finances. Un document mal placé dans SharePoint (ex : contrat commercial dans le site Finances) ne sera jamais auto-étiqueté correctement. Le bon emplacement SharePoint est le premier niveau de gouvernance documentaire. Le bon site avant la bonne étiquette.
 
 ---
 

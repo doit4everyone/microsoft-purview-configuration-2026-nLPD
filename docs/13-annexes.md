@@ -65,17 +65,17 @@ Le type d’information sensible (SIT) natif de Microsoft « Swiss Social Secu
 
 ### C.1 : Regex et configuration du modèle
 
-**Expression régulière (regex) : **`756\.\d{4}\.\d{4}\.\d{2}`
+**Expression régulière (regex) :** `756\.\d{4}\.\d{4}\.\d{2}`
 
 Ce regex détecte exactement le format suisse avec points obligatoires : 756.XXXX.XXXX.XX. Le préfixe 756 est le code pays suisse. Les points échappés (`\.`) forcent le séparateur point, une séquence de chiffres collés comme 7561234567890 n’est pas détectée.
 
-**Paramètres du modèle Purview : **Type de correspondance = Correspondance de chaîne | Niveau de confiance = Moyen | Nombre d’instances min = 1.
+**Paramètres du modèle Purview :** Type de correspondance = Correspondance de chaîne | Niveau de confiance = Moyen | Nombre d’instances min = 1.
 
 ### C.2 : Mots-clés multilingues (4 langues nationales + anglais)
 
 Ces mots-clés sont des éléments de soutien, ils augmentent le niveau de confiance de la détection quand ils apparaissent dans une fenêtre de 300 caractères autour du numéro détecté. Ils ne ralentissent pas l’analyse et n’affectent pas les performances des politiques DLP ou d’auto-labelling.
 
-ℹ️ **Astuce copier-coller : **copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez « / » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
+ℹ️ **Astuce copier-coller :** copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez « / » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
 
 ⚠️ Notepad++ : activez le mode Expression régulière et utilisez \\n dans le champ Remplacer par au lieu de Ctrl+Entrée.
 
@@ -117,7 +117,7 @@ Cette section concerne uniquement la migration d’anciennes politiques qui util
 
 La règle Règle-Medical de l’auto-labelling n’est pas concernée : elle utilise le SIT Medical-RH-Suisse (section C.5). Ne supprimez pas non plus le SIT natif Swiss Social Security Number AHV des politiques Insider Risk Management et Endpoint DLP : il y complète volontairement AVS-Suisse.
 
-**ℹ️ INFO : **Après remplacement, relancez la simulation des politiques d’auto-labelling et vérifiez dans l’onglet Éléments correspondants que vos fichiers de test apparaissent. Le SIT personnalisé détecte tout numéro au format 756.XXXX.XXXX.XX indépendamment de la validité du checksum.
+**ℹ️ INFO :** Après remplacement, relancez la simulation des politiques d’auto-labelling et vérifiez dans l’onglet Éléments correspondants que vos fichiers de test apparaissent. Le SIT personnalisé détecte tout numéro au format 756.XXXX.XXXX.XX indépendamment de la validité du checksum.
 
 ### C.5 : SIT personnalisé Medical-RH-Suisse
 
@@ -127,7 +127,7 @@ Le SIT natif Microsoft « All Medical Terms And Conditions » est trop large pou
 
 Ces mots-clés ciblent les documents RH contenant des informations médicales nominatives. Ils ne déclenchent pas sur des termes médicaux génériques ou scientifiques. Saisissez un mot-clé par ligne dans Purview.
 
-ℹ️ **Astuce copier-coller : **copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez « / » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
+ℹ️ **Astuce copier-coller :** copiez les mots-clés d’une ligne du tableau ci-dessous dans un document Word vierge, puis faites Ctrl+H (Remplacer) : dans Rechercher saisissez « / » (espace-slash-espace), dans Remplacer par saisissez « ^p » (caret-p, qui représente un saut de paragraphe dans Word), puis cliquez sur Tout remplacer. Vous obtenez la liste prête à coller directement dans l’interface Purview, un mot-clé par ligne.
 
 ⚠️ Notepad++ : activez le mode Expression régulière et utilisez \\n dans le champ Remplacer par au lieu de Ctrl+Entrée.
 
@@ -186,13 +186,13 @@ Sans organisation associée aux mesures techniques, Purview devient une boîte n
 
 ### F.2 : Escalade et incidents nLPD
 
-**Annonce au PFPDT : **dans les meilleurs délais lorsque l’analyse conclut que la violation de la sécurité des données entraîne vraisemblablement un risque élevé pour la personnalité ou les droits fondamentaux des personnes concernées (art. 24 al. 1 nLPD). Toute violation n’entraîne donc pas automatiquement une annonce.
+**Annonce au PFPDT :** dans les meilleurs délais lorsque l’analyse conclut que la violation de la sécurité des données entraîne vraisemblablement un risque élevé pour la personnalité ou les droits fondamentaux des personnes concernées (art. 24 al. 1 nLPD). Toute violation n’entraîne donc pas automatiquement une annonce.
 
-**Déclencheur interne : **toute alerte DLP de gravité élevée non résolue dans les 48 heures déclenche une analyse d’incident. Ce délai est une règle interne d’escalade, pas un délai légal d’annonce.
+**Déclencheur interne :** toute alerte DLP de gravité élevée non résolue dans les 48 heures déclenche une analyse d’incident. Ce délai est une règle interne d’escalade, pas un délai légal d’annonce.
 
-**Chaîne d’escalade : **Alerte Purview → Admin IT (48h) → Direction (si violation confirmée) → Conseil juridique (évaluation du risque élevé) → PFPDT (dans les meilleurs délais si l’annonce est requise, art. 24 al. 1 nLPD).
+**Chaîne d’escalade :** Alerte Purview → Admin IT (48h) → Direction (si violation confirmée) → Conseil juridique (évaluation du risque élevé) → PFPDT (dans les meilleurs délais si l’annonce est requise, art. 24 al. 1 nLPD).
 
-**ℹ️ INFO : **Si l’organisation tient un registre des activités de traitement (art. 12 nLPD, voir Annexe I pour l’exemption des PME), intégrez-y ce tableau RACI. Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
+**ℹ️ INFO :** Si l’organisation tient un registre des activités de traitement (art. 12 nLPD, voir Annexe I pour l’exemption des PME), intégrez-y ce tableau RACI. Nommez une personne physique responsable pour chaque ligne. « Admin IT » seul ne suffit pas en audit PFPD.
 
 ## Annexe G : Procédure de levée d’anonymat IRM (règle de gouvernance interne)
 
@@ -215,7 +215,7 @@ Processus de traitement d’une alerte IRM
 
 Principe fondamental
 
-**La levée d’anonymat est l’exception, pas la règle. **La grande majorité des alertes IRM doit pouvoir être qualifiée et clôturée sans levée d’anonymat , faux positif, formation utilisateur, correction technique. La levée d’anonymat n’est justifiée que si (a) l’incident est confirmé grave, (b) l’identification est indispensable à l’investigation, et (c) une décision écrite de la Direction est obtenue préalablement. La validation écrite préalable n’est pas une séquence imposée par l’art. 26 OLT 3, mais une règle interne recommandée : une levée d’anonymat non encadrée affaiblit la démonstration de proportionnalité et peut porter atteinte à la personnalité du collaborateur (art. 328 et 328b CO).
+**La levée d’anonymat est l’exception, pas la règle.** La grande majorité des alertes IRM doit pouvoir être qualifiée et clôturée sans levée d’anonymat , faux positif, formation utilisateur, correction technique. La levée d’anonymat n’est justifiée que si (a) l’incident est confirmé grave, (b) l’identification est indispensable à l’investigation, et (c) une décision écrite de la Direction est obtenue préalablement. La validation écrite préalable n’est pas une séquence imposée par l’art. 26 OLT 3, mais une règle interne recommandée : une levée d’anonymat non encadrée affaiblit la démonstration de proportionnalité et peut porter atteinte à la personnalité du collaborateur (art. 328 et 328b CO).
 
 ## Annexe H : Gestion des comptes et rôles Purview
 
@@ -225,17 +225,17 @@ Un auditeur PFPDT attend : (1) séparation des rôles critiques, (2) traçabilit
 
 Compte : **admin-it@demo.ch** | État : Actif | MFA : Obligatoire | Licence : Business Premium + Purview Suite.
 
-**Rôles Entra ID : **Administrateur de la conformité, Administrateur de la sécurité, Administrateur IA (si DSPM/Copilot).
+**Rôles Entra ID :** Administrateur de la conformité, Administrateur de la sécurité, Administrateur IA (si DSPM/Copilot).
 
-**Rôles Purview RBAC : **Compliance Administrator, Data Security AI Admins, Data Security Viewers, eDiscovery Manager (Gestionnaire + Administrateur), Communication Compliance Admin, Insider Risk Management Analysts.
+**Rôles Purview RBAC :** Compliance Administrator, Data Security AI Admins, Data Security Viewers, eDiscovery Manager (Gestionnaire + Administrateur), Communication Compliance Admin, Insider Risk Management Analysts.
 
-**Exchange Online : **Compliance Management (rôle Audit Logs, moindre privilège). **❌ Pas de Super User RMS. ❌ Pas de Global Admin (sauf POC).**
+**Exchange Online :** Compliance Management (rôle Audit Logs, moindre privilège). **❌ Pas de Super User RMS. ❌ Pas de Global Admin (sauf POC).**
 
 ### Compte 2 : Break-glass Chiffrement RMS (urgence uniquement)
 
 Compte : **rms-breakglass@demo.ch** | Type : cloud-only, non nominatif | État : **❌ Désactivé sauf incident** | MFA : FIDO2 ou TOTP offline | Licence : aucune.
 
-**Rôle unique : **Super User RMS (via PowerShell uniquement). **❌ Aucun rôle Entra ID administratif.  ❌ Aucun rôle Purview. ❌ Aucun accès SharePoint.**
+**Rôle unique :** Super User RMS (via PowerShell uniquement). **❌ Aucun rôle Entra ID administratif.  ❌ Aucun rôle Purview. ❌ Aucun accès SharePoint.**
 
 Activation temporaire uniquement, désactivation immédiate après usage. Chaque activation est tracée dans les journaux d’audit Entra ID (Journaux d’audit → Gestion des utilisateurs).
 
@@ -243,25 +243,25 @@ Activation temporaire uniquement, désactivation immédiate après usage. Chaque
 
 Compte : **audit-purview@demo.ch** | État : Actif | MFA : Obligatoire | Licence : Business Premium + Purview Suite.
 
-**Rôles Purview RBAC : **Data Security Viewers, Content Explorer List Viewer.
+**Rôles Purview RBAC :** Data Security Viewers, Content Explorer List Viewer.
 
-⚠️ Ne pas attribuer **Content Explorer Content Viewer **: permet l’audit sans accès au contenu des fichiers (proportionnalité nLPD art. 6).
+⚠️ Ne pas attribuer **Content Explorer Content Viewer** : permet l’audit sans accès au contenu des fichiers (proportionnalité nLPD art. 6).
 
 ### Compte 4 : Direction / Responsable traitement (lecture exécutive)
 
 Compte : membre de **GRP-Direction-Purview** | État : Actif | MFA : Obligatoire | Licence : Business Premium + Purview Suite.
 
-**Rôle unique : **Data Security Viewers. **❌ Pas d’administration. ❌ Pas d’accès Content Explorer contenu.** Séparation des tâches (mesure organisationnelle, art. 8 nLPD) : le responsable supervise sans opérer.
+**Rôle unique :** Data Security Viewers. **❌ Pas d’administration. ❌ Pas d’accès Content Explorer contenu.** Séparation des tâches (mesure organisationnelle, art. 8 nLPD) : le responsable supervise sans opérer.
 
 ### Transition depuis admin@demo.ch procédure de désactivation safe
 
 Le compte admin@demo.ch utilisé pendant le POC cumule tous les rôles. Ce modèle est acceptable en phase de test mais doit être séparé avant mise en production.
 
-**Étape 1 : Créer et valider admin-it@demo.ch : **attribuer tous les rôles du tableau Compte 1. Tester intégralement toutes les configurations Purview avec ce nouveau compte avant de continuer.
+**Étape 1 : Créer et valider admin-it@demo.ch :** attribuer tous les rôles du tableau Compte 1. Tester intégralement toutes les configurations Purview avec ce nouveau compte avant de continuer.
 
-**Étape 2 : Transférer la licence et retirer les rôles Purview : **désattribuer la licence Business Premium + Purview Suite de admin@demo.ch et l’attribuer à admin-it@demo.ch. **⚠️ Important** : les rôles Purview survivent à la désactivation du compte, retirer manuellement les rôles Purview de admin@demo.ch après transfert.
+**Étape 2 : Transférer la licence et retirer les rôles Purview :** désattribuer la licence Business Premium + Purview Suite de admin@demo.ch et l’attribuer à admin-it@demo.ch. **⚠️ Important** : les rôles Purview survivent à la désactivation du compte, retirer manuellement les rôles Purview de admin@demo.ch après transfert.
 
-**Étape 3 : Bloquer la connexion (pas supprimer) : **Entra ID → Utilisateurs → admin@demo.ch → Modifier → **Bloquer la connexion** → Enregistrer. Le compte reste présent avec Global Admin conservé comme break-glass de dernier recours. En cas d’urgence absolue : réactiver temporairement → effectuer l’action → désactiver immédiatement. Chaque réactivation est tracée automatiquement dans les journaux d’audit Entra ID.
+**Étape 3 : Bloquer la connexion (pas supprimer) :** Entra ID → Utilisateurs → admin@demo.ch → Modifier → **Bloquer la connexion** → Enregistrer. Le compte reste présent avec Global Admin conservé comme break-glass de dernier recours. En cas d’urgence absolue : réactiver temporairement → effectuer l’action → désactiver immédiatement. Chaque réactivation est tracée automatiquement dans les journaux d’audit Entra ID.
 
 ### Synthèse : Lecture auditeur PFPDT par compte
 
@@ -366,7 +366,7 @@ Activité 5 : Transmission externe de documents
 | **Base légale (art. 31 nLPD)** | À déterminer selon les personnes concernées, la nature des données et la finalité de la transmission. L’art. 31 al. 2 let. a nLPD peut être invoqué lorsque les données concernent le cocontractant et que le traitement est directement lié à la conclusion ou à l’exécution du contrat. Une transmission imposée par la loi (fiduciaire pour les assurances sociales, autorité fiscale) repose sur l’obligation légale correspondante. Les autres situations s’examinent au regard du motif justificatif applicable (art. 31 al. 1 nLPD), le consentement n’étant invoqué que subsidiairement. |
 | **Mesures de sécurité (art. 8 nLPD)** | Étiquette 6 - Transmission-Externe (marquages visuels, impression autorisée pour le destinataire). Politique DLP-Protection-Transmission-Externe (détection des données sensibles partagées, alerte admin). Application manuelle de l’étiquette 6 par l’utilisateur, qui matérialise la décision de transmettre. Permissions propres à chaque bibliothèque. Rétention de 2 jours avec suppression différée, complétée par la suppression manuelle de la copie dès la réception confirmée. Journal d’audit Microsoft 365 pour la traçabilité de tous les partages. |
 
-**Note pratique : **ce registre doit être tenu à jour à chaque modification significative des traitements (nouvel outil, nouveau prestataire, nouvelle catégorie de données). Il n’existe pas de formulaire officiel PFPDT, ce modèle est conforme aux exigences minimales de l’art. 12 nLPD. Conservez-le dans un emplacement contrôlé (ex. : site SharePoint Direction, accès restreint à Direction + DPO).
+**Note pratique :** ce registre doit être tenu à jour à chaque modification significative des traitements (nouvel outil, nouveau prestataire, nouvelle catégorie de données). Il n’existe pas de formulaire officiel PFPDT, ce modèle est conforme aux exigences minimales de l’art. 12 nLPD. Conservez-le dans un emplacement contrôlé (ex. : site SharePoint Direction, accès restreint à Direction + DPO).
 
 ## Annexe J : Soutien au travail de documentation
 

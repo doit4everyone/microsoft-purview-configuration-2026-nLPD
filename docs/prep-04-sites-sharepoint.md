@@ -43,7 +43,7 @@ la création des sites standards.
 | Finances demo.ch | Équipe | sites/Finances | GRP-Finances + GRP-Direction (lecture) |
 | Transmission externe | Équipe | sites/Transmissionexterne | Voir section dédiée |
 
-> ⚠️ **URL DE RÉFÉRENCE : **les adresses de ce tableau sont réutilisées telles quelles dans les politiques DLP, d’étiquetage automatique et de rétention du guide Purview (https://demo.sharepoint.com/sites/RH, /sites/Finances, /sites/direction, /sites/Transmissionexterne). Saisissez exactement ces adresses lors de la création des sites. Une adresse différente fait qu’une politique ne couvre pas le site attendu. Après création de chaque politique, vérifiez dans le portail Purview les emplacements réellement sélectionnés.
+> ⚠️ **URL DE RÉFÉRENCE :** les adresses de ce tableau sont réutilisées telles quelles dans les politiques DLP, d’étiquetage automatique et de rétention du guide Purview (https://demo.sharepoint.com/sites/RH, /sites/Finances, /sites/direction, /sites/Transmissionexterne). Saisissez exactement ces adresses lors de la création des sites. Une adresse différente fait qu’une politique ne couvre pas le site attendu. Après création de chaque politique, vérifiez dans le portail Purview les emplacements réellement sélectionnés.
 
 ## 4.1 Accéder au Centre d'administration SharePoint
 

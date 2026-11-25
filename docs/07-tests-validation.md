@@ -28,7 +28,7 @@ lang: fr
 
 # Partie 6 : Scénarios de test et validation
 
-> ⚠️ **ATTENTION : **Avant de commencer les tests : vérifiez que les politiques DLP et auto-labelling sont bien activées (pas en simulation) et que l'audit est actif. Attendez 24-48h après activation avant de tester.
+> ⚠️ **ATTENTION :** Avant de commencer les tests : vérifiez que les politiques DLP et auto-labelling sont bien activées (pas en simulation) et que l'audit est actif. Attendez 24-48h après activation avant de tester.
 
 > 📦 **Fichiers de démo requis :** les tests ci-dessous utilisent des fichiers fictifs (contrat de travail, fiches de salaire, registre du personnel, grand livre). Téléchargez `FICHIERS_DEMO_AXONIX.zip` depuis la [release v1.0](https://github.com/doit4everyone/microsoft-purview-configuration-2026-nLPD/releases/tag/v1.0) et uploadez-les dans les sites SharePoint correspondants (RH, Finances) avant de commencer. Le détail de la répartition par site est décrit dans la [page de préparation du tenant](prep-06-documents-demo.html).
 
@@ -42,7 +42,7 @@ lang: fr
 
 4. **Vérifier dans Activity Explorer** Purview → Activity Explorer → filtrez Type d'activité = Étiquette appliquée automatiquement. Le fichier doit apparaître dans la liste.
 
-> ⚠️ **ATTENTION : **Si le label n'apparaît pas après ce délai : vérifiez que la stratégie d'auto-labelling est bien en mode Activé (pas Simulation) et que le site SharePoint RH est bien inclus dans les emplacements de la stratégie.
+> ⚠️ **ATTENTION :** Si le label n'apparaît pas après ce délai : vérifiez que la stratégie d'auto-labelling est bien en mode Activé (pas Simulation) et que le site SharePoint RH est bien inclus dans les emplacements de la stratégie.
 
 ## 6.2 Test 2 : DLP bloque le partage externe
 
@@ -56,7 +56,7 @@ lang: fr
 
 5. **Vérifier dans Activity Explorer** Attendez quelques minutes puis allez dans Purview → Activity Explorer → filtrez Type = Correspondance de règle DLP. L'événement doit apparaître.
 
-> ⚠️ **ATTENTION : **Si aucun blocage n'apparaît : vérifiez que la politique DLP est en mode Activé et non Simulation. En mode simulation, les règles ne bloquent pas.
+> ⚠️ **ATTENTION :** Si aucun blocage n'apparaît : vérifiez que la politique DLP est en mode Activé et non Simulation. En mode simulation, les règles ne bloquent pas.
 
 ## 6.3 Test 3 : Protection Copilot
 
